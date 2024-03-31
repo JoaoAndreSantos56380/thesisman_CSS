@@ -16,21 +16,23 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class DissertationTopic {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
 
+	@NonNull
 	private String title;
 
+	@NonNull
 	private String description;
 
-	private int salary;
+	@NonNull
+	private double salary;
 
 	//associacao many-to-one
 	@NonNull
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_professor_id", referencedColumnName = "id")
 	private Professor internalAdvisor;
-
 
 	//associacao many-to-one
 	@Nullable
@@ -43,9 +45,8 @@ public class DissertationTopic {
 	@JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
 	private ArrayList<Masters> compatibleMasters;
 
-	private int year;
-
 	public DissertationTopic() {
 	}
+
 
 }

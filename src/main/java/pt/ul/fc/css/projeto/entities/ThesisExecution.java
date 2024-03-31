@@ -3,15 +3,20 @@ package pt.ul.fc.css.projeto.entities;
 import java.util.Date;
 
 import io.micrometer.common.lang.NonNull;
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
+@Entity
 public class ThesisExecution {
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
 
 	//associacao one-to-one
 	@NonNull
@@ -24,12 +29,11 @@ public class ThesisExecution {
 	@JoinColumn(name = "fk_dissertation_topic_id", referencedColumnName = "id")
 	private DissertationTopic topic;
 
+	@NonNull
 	private Date yearOfExecution;
 
+	@Nullable
 	private int finalGrade;
-
-	//nao e suposto a execucao conhecer as defesas mas sim o contrario
-	//private ArrayList<ThesisDefense> proposalDefenses;
 
 	public void setFinalGrade(int grade){
 		finalGrade = grade;
