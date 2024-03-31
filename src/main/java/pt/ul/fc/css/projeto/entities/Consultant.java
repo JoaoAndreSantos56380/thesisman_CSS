@@ -1,19 +1,20 @@
 package pt.ul.fc.css.projeto.entities;
 
-import org.springframework.lang.Nullable;
+import org.springframework.lang.NonNull;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("CONSULTANT")
 public class Consultant extends User {
-	public Consultant(String email, String password) {
-		super(email, password);
+	public Consultant(String email, String password, String name) {
+		super(email, password, name);
 	}
+
 	public Consultant() {
 	}
 
-	@Nullable
+	@NonNull
 	private String company;
 
 	public String getCompany() {

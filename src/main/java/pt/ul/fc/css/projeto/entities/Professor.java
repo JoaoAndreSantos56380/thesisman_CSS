@@ -8,18 +8,19 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue("TEACHER")
 public class Professor extends User {
-	public Professor(String username, String password) {
-		super(username, password);
-	}
 
-	public Professor(String username, String password, String emailField) {
-		super(username, password);
-		this.emailField = emailField;
+	public Professor(String username, String password, String name, Boolean isAdmin) {
+		super(username, password, name);
+		this.isAdmin = isAdmin;
 	}
 
 	public Professor() {
 	}
 
 	@NonNull
-	private String emailField;
+	private boolean isAdmin;
+
+	public boolean getIsAdmin(){
+		return isAdmin;
+	}
 }

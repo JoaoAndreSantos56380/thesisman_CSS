@@ -1,7 +1,7 @@
 package pt.ul.fc.css.projeto.entities;
 
-
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
@@ -11,10 +11,13 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 @DiscriminatorValue("STUDENT")
-// @Table(name = "student")
-public class Student extends User {
-	public Student(String email, String password) {
-		super(email, password);
+public class Student extends User{
+	public Student(@NonNull String username, @NonNull String password, @NonNull String name, @NonNull int studentNumber,
+			@NonNull double averageGrade, @Nullable Masters master) {
+		super(username, password, name);
+		this.studentNumber = studentNumber;
+		this.averageGrade = averageGrade;
+		this.master = master;
 	}
 
 	public Student() {
@@ -23,37 +26,28 @@ public class Student extends User {
 	@NonNull
 	private int studentNumber;
 
-	//associacao many-to-one
-	@NonNull
+	// associacao many-to-one
+	@Nullable
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
-	private Masters masters;
+	private Masters master;
 
 	@NonNull
 	private double averageGrade;
-
-	/* @Nullable
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_application_id", referencedColumnName = "id") */
-	//private ArrayList<Application> application;
 
 	public int getStudentNumber() {
 		return studentNumber;
 	}
 
-	public void setStudentNumber(int studentNumber) {
-		this.studentNumber = studentNumber;
-	}
-
 	public Masters getMasters() {
-		return masters;
+		return master;
 	}
 
-	public void setMasters(Masters masters) {
-		this.masters = masters;
+	public void setMaster(Masters master) {
+		this.master = master;
 	}
 
-	public void setAverageGrade(float averageGrade) {
-		this.averageGrade = averageGrade;
+	public double getAverageGrade() {
+		return averageGrade;
 	}
 }

@@ -1,15 +1,20 @@
 package pt.ul.fc.css.projeto.entities;
 
 import org.springframework.lang.NonNull;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 @Entity
-@Table(name = "users")
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private long id;
+	private Long id;
 
 	@NonNull
 	private String username;
@@ -19,6 +24,15 @@ public abstract class User {
 
 	@NonNull
 	private String name;
+
+	public User(@NonNull String username, @NonNull String password, @NonNull String name) {
+		this.username = username;
+		this.password = password;
+		this.name = name;
+	}
+
+	public User() {
+	}
 
 	public long getId() {
 		return id;
@@ -42,13 +56,5 @@ public abstract class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-
-	public User() {
 	}
 }
