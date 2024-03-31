@@ -15,6 +15,9 @@ public class ProjectExecution extends ThesisExecution {
 	@JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
 	private Consultant consultant;
 
+	public ProjectExecution() {
+	}
+
 	public Consultant getConsultant() {
 		return consultant;
 	}

@@ -10,6 +10,8 @@ public class Consultant extends User {
 	public Consultant(String email, String password) {
 		super(email, password);
 	}
+	public Consultant() {
+	}
 
 	@Nullable
 	private String company;

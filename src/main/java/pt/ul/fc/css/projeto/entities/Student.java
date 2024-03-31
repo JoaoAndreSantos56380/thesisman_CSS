@@ -17,6 +17,9 @@ public class Student extends User {
 		super(email, password);
 	}
 
+	public Student() {
+	}
+
 	@NonNull
 	private int studentNumber;
 

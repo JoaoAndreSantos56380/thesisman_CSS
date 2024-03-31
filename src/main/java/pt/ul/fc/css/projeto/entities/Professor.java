@@ -17,6 +17,9 @@ public class Professor extends User {
 		this.emailField = emailField;
 	}
 
+	public Professor() {
+	}
+
 	@NonNull
 	private String emailField;
 }
