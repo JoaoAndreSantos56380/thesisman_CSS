@@ -12,4 +12,7 @@ public interface DissertationTopicRepository extends JpaRepository<DissertationT
     @Query("SELECT a FROM Master a WHERE a.name LIKE %:q% ")
     List<DissertationTopic> findByName(@Param("q") String q);
 
+    public void addDissertationTopic(DissertationTopic topic); 
+
+    public void removeDissertationTopic(DissertationTopic topic); 
 }

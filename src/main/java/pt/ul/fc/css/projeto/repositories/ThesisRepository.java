@@ -5,14 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import pt.ul.fc.css.projeto.entities.Masters;
+import pt.ul.fc.css.projeto.entities.ThesisExecution;
 
-public interface MastersRepository extends JpaRepository<Masters, Integer> {
+public interface ThesisRepository extends JpaRepository<ThesisExecution, Integer> {
 
     @Query("SELECT a FROM Master a WHERE a.name LIKE %:q% ")
-    List<Masters> findByName(@Param("q") String q);
+    List<ThesisExecution> findByName(@Param("q") String q);
 
-    public void addMasters(Masters masters);   
+    public void addThesis(ThesisExecution thesis);
 
-    public void removeMasters(Masters masters); 
+    public void removeThesis(ThesisExecution thesis);
+
 }
