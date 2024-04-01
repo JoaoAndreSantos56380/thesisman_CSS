@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 
@@ -37,7 +36,7 @@ public class DissertationTopic {
   private Consultant externalAdvisor;
 
   @Nullable
-  @ManyToMany(cascade = CascadeType.ALL)
+  // @ManyToMany(cascade = CascadeType.AL
   @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
   private ArrayList<Masters> compatibleMasters;
 
