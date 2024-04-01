@@ -1,4 +1,4 @@
-package pt.ul.fc.css.projeto.entities;
+package pt.ul.fc.css.example.demo.entities;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
