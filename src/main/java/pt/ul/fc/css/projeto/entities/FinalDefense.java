@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne;
 import org.springframework.lang.NonNull;
 
 @Entity
-public class FinalPresentation extends ThesisDefense {
+public class FinalDefense extends ThesisDefense {
   // associacao many-to-one
   @NonNull
   @ManyToOne(cascade = CascadeType.ALL)
