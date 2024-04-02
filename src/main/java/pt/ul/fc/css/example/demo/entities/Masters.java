@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import java.util.Objects;
 
 @Entity
 public class Masters {
@@ -33,6 +34,20 @@ public class Masters {
 
   public Professor getCoordinator() {
     return coordinator;
+  }
+
+  public Long getId() {
+    return this.id;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    var that = (Masters) obj;
+    return Objects.equals(this.getId(), that.getId())
+        && Objects.equals(this.getName(), that.getName())
+        && Objects.equals(this.getCoordinator(), that.getCoordinator());
   }
 
   public Masters() {}
