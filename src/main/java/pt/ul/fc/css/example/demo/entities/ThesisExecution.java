@@ -42,4 +42,6 @@ public class ThesisExecution {
     this.yearOfExecution = yearOfExecution;
     this.finalGrade = finalGrade;
   }
+
+  public ThesisExecution() {}
 }
