@@ -22,6 +22,6 @@ public interface MastersRepository extends JpaRepository<Masters, Long> {
 	// Custom query to find Masters by coordinator
 	@Transactional
 	@Modifying
-	@Query("SELECT m FROM Masters m WHERE m.coordinator.id = :userId")
-	List<Masters> findByCoordinator(@Param(":userId") Professor coordinator);
+	@Query("SELECT m FROM Masters m WHERE m.coordinator.id = :coordinatorId")
+	List<Masters> findByCoordinator(@Param("coordinatorId") Long coordinatorId);
 }
