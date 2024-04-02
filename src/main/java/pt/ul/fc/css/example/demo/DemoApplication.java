@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import pt.ul.fc.css.example.demo.entities.Application;
+import pt.ul.fc.css.example.demo.entities.Consultant;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.FinalDefense;
 import pt.ul.fc.css.example.demo.entities.Masters;
@@ -45,6 +46,7 @@ public class DemoApplication {
 			Professor cr7Professor = new Professor("cr7", "password", "cristiano ronaldo");
 			Professor rq7Professor = new Professor("rq7", "password", "ricardo quaresma");
 			Professor presiJuri = new Professor("pjuri", "password", "presi juri");
+			Consultant consultant = new Consultant("consultant@mail.com", "password", "jorge mendes", " sumol");
 
 			// criar mestrado com esse prof a coordenador
 			Masters theBestMaster = new Masters("the best", cr7Professor);
@@ -57,6 +59,7 @@ public class DemoApplication {
 
 			DissertationTopic dissertationTopicFutebolRadiante = new DissertationTopic("Futebol radiante", "description", 99999, rq7Professor, null, mastersArr);
 
+			userRepository.save(consultant);
 			userRepository.save(cr7Professor);
 			userRepository.save(rq7Professor);
 			mastersRepository.save(theBestMaster);
@@ -98,7 +101,7 @@ public class DemoApplication {
 			/* dissertationTopicRepository.save(topic);
 			dissertationTopicRepository.save(topic2);
 			dissertationTopicRepository.save(topic3); */
-			
+
 		};
 	}
 }

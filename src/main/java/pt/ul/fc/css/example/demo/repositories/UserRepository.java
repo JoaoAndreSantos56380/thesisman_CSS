@@ -16,8 +16,19 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 	@Query("SELECT a FROM AppUser a WHERE a.username LIKE %:q% ")
 	List<AppUser> findByUserName(@Param("q") String q);
 
-	/* @Query("SELECT a FROM AppUser a WHERE a.studentNumber = :number ")
-	List<AppUser> findByStudentNumber(@Param("number") int number); */
+	@Query("SELECT a FROM AppUser a WHERE a.studentNumber = :number ")
+	List<AppUser> findByStudentNumber(@Param("number") int number);
+
+	@Query("SELECT a FROM AppUser a WHERE a.averageGrade = :averageGrade ")
+	List<AppUser> findByAvgGrade(@Param("averageGrade") double averageGrade);
+
+	@Query("SELECT a FROM AppUser a WHERE a.master.id = :masterId ")
+	List<AppUser> findByMasterId(@Param("masterId") Long masterrId);
+
+	@Query("SELECT a FROM AppUser a WHERE a.company LIKE %:company% ")
+	List<AppUser> findByCompany(@Param("company") String company);
+
+
 
 
 }
