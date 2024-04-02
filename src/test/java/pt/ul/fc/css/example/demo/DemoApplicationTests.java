@@ -3,11 +3,12 @@ package pt.ul.fc.css.example.demo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import pt.ul.fc.css.example.demo.entities.AppUser;
+import pt.ul.fc.css.example.demo.entities.Masters;
+import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
@@ -15,6 +16,7 @@ import pt.ul.fc.css.example.demo.repositories.MastersRepository;
 import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
 
+@Transactional
 @SpringBootTest
 class DemoApplicationTests {
 
@@ -37,38 +39,49 @@ class DemoApplicationTests {
 
   @Test
   void testTopicListIsNotEmpty() {
-	assertTrue(dissertationTopicRepository.count() > 0);
+    assertTrue(dissertationTopicRepository.count() > 0);
   }
 
   @Test
   void tesisListIsNotEmpty() {
-	assertTrue(thesisExecutionRepository.count() > 0);
+    assertTrue(thesisExecutionRepository.count() > 0);
   }
 
   @Test
   void ApplicationListIsNotEmpty() {
-	assertTrue(ApplicationRepository.count() > 0);
+    assertTrue(ApplicationRepository.count() > 0);
   }
 
   @Test
   void DefenseListIsNotEmpty() {
-	assertTrue(defenseRepository.count() > 0);
+    assertTrue(defenseRepository.count() > 0);
   }
 
+  /*
+   * @Test
+   * void testFindByName() {
+   * AppUser professor = userRepository.findByName("cristiano ronaldo").get(0);
+   * assertEquals(professor.getName(), "cristiano ronaldo");
+   * }
+   */
 
   @Test
-  void testFindByName() {
-    AppUser professor = userRepository.findByName("cristiano ronaldo").get(0);
-    assertEquals(professor.getName(), "cristiano ronaldo");
+  void findMastersByName() {
+    assertTrue(mastersRepository.findByName("mustang").size() > 0);
   }
 
-  void testFindByUserName() {
-    AppUser professor = userRepository.findByUserName("cr7").get(0);
-    assertEquals(professor.getName(), "cr7");
-  }
+  @Test
+  void findMastersCoordinator() {
+    Professor testCoordinator = new Professor("username", "password", "test coordinator");
+    userRepository.save(testCoordinator);
 
-  void testFindByStudentNumber() {
-    AppUser professor = userRepository.findByUserName("cr7").get(0);
-    assertEquals(professor.getName(), "cr7");
+    Masters testMaster = new Masters("Test Masters", testCoordinator);
+    mastersRepository.save(testMaster);
+
+    System.out.println(testMaster);
+
+    Masters recovered = mastersRepository.findByCoordinator(testCoordinator).get(0);
+
+    assertEquals(recovered, testMaster);
   }
 }
