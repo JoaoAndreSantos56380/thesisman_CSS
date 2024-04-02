@@ -33,12 +33,12 @@ public class DissertationTopic {
 
   // associacao many-to-one
   @Nullable
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne //(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
   private Consultant externalAdvisor;
 
   @Nullable
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany //(cascade = CascadeType.ALL)
   @JoinTable(
         name = "dissertation_topic_compatible_masters",
         joinColumns = @JoinColumn(name = "dissertation_topic_id"),
@@ -48,4 +48,13 @@ public class DissertationTopic {
   private ArrayList<Masters> compatibleMasters;
 
   public DissertationTopic() {}
+
+  public DissertationTopic(@NonNull String title, @NonNull String description, @NonNull double salary, @NonNull Professor internalAdvisor, @Nullable Consultant externalAdvisor, @Nullable ArrayList<Masters> compatibleMasters) {
+    this.title = title;
+    this.description = description;
+    this.salary = salary;
+    this.internalAdvisor = internalAdvisor;
+    this.externalAdvisor = externalAdvisor;
+    this.compatibleMasters = compatibleMasters;
+  }
 }

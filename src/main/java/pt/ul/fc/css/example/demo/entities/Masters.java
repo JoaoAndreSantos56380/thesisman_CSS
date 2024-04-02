@@ -19,7 +19,18 @@ public class Masters {
 
   // associacao 1-1 com o professor
   @NonNull
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne //(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "fk_professor_id", referencedColumnName = "id")
   private Professor coordinator;
+
+  public Masters(@NonNull String name, @NonNull Professor coordinator) {
+  	this.name = name;
+  	this.coordinator = coordinator;
+  }
+
+  public String getName(){
+	return name;
+  }
+
+  public Masters() {}
 }
