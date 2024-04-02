@@ -40,12 +40,45 @@ public class DissertationTopic {
   @Nullable
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
-        name = "dissertation_topic_compatible_masters",
-        joinColumns = @JoinColumn(name = "dissertation_topic_id"),
-        inverseJoinColumns = @JoinColumn(name = "master_id")
-    )
-  //@JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
+      name = "dissertation_topic_compatible_masters",
+      joinColumns = @JoinColumn(name = "dissertation_topic_id"),
+      inverseJoinColumns = @JoinColumn(name = "master_id"))
+  // @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
   private ArrayList<Masters> compatibleMasters;
 
+  public long getId() {
+    return this.id;
+  }
+
+  public String getTitle() {
+    return this.title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getDescription() {
+    return this.description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
   public DissertationTopic() {}
+
+  @Override
+  public String toString() {
+    return "DissertationTopic["
+        + "id="
+        + getId()
+        + ", "
+        + "title="
+        + getTitle()
+        + ", "
+        + "description="
+        + getDescription()
+        + ']';
+  }
 }

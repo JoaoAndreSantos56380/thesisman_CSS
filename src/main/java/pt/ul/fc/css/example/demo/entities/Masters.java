@@ -22,4 +22,8 @@ public class Masters {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_professor_id", referencedColumnName = "id")
   private Professor coordinator;
+
+  public String getName() {
+    return name;
+  }
 }

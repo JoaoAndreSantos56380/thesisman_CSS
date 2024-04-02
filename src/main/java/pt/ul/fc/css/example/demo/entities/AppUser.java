@@ -48,4 +48,18 @@ public abstract class AppUser {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  @Override
+  public String toString() {
+    return "AppUser["
+        + "id="
+        + getId()
+        + ", "
+        + "name="
+        + getName()
+        + ", "
+        + "password="
+        + getPassword()
+        + ']';
+  }
 }

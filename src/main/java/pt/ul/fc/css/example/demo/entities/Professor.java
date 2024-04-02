@@ -12,4 +12,18 @@ public class Professor extends AppUser {
   }
 
   public Professor() {}
+
+  @Override
+  public String toString() {
+    return "Professor["
+        + "id="
+        + getId()
+        + ", "
+        + "username="
+        + getName()
+        + ", "
+        + "password="
+        + getPassword()
+        + ']';
+  }
 }
