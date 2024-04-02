@@ -1,6 +1,7 @@
 package pt.ul.fc.css.example.demo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,12 +10,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
+import pt.ul.fc.css.example.demo.entities.FinalDefense;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
+import pt.ul.fc.css.example.demo.entities.ThesisDefense;
+import pt.ul.fc.css.example.demo.entities.ThesisExecution;
+import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
+import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
+import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
 
 @SpringBootApplication
@@ -28,7 +36,7 @@ public class DemoApplication {
 
   @Bean
   public CommandLineRunner demo(
-      UserRepository userRepository, MastersRepository mastersRepository, DissertationTopicRepository dissertationTopicRepository) {
+      UserRepository userRepository, MastersRepository mastersRepository, DissertationTopicRepository dissertationTopicRepository, ThesisExecutionRepository thesisExecutionRepository, DefenseRepository defenseRepository, ApplicationRepository applicationRepository) {
     return (args) -> {
       // criar professor
       Professor prof1 = new Professor("prof1", "passprof1", "profname1");
@@ -51,6 +59,23 @@ public class DemoApplication {
       mastersRepository.save(master2);
 
 	  dissertationTopicRepository.save(dissertationTopic);
+
+	  ThesisExecution thesis = new ThesisExecution(student1, dissertationTopic, new Date(), 13);
+
+	  thesisExecutionRepository.save(thesis);
+
+	  ThesisDefense defense = new ThesisDefense(thesis,"1.1.1", new Date(), 14.5);
+
+	  FinalDefense finalDefense = new FinalDefense(thesis, "1.1.1", new Date(), 16, prof1);
+
+	  defenseRepository.save(defense);
+
+	  defenseRepository.save(finalDefense);
+
+	  Application application = new Application(student1, dissertationTopic);
+
+	  applicationRepository.save(application);
+
     };
   }
 }
