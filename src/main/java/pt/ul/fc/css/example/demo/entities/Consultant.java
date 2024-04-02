@@ -6,7 +6,7 @@ import org.springframework.lang.NonNull;
 
 @Entity
 @DiscriminatorValue("CONSULTANT")
-public class Consultant extends User {
+public class Consultant extends AppUser {
   public Consultant(String email, String password, String name) {
     super(email, password, name);
   }

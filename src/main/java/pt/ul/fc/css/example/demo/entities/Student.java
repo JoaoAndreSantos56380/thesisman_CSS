@@ -10,7 +10,7 @@ import org.springframework.lang.Nullable;
 
 @Entity
 @DiscriminatorValue("STUDENT")
-public class Student extends User {
+public class Student extends AppUser {
   public Student(
       @NonNull String username,
       @NonNull String password,

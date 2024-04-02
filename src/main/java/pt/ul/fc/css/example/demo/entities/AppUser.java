@@ -10,7 +10,7 @@ import org.springframework.lang.NonNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class User {
+public abstract class AppUser {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
@@ -21,13 +21,13 @@ public abstract class User {
 
   @NonNull private String name;
 
-  public User(@NonNull String username, @NonNull String password, @NonNull String name) {
+  public AppUser(@NonNull String username, @NonNull String password, @NonNull String name) {
     this.username = username;
     this.password = password;
     this.name = name;
   }
 
-  public User() {}
+  public AppUser() {}
 
   public long getId() {
     return id;
