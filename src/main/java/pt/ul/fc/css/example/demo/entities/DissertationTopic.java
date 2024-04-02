@@ -30,7 +30,7 @@ public class DissertationTopic {
   // associacao many-to-one
   @Nullable
   @ManyToOne // (cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_submitter_id", referencedColumnName = "id")
   private AppUser submitter;
 
   @Nullable
