@@ -41,16 +41,12 @@ public class ThesisExecution {
     finalGrade = grade;
   }
 
-  public ThesisExecution(
-      Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade) {
+  public ThesisExecution(Student student, DissertationTopic topic, Date yearOfExecution) {
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;
-    this.finalGrade = finalGrade;
     this.student = student;
     this.topic = topic;
-    this.yearOfExecution = yearOfExecution;
-    this.finalGrade = finalGrade;
     this.internalAdvisor = (Professor) topic.getSubmitter();
   }
 
