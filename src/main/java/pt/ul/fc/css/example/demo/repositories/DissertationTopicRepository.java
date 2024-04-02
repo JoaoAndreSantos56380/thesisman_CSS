@@ -29,4 +29,5 @@ public interface DissertationTopicRepository extends JpaRepository<DissertationT
   void updateStudentNumber(
       @Param("userId") Long userId, @Param("studentNumber") Integer studentNumber);
   */
+  
 }
