@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 
@@ -36,8 +38,13 @@ public class DissertationTopic {
   private Consultant externalAdvisor;
 
   @Nullable
-  // @ManyToMany(cascade = CascadeType.AL
-  @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+        name = "dissertation_topic_compatible_masters",
+        joinColumns = @JoinColumn(name = "dissertation_topic_id"),
+        inverseJoinColumns = @JoinColumn(name = "master_id")
+    )
+  //@JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
   private ArrayList<Masters> compatibleMasters;
 
   public DissertationTopic() {}
