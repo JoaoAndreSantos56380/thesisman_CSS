@@ -33,8 +33,12 @@ public abstract class AppUser {
     return id;
   }
 
+  public String getUserName(){
+	return username;
+  }
+
   public String getName() {
-    return username;
+    return name;
   }
 
   public void setName(String username) {
