@@ -26,7 +26,7 @@ public class DissertationTopic {
 
   @NonNull private double salary;
 
-  // associacao many-to-one
+  // associacao many-to-one, este cascade da erro
   @NonNull
   @ManyToOne //(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "fk_professor_id", referencedColumnName = "id")
@@ -65,6 +65,14 @@ public class DissertationTopic {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public Consultant getConsultant() {
+    return this.externalAdvisor;
+  }
+
+  public List<Masters> getCompatibleMasters() {
+    return this.compatibleMasters;
   }
 
   public DissertationTopic() {}

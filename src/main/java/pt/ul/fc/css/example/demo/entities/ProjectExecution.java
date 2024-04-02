@@ -15,10 +15,14 @@ public class ProjectExecution extends ThesisExecution {
   @JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
   private Consultant consultant;
 
-  	public ProjectExecution(Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade, Consultant consultant) {
-		super(student, topic, yearOfExecution, finalGrade);
-		this.consultant = consultant;
-	}
+  public ProjectExecution() {
+    super();
+  }
+
+  public ProjectExecution(Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade, Consultant consultant) {
+    super(student, topic, yearOfExecution, finalGrade);
+    this.consultant = consultant;
+}
 
   public Consultant getConsultant() {
     return consultant;

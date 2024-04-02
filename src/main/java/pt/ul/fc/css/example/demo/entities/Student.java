@@ -30,7 +30,7 @@ public class Student extends AppUser {
 
   // associacao many-to-one
   @NonNull
-  @ManyToOne //(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
   private Masters master;
 

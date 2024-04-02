@@ -41,5 +41,11 @@ public class ThesisExecution {
   	this.topic = topic;
   	this.yearOfExecution = yearOfExecution;
   	this.finalGrade = finalGrade;
+    this.student = student;
+    this.topic = topic;
+    this.yearOfExecution = yearOfExecution;
+    this.finalGrade = finalGrade;
   }
+
+  public ThesisExecution() {}
 }

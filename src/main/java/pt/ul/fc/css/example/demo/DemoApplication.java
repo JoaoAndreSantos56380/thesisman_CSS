@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.FinalDefense;
+import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
@@ -20,10 +21,14 @@ import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
+//import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
+//import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
 import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
+//import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
+import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -76,6 +81,24 @@ public class DemoApplication {
 
 	  applicationRepository.save(application);
 
+      /* Masters master = new Masters("Matematica", prof1);
+	    Masters master3 = new Masters("Ingles", prof1);
+
+
+	  ArrayList<Masters> mastersList = new ArrayList<>();
+	  mastersList.add(master);
+	  mastersList.add(master2);
+
+	  // cria um DissertationTopic
+	  DissertationTopic topic = new DissertationTopic("Biologia", "Memo bom", 1231.446, prof1, null, null);
+    DissertationTopic topic2 = new DissertationTopic("TREX", "Memo bom", 1231.446, prof1, null, null);
+    DissertationTopic topic3 = new DissertationTopic("TREX", "Memo bom", 1231.446, prof1, null, null);
+
+    userRepository.save(prof1);
+    mastersRepository.save(master);
+	  dissertationTopicRepository.save(topic);
+    dissertationTopicRepository.save(topic2);
+    dissertationTopicRepository.save(topic3); */
     };
   }
 }
