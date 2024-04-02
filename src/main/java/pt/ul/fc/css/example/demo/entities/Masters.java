@@ -50,5 +50,19 @@ public class Masters {
         && Objects.equals(this.getCoordinator(), that.getCoordinator());
   }
 
+  @Override
+  public String toString() {
+    return "Masters["
+        + "id="
+        + getId()
+        + ", "
+        + "name="
+        + getName()
+        + ", "
+        + "coordinator="
+        + getCoordinator()
+        + "]";
+  }
+
   public Masters() {}
 }

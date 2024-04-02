@@ -42,4 +42,18 @@ public class Application {
   public DissertationTopic getTopic() {
     return this.topic;
   }
+
+  @Override
+  public String toString() {
+    return "Application["
+        + "id="
+        + getId()
+        + ", "
+        + "student="
+        + getStudent()
+        + ", "
+        + "topic="
+        + getTopic()
+        + "]";
+  }
 }
