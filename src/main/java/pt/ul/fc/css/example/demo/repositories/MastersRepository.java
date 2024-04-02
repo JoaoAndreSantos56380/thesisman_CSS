@@ -10,7 +10,7 @@ import pt.ul.fc.css.example.demo.entities.Masters;
 
 public interface MastersRepository extends JpaRepository<Masters, Long> {
 
-  // Custom query to find Masters by name
+  /* // Custom query to find Masters by name
   @Transactional
   @Modifying
   @Query("SELECT m FROM Masters m WHERE m.name LIKE %:q% ")
@@ -21,4 +21,11 @@ public interface MastersRepository extends JpaRepository<Masters, Long> {
   @Modifying
   @Query("SELECT m FROM Masters m WHERE m.coordinator.id = :coordinatorId")
   List<Masters> findByCoordinator(@Param("coordinatorId") Long coordinatorId);
+
+  	@Query("SELECT a FROM Master a WHERE a.name LIKE %:q% ")
+	List<Masters> findByName(@Param("q") String q);
+
+	public void addMasters(Masters masters);
+
+	public void removeMasters(Masters masters); */
 }
