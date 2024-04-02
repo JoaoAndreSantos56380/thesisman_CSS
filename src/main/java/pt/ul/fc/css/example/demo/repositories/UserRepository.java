@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pt.ul.fc.css.example.demo.entities.AppUser;
+import pt.ul.fc.css.example.demo.entities.Masters;
 
 public interface UserRepository extends JpaRepository<AppUser, Long> {
 
@@ -24,6 +25,9 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
 	@Query("SELECT a FROM AppUser a WHERE a.master.id = :masterId ")
 	List<AppUser> findByMasterId(@Param("masterId") Long masterrId);
+
+	@Query("SELECT a FROM AppUser a WHERE a.master = :master ")
+	List<AppUser> findByMaster(@Param("master") Masters master);
 
 	@Query("SELECT a FROM AppUser a WHERE a.company LIKE %:company% ")
 	List<AppUser> findByCompany(@Param("company") String company);

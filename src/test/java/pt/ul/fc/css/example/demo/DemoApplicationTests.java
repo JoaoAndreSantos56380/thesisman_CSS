@@ -127,9 +127,30 @@ class DemoApplicationTests {
   }
 
   @Test
+  void testFindByMaster() {
+	Masters master = mastersRepository.findByName("the best").get(0);
+	Student marie = (Student) userRepository.findByMaster(master).get(0);
+	assertEquals(marie.getName(), "Marie Curie");
+  }
+
+  @Test
   void testFindByCompany() {
 	Consultant jorge = (Consultant) userRepository.findByCompany("sumol").get(0);
 	assertEquals(jorge.getName(), "jorge mendes");
   }
+
+  @Test
+  void testMasterFindByName() {
+	Masters master = (Masters) mastersRepository.findByName("the best").get(0);
+	assertEquals(master.getName(), "the best");
+  }
+
+  @Test
+  void testMasterFindByCoordinator() {
+	Professor cr7Professor = (Professor) userRepository.findByName("cristiano ronaldo").get(0);
+	Masters master = (Masters) mastersRepository.findByCoordinator(cr7Professor).get(0);
+	assertEquals(master.getName(), "the best");
+  }
+
 }
 
