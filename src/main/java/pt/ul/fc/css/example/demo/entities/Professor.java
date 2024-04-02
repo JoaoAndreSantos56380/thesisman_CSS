@@ -2,6 +2,7 @@ package pt.ul.fc.css.example.demo.entities;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import java.util.Objects;
 
 @Entity
 @DiscriminatorValue("TEACHER")
@@ -25,5 +26,14 @@ public class Professor extends AppUser {
         + "password="
         + getPassword()
         + ']';
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (obj == null || obj.getClass() != this.getClass()) return false;
+    var that = (Professor) obj;
+    return Objects.equals(this.getId(), that.getId())
+        && Objects.equals(this.getName(), that.getName());
   }
 }
