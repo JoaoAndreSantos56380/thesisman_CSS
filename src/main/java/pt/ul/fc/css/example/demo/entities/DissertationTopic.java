@@ -66,6 +66,14 @@ public class DissertationTopic {
     return this.compatibleMasters;
   }
 
+  public DissertationTopicType getType() {
+    return this.type;
+  }
+
+  public AppUser getSubmitter() {
+    return this.submitter;
+  }
+
   public DissertationTopic() {}
 
   public DissertationTopic(
