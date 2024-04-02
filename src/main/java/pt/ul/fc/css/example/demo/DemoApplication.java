@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.FinalDefense;
-import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
@@ -21,84 +20,85 @@ import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
-//import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
-//import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
 import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
-//import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
-import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 
 @SpringBootApplication
 public class DemoApplication {
 
-  private static final Logger log = LoggerFactory.getLogger(DemoApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(DemoApplication.class);
 
-  public static void main(String[] args) {
-    SpringApplication.run(DemoApplication.class, args);
-  }
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
 
-  @Bean
-  public CommandLineRunner demo(
-      UserRepository userRepository, MastersRepository mastersRepository, DissertationTopicRepository dissertationTopicRepository, ThesisExecutionRepository thesisExecutionRepository, DefenseRepository defenseRepository, ApplicationRepository applicationRepository) {
-    return (args) -> {
-      // criar professor
-      Professor prof1 = new Professor("prof1", "passprof1", "profname1");
-      Professor prof2 = new Professor("prof2", "passprof2", "profname2");
-      // criar mestrado com esse prof a coordenador
-      Masters master1 = new Masters("master1", prof1);
-      Masters master2 = new Masters("master2", prof2);
+	@Bean
+	public CommandLineRunner demo(
+			UserRepository userRepository, MastersRepository mastersRepository,
+			DissertationTopicRepository dissertationTopicRepository,
+			ThesisExecutionRepository thesisExecutionRepository, DefenseRepository defenseRepository,
+			ApplicationRepository applicationRepository) {
+		return (args) -> {
+			// criar professor
+			Professor cr7Professor = new Professor("cr7", "password", "cristiano ronaldo");
+			Professor rq7Professor = new Professor("rq7", "password", "ricardo quaresma");
+			Professor presiJuri = new Professor("pjuri", "password", "presi juri");
 
-      Student student1 = new Student("student1", "pass1", "studentname1", 56380, 12.78, master1);
+			// criar mestrado com esse prof a coordenador
+			Masters theBestMaster = new Masters("the best", cr7Professor);
+			Masters master2 = new Masters("mustang", rq7Professor);
 
-	  ArrayList<Masters> mastersArr = new ArrayList<Masters>();
-	  mastersArr.add(master1);
+			Student mCurieStudent = new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster);
 
-	  DissertationTopic dissertationTopic = new DissertationTopic("title1","description1", 1, prof2, null, mastersArr);
+			ArrayList<Masters> mastersArr = new ArrayList<Masters>();
+			mastersArr.add(theBestMaster);
 
-      userRepository.save(prof1);
-      userRepository.save(prof2);
-      mastersRepository.save(master1);
-      userRepository.save(student1);
-      mastersRepository.save(master2);
+			DissertationTopic dissertationTopicFutebolRadiante = new DissertationTopic("Futebol radiante", "description", 99999, rq7Professor, null, mastersArr);
 
-	  dissertationTopicRepository.save(dissertationTopic);
+			userRepository.save(cr7Professor);
+			userRepository.save(rq7Professor);
+			mastersRepository.save(theBestMaster);
+			userRepository.save(mCurieStudent);
+			mastersRepository.save(master2);
 
-	  ThesisExecution thesis = new ThesisExecution(student1, dissertationTopic, new Date(), 13);
+			dissertationTopicRepository.save(dissertationTopicFutebolRadiante);
 
-	  thesisExecutionRepository.save(thesis);
+			ThesisExecution thesis = new ThesisExecution(mCurieStudent, dissertationTopicFutebolRadiante, new Date(), 20);
 
-	  ThesisDefense defense = new ThesisDefense(thesis,"1.1.1", new Date(), 14.5);
+			thesisExecutionRepository.save(thesis);
 
-	  FinalDefense finalDefense = new FinalDefense(thesis, "1.1.1", new Date(), 16, prof1);
+			ThesisDefense defense = new ThesisDefense(thesis, "1.1.1", new Date(), 20);
 
-	  defenseRepository.save(defense);
+			FinalDefense finalDefense = new FinalDefense(thesis, "1.1.1", new Date(), 20, presiJuri);
 
-	  defenseRepository.save(finalDefense);
+			defenseRepository.save(defense);
 
-	  Application application = new Application(student1, dissertationTopic);
+			defenseRepository.save(finalDefense);
 
-	  applicationRepository.save(application);
+			Application application = new Application(mCurieStudent, dissertationTopicFutebolRadiante);
 
-      /* Masters master = new Masters("Matematica", prof1);
-	    Masters master3 = new Masters("Ingles", prof1);
+			applicationRepository.save(application);
 
+			/* Masters master3 = new Masters("Ingles", cr7Professor); */
+			// Masters master = new Masters("Matematica", prof3);
 
-	  ArrayList<Masters> mastersList = new ArrayList<>();
-	  mastersList.add(master);
-	  mastersList.add(master2);
+			/* ArrayList<Masters> mastersList = new ArrayList<>(); */
+			// mastersList.add(master);
+			/* mastersList.add(master2); */
 
-	  // cria um DissertationTopic
-	  DissertationTopic topic = new DissertationTopic("Biologia", "Memo bom", 1231.446, prof1, null, null);
-    DissertationTopic topic2 = new DissertationTopic("TREX", "Memo bom", 1231.446, prof1, null, null);
-    DissertationTopic topic3 = new DissertationTopic("TREX", "Memo bom", 1231.446, prof1, null, null);
+			// cria um DissertationTopic
+			/* DissertationTopic topic = new DissertationTopic("Biologia", "Memo bom", 1231.446, cr7Professor, null, null);
+			DissertationTopic topic2 = new DissertationTopic("TREX", "Memo bom", 1231.446, cr7Professor, null, null);
+			DissertationTopic topic3 = new DissertationTopic("TREX", "Memo bom", 1231.446, cr7Professor, null, null); */
 
-    userRepository.save(prof1);
-    mastersRepository.save(master);
-	  dissertationTopicRepository.save(topic);
-    dissertationTopicRepository.save(topic2);
-    dissertationTopicRepository.save(topic3); */
-    };
-  }
+			// mastersRepository.save(master);
+			// userRepository.save(cr7Professor);
+			/* dissertationTopicRepository.save(topic);
+			dissertationTopicRepository.save(topic2);
+			dissertationTopicRepository.save(topic3); */
+			
+		};
+	}
 }
