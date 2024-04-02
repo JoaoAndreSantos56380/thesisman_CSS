@@ -4,18 +4,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import pt.ul.fc.css.example.demo.entities.Consultant;
+import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
-import pt.ul.fc.css.example.demo.entities.Professor;
 
 public interface DissertationTopicRepository extends JpaRepository<DissertationTopic, Long> {
 
-  @Query("SELECT d FROM DissertationTopic d WHERE d.internalAdvisor = :advisor")
-  List<DissertationTopic> findByInternalAdvisor(@Param("advisor") Professor advisor);
-
-  @Query("SELECT d FROM DissertationTopic d WHERE d.externalAdvisor = :advisor")
-  List<DissertationTopic> findByExternalAdvisor(@Param("advisor") Consultant advisor);
+  @Query("SELECT d FROM DissertationTopic d WHERE d.submitter = :submitter")
+  List<DissertationTopic> findBySubmitter(@Param("submitter") AppUser submitter);
 
   @Query("SELECT d FROM DissertationTopic d JOIN d.compatibleMasters m WHERE m = :masters")
   List<DissertationTopic> findByCompatibleMasters(@Param("masters") Masters masters);
