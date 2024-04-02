@@ -9,6 +9,7 @@ import org.springframework.lang.NonNull;
 public class Consultant extends AppUser {
   public Consultant(String email, String password, String name, @NonNull String company) {
     super(email, password, name);
+	this.company = company;
   }
 
   public Consultant() {}
