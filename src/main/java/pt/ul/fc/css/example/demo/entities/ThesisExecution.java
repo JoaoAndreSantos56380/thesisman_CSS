@@ -41,6 +41,10 @@ public class ThesisExecution {
   }
 
   public ThesisExecution(Student student, DissertationTopic topic, String yearOfExecution) {
+    if (topic.getType() == DissertationTopicType.PROJECT) {
+      throw new IllegalArgumentException(
+          "Trying to create a ThesisExecution from a Project topic. Use ProjectExecution!");
+    }
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;
