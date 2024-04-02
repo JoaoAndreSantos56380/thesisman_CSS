@@ -1,17 +1,15 @@
 package pt.ul.fc.css.example.demo.entities;
 
-import java.util.Date;
-
 import io.micrometer.common.lang.NonNull;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.util.Date;
 
 @Entity
 public class ProjectExecution extends ThesisExecution {
   @NonNull
-  @ManyToOne //(cascade = CascadeType.ALL)
+  @ManyToOne // (cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
   private Consultant consultant;
 
@@ -19,10 +17,11 @@ public class ProjectExecution extends ThesisExecution {
     super();
   }
 
-  public ProjectExecution(Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade, Consultant consultant) {
+  public ProjectExecution(
+      Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade) {
     super(student, topic, yearOfExecution, finalGrade);
-    this.consultant = consultant;
-}
+    this.consultant = (Consultant) topic.getSubmitter();
+  }
 
   public Consultant getConsultant() {
     return consultant;
