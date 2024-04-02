@@ -22,4 +22,18 @@ public class Consultant extends AppUser {
   public void setCompany(String company) {
     this.company = company;
   }
+
+  @Override
+  public String toString() {
+    return "Consultant["
+        + "id="
+        + getId()
+        + ", "
+        + "name="
+        + getName()
+        + ", "
+        + "company="
+        + getCompany()
+        + ']';
+  }
 }

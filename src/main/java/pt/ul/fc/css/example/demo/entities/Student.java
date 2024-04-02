@@ -51,4 +51,9 @@ public class Student extends AppUser {
   public double getAverageGrade() {
     return averageGrade;
   }
+
+  @Override
+  public String toString() {
+    return "Student[" + "id=" + getId() + ", " + "name=" + getName() + "]";
+  }
 }
