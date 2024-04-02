@@ -12,6 +12,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class DissertationTopic {
@@ -25,26 +26,26 @@ public class DissertationTopic {
 
   @NonNull private double salary;
 
-  // associacao many-to-one
+  // associacao many-to-one, este cascade da erro
   @NonNull
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne //(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_professor_id", referencedColumnName = "id")
   private Professor internalAdvisor;
 
   // associacao many-to-one
   @Nullable
-  @ManyToOne //(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
   private Consultant externalAdvisor;
 
   @Nullable
-  @ManyToMany //(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(
       name = "dissertation_topic_compatible_masters",
       joinColumns = @JoinColumn(name = "dissertation_topic_id"),
       inverseJoinColumns = @JoinColumn(name = "master_id"))
   // @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
-  private ArrayList<Masters> compatibleMasters;
+  private List<Masters> compatibleMasters;
 
   public long getId() {
     return this.id;
