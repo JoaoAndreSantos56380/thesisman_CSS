@@ -29,7 +29,7 @@ public abstract class AppUser {
 
   public AppUser() {}
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
