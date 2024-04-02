@@ -71,6 +71,10 @@ public class DissertationTopic {
     return this.externalAdvisor;
   }
 
+  public List<Masters> getCompatibleMasters() {
+    return this.compatibleMasters;
+  }
+
   public DissertationTopic() {}
 
   public DissertationTopic(@NonNull String title, @NonNull String description, @NonNull double salary, @NonNull Professor internalAdvisor, @Nullable Consultant externalAdvisor, @Nullable ArrayList<Masters> compatibleMasters) {
