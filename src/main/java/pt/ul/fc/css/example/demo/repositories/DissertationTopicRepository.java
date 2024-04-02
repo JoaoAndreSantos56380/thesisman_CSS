@@ -11,10 +11,10 @@ import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 
 public interface DissertationTopicRepository extends JpaRepository<DissertationTopic, Long> {
 
-  @Transactional
+  /* @Transactional
   @Modifying
   @Query("SELECT dt FROM DissertationTopic dt WHERE dt.title LIKE %:q% ")
-  List<DissertationTopic> findByTitle(@Param("q") String q);
+  List<DissertationTopic> findByTitle(@Param("q") String q); */
 
 
   /*
@@ -29,5 +29,5 @@ public interface DissertationTopicRepository extends JpaRepository<DissertationT
   void updateStudentNumber(
       @Param("userId") Long userId, @Param("studentNumber") Integer studentNumber);
   */
-  
+
 }
