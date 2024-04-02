@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 	@Transactional
 	@Modifying
 	@Query("update Student s set s.studentNumber = :studentNumber where s.id = :userId")
-	void updateStudentNumber(@Param("userId") Integer userId, @Param ("studentNumber") Integer studentNumber);
+	void updateStudentNumber(@Param("userId") Long userId, @Param ("studentNumber") Integer studentNumber);
 
 	/*
 	@Modifying
