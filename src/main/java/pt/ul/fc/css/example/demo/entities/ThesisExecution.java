@@ -35,4 +35,11 @@ public class ThesisExecution {
   public void setFinalGrade(int grade) {
     finalGrade = grade;
   }
+
+  public ThesisExecution(Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade) {
+    this.student = student;
+    this.topic = topic;
+    this.yearOfExecution = yearOfExecution;
+    this.finalGrade = finalGrade;
+  }
 }
