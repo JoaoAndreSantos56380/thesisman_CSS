@@ -35,6 +35,13 @@ public class ThesisDefense {
 
   @NonNull private Date time;
 
+  	public ThesisDefense(ThesisExecution thesisExecution, String location, Date time, double grade) {
+		this.thesisExecution = thesisExecution;
+		this.location = location;
+		this.time = time;
+		this.grade = grade; // Including grade in this constructor
+	}
+
   public void assignGrade(int grade) {
     this.grade = grade;
   }
