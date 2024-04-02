@@ -31,6 +31,10 @@ public class Masters {
     return name;
   }
 
+  public Long getId(){
+	return id;
+  }
+
   public Professor getCoordinator() {
     return coordinator;
   }
