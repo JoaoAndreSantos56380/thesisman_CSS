@@ -28,18 +28,18 @@ public class DissertationTopic {
 
   // associacao many-to-one, este cascade da erro
   @NonNull
-  @ManyToOne //(cascade = CascadeType.ALL)
+  @ManyToOne //(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "fk_professor_id", referencedColumnName = "id")
   private Professor internalAdvisor;
 
   // associacao many-to-one
   @Nullable
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  @ManyToOne //(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
   private Consultant externalAdvisor;
 
   @Nullable
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany //(cascade = CascadeType.PERSIST)
   @JoinTable(
       name = "dissertation_topic_compatible_masters",
       joinColumns = @JoinColumn(name = "dissertation_topic_id"),

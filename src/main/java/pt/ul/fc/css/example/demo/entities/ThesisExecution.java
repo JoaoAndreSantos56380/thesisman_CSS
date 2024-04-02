@@ -19,12 +19,12 @@ public class ThesisExecution {
 
   // associacao one-to-one
   @NonNull
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne //(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_student_id", referencedColumnName = "id")
   private Student student;
 
   @NonNull
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne //(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_dissertation_topic_id", referencedColumnName = "id")
   private DissertationTopic topic;
 
@@ -37,6 +37,10 @@ public class ThesisExecution {
   }
 
   public ThesisExecution(Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade) {
+  	this.student = student;
+  	this.topic = topic;
+  	this.yearOfExecution = yearOfExecution;
+  	this.finalGrade = finalGrade;
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;

@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class ProjectExecution extends ThesisExecution {
   @NonNull
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne //(cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_consultant_id", referencedColumnName = "id")
   private Consultant consultant;
 
