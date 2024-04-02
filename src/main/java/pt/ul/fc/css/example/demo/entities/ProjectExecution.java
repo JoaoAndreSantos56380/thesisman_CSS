@@ -4,7 +4,6 @@ import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.util.Date;
 
 @Entity
 public class ProjectExecution extends ThesisExecution {
@@ -17,9 +16,8 @@ public class ProjectExecution extends ThesisExecution {
     super();
   }
 
-  public ProjectExecution(
-      Student student, DissertationTopic topic, Date yearOfExecution, Integer finalGrade) {
-    super(student, topic, yearOfExecution, finalGrade);
+  public ProjectExecution(Student student, DissertationTopic topic, String yearOfExecution) {
+    super(student, topic, yearOfExecution);
     this.consultant = (Consultant) topic.getSubmitter();
   }
 

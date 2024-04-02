@@ -72,7 +72,7 @@ public class DemoApplication {
       dissertationTopicRepository.save(dissertationTopicFutebolRadiante);
 
       ThesisExecution thesis =
-          new ThesisExecution(mCurieStudent, dissertationTopicFutebolRadiante, new Date(), 20);
+          new ThesisExecution(mCurieStudent, dissertationTopicFutebolRadiante, "2024/2025");
 
       thesisExecutionRepository.save(thesis);
 

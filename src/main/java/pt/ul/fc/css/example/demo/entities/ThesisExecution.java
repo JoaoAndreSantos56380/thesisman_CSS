@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import java.util.Date;
 
 @Entity
 public class ThesisExecution {
@@ -33,7 +32,7 @@ public class ThesisExecution {
   @JoinColumn(name = "fk_internal_advisor_id", referencedColumnName = "id")
   private Professor internalAdvisor;
 
-  @NonNull private Date yearOfExecution;
+  @NonNull private String yearOfExecution;
 
   @Nullable private int finalGrade;
 
@@ -41,7 +40,7 @@ public class ThesisExecution {
     finalGrade = grade;
   }
 
-  public ThesisExecution(Student student, DissertationTopic topic, Date yearOfExecution) {
+  public ThesisExecution(Student student, DissertationTopic topic, String yearOfExecution) {
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;
