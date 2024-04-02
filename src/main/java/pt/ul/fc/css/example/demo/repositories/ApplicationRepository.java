@@ -1,18 +1,17 @@
 package pt.ul.fc.css.example.demo.repositories;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import pt.ul.fc.css.example.demo.entities.Application;
+import pt.ul.fc.css.example.demo.entities.DissertationTopic;
+import pt.ul.fc.css.example.demo.entities.Student;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
-	/* @Query("SELECT a FROM Master a WHERE a.name LIKE %:q% ")
-    List<Application> findByName(@Param("q") String q);
+  @Query("SELECT a FROM Application a WHERE a.student = :student")
+  List<Application> findByUser(@Param("student") Student student);
 
-    public void addApplication(Application application);
-
-    public void removeApplication(Application application);  */
+  @Query("SELECT a FROM Application a WHERE a.topic = :topic")
+  List<Application> findByTopic(@Param("topic") DissertationTopic topic);
 }
