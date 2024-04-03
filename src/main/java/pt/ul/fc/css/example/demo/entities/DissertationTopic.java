@@ -12,6 +12,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.lang.NonNull;
 
 @Entity
@@ -49,7 +51,7 @@ public class DissertationTopic {
       joinColumns = @JoinColumn(name = "dissertation_topic_id"),
       inverseJoinColumns = @JoinColumn(name = "master_id"))
   // @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
-  private List<Masters> compatibleMasters;
+  private Set<Masters> compatibleMasters;
 
   public long getId() {
     return this.id;
@@ -71,7 +73,7 @@ public class DissertationTopic {
     this.description = description;
   }
 
-  public List<Masters> getCompatibleMasters() {
+  public Set<Masters> getCompatibleMasters() {
     return this.compatibleMasters;
   }
 
@@ -90,7 +92,7 @@ public class DissertationTopic {
       @NonNull String description,
       @NonNull double salary,
       @NonNull AppUser submitter,
-      @Nullable List<Masters> compatibleMasters) {
+      @Nullable Set<Masters> compatibleMasters) {
     this.title = title;
     this.description = description;
     this.salary = salary;

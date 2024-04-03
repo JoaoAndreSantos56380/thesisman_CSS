@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -85,7 +86,7 @@ class DissertationTopicRepositoryTests {
 
     List<Masters> testMaster = mastersRepository.findByName("Estudos economicos Europeus");
     
-    DissertationTopic topic = new DissertationTopic("Guatemala studies", "top", 0, test, testMaster);
+    DissertationTopic topic = new DissertationTopic("Guatemala studies", "top", 0, test, new HashSet<Masters> (testMaster));
     dissertationTopicRepository.save(topic);
 
     DissertationTopic testTopic = dissertationTopicRepository.findByCompatibleMasters(testMaster.get(0)).get(0);

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,7 +45,7 @@ public class ApplicationRepositoryTests {
         new Consultant("consultant@email.com", "consultantPW", "consultantName", "TestCompany");
     userRepository.save(topicSubmitter);
 
-    ArrayList<Masters> compatibleMasters = new ArrayList<>();
+    HashSet<Masters> compatibleMasters = new HashSet<>();
     compatibleMasters.add(masters);
 
     DissertationTopic topic =
@@ -76,7 +78,7 @@ public class ApplicationRepositoryTests {
         new Consultant("consultant@email.com", "consultantPW", "consultantName", "TestCompany");
     userRepository.save(topicSubmitter);
 
-    ArrayList<Masters> compatibleMasters = new ArrayList<>();
+    HashSet<Masters> compatibleMasters = new HashSet<>();
     compatibleMasters.add(masters);
 
     DissertationTopic topic =
@@ -100,8 +102,7 @@ public class ApplicationRepositoryTests {
     applicationRepository.save(application);
     applicationRepository.save(application2);
 
-    ArrayList<Application> retrievedApplications =
-        (ArrayList<Application>) applicationRepository.findByStudent(student);
+    HashSet<Application> retrievedApplications = new HashSet<Application> (applicationRepository.findByStudent(student));
     assertTrue(retrievedApplications.size() == 2);
     assertTrue(retrievedApplications.contains(application));
     assertTrue(retrievedApplications.contains(application2));
@@ -123,7 +124,7 @@ public class ApplicationRepositoryTests {
         new Consultant("consultant@email.com", "consultantPW", "consultantName", "TestCompany");
     userRepository.save(topicSubmitter);
 
-    ArrayList<Masters> compatibleMasters = new ArrayList<>();
+    HashSet<Masters> compatibleMasters = new HashSet<>();
     compatibleMasters.add(masters);
 
     DissertationTopic topic =

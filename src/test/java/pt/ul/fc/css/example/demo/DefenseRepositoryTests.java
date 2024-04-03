@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class DefenseRepositoryTests {
         compatibleMasters.add(masters);
 
         DissertationTopic topic = new DissertationTopic(
-                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, compatibleMasters);
+                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, new HashSet<Masters>(compatibleMasters));
         dissertationTopicRepository.save(topic);
 
         ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");
@@ -90,7 +91,7 @@ public class DefenseRepositoryTests {
         compatibleMasters.add(masters);
 
         DissertationTopic topic = new DissertationTopic(
-                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, compatibleMasters);
+                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, new HashSet<Masters>(compatibleMasters));
         dissertationTopicRepository.save(topic);
 
         ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");
@@ -120,7 +121,7 @@ public class DefenseRepositoryTests {
         compatibleMasters.add(masters);
 
         DissertationTopic topic = new DissertationTopic(
-                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, compatibleMasters);
+                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, new HashSet<Masters>(compatibleMasters));
         dissertationTopicRepository.save(topic);
 
         ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");

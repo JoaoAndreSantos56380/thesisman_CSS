@@ -2,6 +2,8 @@ package pt.ul.fc.css.example.demo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -56,7 +58,7 @@ public class DemoApplication {
       Student mCurieStudent =
           new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster);
 
-      ArrayList<Masters> mastersArr = new ArrayList<Masters>();
+      HashSet<Masters> mastersArr = new HashSet<Masters>();
       mastersArr.add(theBestMaster);
 
       DissertationTopic dissertationTopicFutebolRadiante =
