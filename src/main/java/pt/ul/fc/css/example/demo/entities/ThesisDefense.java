@@ -18,7 +18,7 @@ public class ThesisDefense {
   private Long id;
 
   @NonNull
-  @ManyToOne // (cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "fk_thesisExecution_id", referencedColumnName = "id", nullable = false)
   private ThesisExecution thesisExecution;
 
