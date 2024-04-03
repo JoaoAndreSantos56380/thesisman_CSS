@@ -1,6 +1,5 @@
 package pt.ul.fc.css.example.demo.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +17,7 @@ public class ThesisDefense {
   private Long id;
 
   @NonNull
-  @ManyToOne //(cascade = CascadeType.ALL)
+  @ManyToOne // (cascade = CascadeType.ALL)
   @JoinColumn(name = "fk_thesisExecution_id", referencedColumnName = "id")
   private ThesisExecution thesisExecution;
 
@@ -35,12 +34,14 @@ public class ThesisDefense {
 
   @NonNull private Date time;
 
-  	public ThesisDefense(ThesisExecution thesisExecution, String location, Date time, double grade) {
-		this.thesisExecution = thesisExecution;
-		this.location = location;
-		this.time = time;
-		this.grade = grade; // Including grade in this constructor
-	}
+  public ThesisDefense(ThesisExecution thesisExecution, String location, Date time) {
+    this.thesisExecution = thesisExecution;
+    this.location = location;
+    this.time = time;
+    this.grade = 0; // Including grade in this constructor
+  }
+
+  public ThesisDefense() {}
 
   public void assignGrade(int grade) {
     this.grade = grade;
