@@ -2,6 +2,7 @@ package pt.ul.fc.css.example.demo.entities;
 
 import io.micrometer.common.lang.NonNull;
 import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,22 +20,26 @@ public class ThesisExecution {
   // associacao one-to-one
   @NonNull
   @OneToOne // (cascade = CascadeType.ALL)
-  @JoinColumn(name = "fk_student_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_student_id", referencedColumnName = "id", nullable = false)
   private Student student;
 
   @NonNull
   @OneToOne // (cascade = CascadeType.ALL)
-  @JoinColumn(name = "fk_dissertation_topic_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_dissertation_topic_id", referencedColumnName = "id", nullable = false)
   private DissertationTopic topic;
 
   @NonNull
   @ManyToOne // (cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "fk_internal_advisor_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_internal_advisor_id", referencedColumnName = "id", nullable = false)
   private Professor internalAdvisor;
 
-  @NonNull private String yearOfExecution;
+  @NonNull
+  @Column(nullable = false)
+  private String yearOfExecution;
 
-  @Nullable private int finalGrade;
+  @Nullable
+  @Column(nullable = true)
+  private int finalGrade;
 
   public void setFinalGrade(int grade) {
     finalGrade = grade;
