@@ -1,5 +1,6 @@
 package pt.ul.fc.css.example.demo.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,11 +16,17 @@ public abstract class AppUser {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @NonNull private String username;
+  @NonNull
+  @Column(nullable = false)
+  private String username;
 
-  @NonNull private String password;
+  @NonNull
+  @Column(nullable = false)
+  private String password;
 
-  @NonNull private String name;
+  @NonNull
+  @Column(nullable = false)
+  private String name;
 
   public AppUser(@NonNull String username, @NonNull String password, @NonNull String name) {
     this.username = username;
@@ -33,8 +40,8 @@ public abstract class AppUser {
     return id;
   }
 
-  public String getUserName(){
-	return username;
+  public String getUserName() {
+    return username;
   }
 
   public String getName() {
