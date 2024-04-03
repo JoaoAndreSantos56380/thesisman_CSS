@@ -1,6 +1,7 @@
 package pt.ul.fc.css.example.demo.entities;
 
 import io.micrometer.common.lang.NonNull;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,12 +16,14 @@ public class Masters {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @NonNull private String name;
+  @NonNull
+  @Column(nullable = false)
+  private String name;
 
   // associacao 1-1 com o professor
   @NonNull
   @OneToOne // (cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "fk_professor_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_professor_id", referencedColumnName = "id", nullable = false)
   private Professor coordinator;
 
   public Masters(@NonNull String name, @NonNull Professor coordinator) {

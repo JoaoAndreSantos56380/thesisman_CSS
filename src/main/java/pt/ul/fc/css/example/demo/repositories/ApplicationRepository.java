@@ -10,7 +10,7 @@ import pt.ul.fc.css.example.demo.entities.Student;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
   @Query("SELECT a FROM Application a WHERE a.student = :student")
-  List<Application> findByUser(@Param("student") Student student);
+  List<Application> findByStudent(@Param("student") Student student);
 
   @Query("SELECT a FROM Application a WHERE a.topic = :topic")
   List<Application> findByTopic(@Param("topic") DissertationTopic topic);

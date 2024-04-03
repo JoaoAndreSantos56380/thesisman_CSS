@@ -17,13 +17,13 @@ public class Application {
   @NonNull
   // associacao one-to-many
   @ManyToOne // (cascade = CascadeType.ALL)
-  @JoinColumn(name = "fk_student_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_student_id", referencedColumnName = "id", nullable = false)
   private Student student;
 
   // associacao one-to-one
   @NonNull
   @ManyToOne // (cascade = CascadeType.ALL)
-  @JoinColumn(name = "fk_dissertation_topic_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_dissertation_topic_id", referencedColumnName = "id", nullable = false)
   private DissertationTopic topic;
 
   public Application(Student student, DissertationTopic topic) {

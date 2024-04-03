@@ -1,7 +1,7 @@
 package pt.ul.fc.css.example.demo.entities;
 
-import io.micrometer.common.lang.NonNull;
-import io.micrometer.common.lang.Nullable;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.lang.NonNull;
 
 @Entity
 public class DissertationTopic {
@@ -19,21 +20,29 @@ public class DissertationTopic {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @NonNull private DissertationTopicType type;
+  @NonNull
+  @Column(nullable = false)
+  private DissertationTopicType type;
 
-  @NonNull private String title;
+  @NonNull
+  @Column(nullable = false)
+  private String title;
 
-  @NonNull private String description;
+  @NonNull
+  @Column(nullable = false)
+  private String description;
 
-  @NonNull private double salary;
+  @NonNull
+  @Column(nullable = false)
+  private double salary;
 
   // associacao many-to-one
-  @Nullable
+  @NonNull
   @ManyToOne // (cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "fk_submitter_id", referencedColumnName = "id")
+  @JoinColumn(name = "fk_submitter_id", referencedColumnName = "id", nullable = false)
   private AppUser submitter;
 
-  @Nullable
+  @NonNull
   @ManyToMany // (cascade = CascadeType.PERSIST)
   @JoinTable(
       name = "dissertation_topic_compatible_masters",

@@ -31,6 +31,7 @@ public class Student extends AppUser {
       @Nullable Masters master) {
     super(username, password, name);
     this.studentNumber = studentNumber;
+    this.averageGrade = 0;
     this.master = master;
   }
 

@@ -76,9 +76,9 @@ public class DemoApplication {
 
       thesisExecutionRepository.save(thesis);
 
-      ThesisDefense defense = new ThesisDefense(thesis, "1.1.1", new Date(), 20);
+      ThesisDefense defense = new ThesisDefense(thesis, "1.1.1", new Date());
 
-      FinalDefense finalDefense = new FinalDefense(thesis, "1.1.1", new Date(), 20, presiJuri);
+      FinalDefense finalDefense = new FinalDefense(thesis, "1.1.1", new Date(), presiJuri);
 
       defenseRepository.save(defense);
 
