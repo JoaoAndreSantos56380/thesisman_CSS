@@ -3,6 +3,9 @@ package pt.ul.fc.css.example.demo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,25 +173,38 @@ class DemoApplicationTests {
 
     assertEquals(1, dissertationTopicRepository.findBySubmitter(test).size());
   }
-  /* 
+  
   @Test
   void findDissertationTopicBySubmitter2() {
-    Professor test = (Professor) userRepository.findByName("presi juri").get(0);
-    DissertationTopic topicTest = dissertationTopicRepository.findBySubmitter(test).get(0);
-    System.out.println(topicTest.getDescription());
-    assertEquals("description", topicTest.getDescription());
+    Professor test = new Professor("username", "password", "test coordinator");
+    
+    DissertationTopic topic = new DissertationTopic("Guatemala studies", "top", 0, test, null);
+
+    userRepository.save(test);
+    dissertationTopicRepository.save(topic);
+    List<DissertationTopic> topicTestList = dissertationTopicRepository.findBySubmitter(test);
+    DissertationTopic topicTest = topicTestList.get(0);
+    assertEquals("top", topicTest.getDescription());
   }
 
   @Test
   void findDissertationTopicBCompatibleMasters() {
-    Professor testCoordinator = new Professor("username", "password", "test coordinator");
-    userRepository.save(testCoordinator);
+    Professor test = new Professor("username", "password", "test coordinator");
+    
+    Masters masters = new Masters("Estudos economicos Europeus", test);
 
-    Masters testMaster = mastersRepository.findByName("the best").get(0);
-    DissertationTopic test = dissertationTopicRepository.findByCompatibleMasters(testMaster).get(0);
+    userRepository.save(test);
+    mastersRepository.save(masters);
 
-    assertEquals("description", test.getDescription());
-  }*/
+    List<Masters> testMaster = mastersRepository.findByName("Estudos economicos Europeus");
+    
+    DissertationTopic topic = new DissertationTopic("Guatemala studies", "top", 0, test, testMaster);
+    dissertationTopicRepository.save(topic);
+
+    DissertationTopic testTopic = dissertationTopicRepository.findByCompatibleMasters(testMaster.get(0)).get(0);
+
+    assertEquals("top", testTopic.getDescription());
+  }
 
 
 }

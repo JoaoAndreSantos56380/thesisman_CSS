@@ -45,6 +45,10 @@ public class ThesisExecution {
     finalGrade = grade;
   }
 
+  public Student getStudent() {
+    return this.student;
+  }
+
   public ThesisExecution(Student student, DissertationTopic topic, String yearOfExecution) {
     if (topic.getType() == DissertationTopicType.PROJECT) {
       throw new IllegalArgumentException(
@@ -53,8 +57,6 @@ public class ThesisExecution {
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;
-    this.student = student;
-    this.topic = topic;
     this.internalAdvisor = (Professor) topic.getSubmitter();
   }
 
@@ -66,8 +68,6 @@ public class ThesisExecution {
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;
-    this.student = student;
-    this.topic = topic;
     this.internalAdvisor = internalAdvisor;
   }
 
