@@ -72,4 +72,63 @@ public class DefenseRepositoryTests {
         assertTrue(defenseRepository.count() == 1);
     }
 
+    @Test
+    void testFindByStudent() {
+        Professor masterCoordinator = new Professor("ProfessorUsername", "ProfessorPW", "ProfessorName");
+        userRepository.save(masterCoordinator);
+
+        Masters masters = new Masters("TestMasters", masterCoordinator);
+        mastersRepository.save(masters);
+
+        Student student = new Student("username", "password", "name", 0, masters);
+        userRepository.save(student);
+
+        Professor topicSubmitter = new Professor("submitter@email.com", "submitterPW", "submitter");
+        userRepository.save(topicSubmitter);
+
+        ArrayList<Masters> compatibleMasters = new ArrayList<>();
+        compatibleMasters.add(masters);
+
+        DissertationTopic topic = new DissertationTopic(
+                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, compatibleMasters);
+        dissertationTopicRepository.save(topic);
+
+        ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");
+        thesisExecutionRepository.save(execution);
+
+        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date());
+        defenseRepository.save(defense);
+
+        assertTrue(defenseRepository.findByStudent(student).contains(defense));
+    }
+
+    @Test
+    void testFindByLocation() {
+        Professor masterCoordinator = new Professor("ProfessorUsername", "ProfessorPW", "ProfessorName");
+        userRepository.save(masterCoordinator);
+
+        Masters masters = new Masters("TestMasters", masterCoordinator);
+        mastersRepository.save(masters);
+
+        Student student = new Student("username", "password", "name", 0, masters);
+        userRepository.save(student);
+
+        Professor topicSubmitter = new Professor("submitter@email.com", "submitterPW", "submitter");
+        userRepository.save(topicSubmitter);
+
+        ArrayList<Masters> compatibleMasters = new ArrayList<>();
+        compatibleMasters.add(masters);
+
+        DissertationTopic topic = new DissertationTopic(
+                "DissertationTopic", "DissertationDescription", 2.0, topicSubmitter, compatibleMasters);
+        dissertationTopicRepository.save(topic);
+
+        ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");
+        thesisExecutionRepository.save(execution);
+
+        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date());
+        defenseRepository.save(defense);
+
+        assertTrue(defenseRepository.findByLocation("remote").contains(defense));
+    }
 }
