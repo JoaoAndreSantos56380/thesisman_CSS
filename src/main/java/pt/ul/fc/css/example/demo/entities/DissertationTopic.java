@@ -81,7 +81,7 @@ public class DissertationTopic {
       @NonNull String description,
       @NonNull double salary,
       @NonNull AppUser submitter,
-      @Nullable ArrayList<Masters> compatibleMasters) {
+      @Nullable List<Masters> compatibleMasters) {
     this.title = title;
     this.description = description;
     this.salary = salary;
