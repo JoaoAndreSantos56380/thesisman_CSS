@@ -31,6 +31,8 @@ public class Application {
     this.topic = topic;
   }
 
+  public Application() {}
+
   public Long getId() {
     return this.id;
   }
