@@ -63,5 +63,48 @@ public class ThesisRepositoryTests {
 		assertEquals(foundThesis.getStudent().getName(),einstein.getName());
 	}
 
+	void testfindByDissertationTopic() {
+		Student einstein = new Student("aeinstein", "password", "einstein", 1935, 19.99, null);
+
+		Professor oppenheimer = new Professor("oppenheimer", "password", "oppenheimer");
+
+		userRepository.save(einstein);
+		userRepository.save(oppenheimer);
+
+		DissertationTopic dissertationTopic = new DissertationTopic("megadissertation", "description", 0, einstein, null);
+
+		dissertationTopicRepository.save(dissertationTopic);
+
+		ThesisExecution thesis = new ThesisExecution(einstein, dissertationTopic, "24/25", oppenheimer);
+
+		thesisExecutionRepository.save(thesis);
+
+		ThesisExecution foundThesis = thesisExecutionRepository.findByDissertationTopic(dissertationTopic).get(0);
+
+		assertEquals(foundThesis.getStudent().getName(),einstein.getName());
+	}
+
+	@Test
+	void testfindByYearOfExecution() {
+		Student einstein = new Student("aeinstein", "password", "einstein", 1935, 19.99, null);
+
+		Professor oppenheimer = new Professor("oppenheimer", "password", "oppenheimer");
+
+		userRepository.save(einstein);
+		userRepository.save(oppenheimer);
+
+		DissertationTopic dissertationTopic = new DissertationTopic("megadissertation", "description", 0, einstein, null);
+
+		dissertationTopicRepository.save(dissertationTopic);
+
+		ThesisExecution thesis = new ThesisExecution(einstein, dissertationTopic, "24/25", oppenheimer);
+
+		thesisExecutionRepository.save(thesis);
+
+		ThesisExecution foundThesis = thesisExecutionRepository.findByYearOfExecution("24/25").get(0);
+
+		assertEquals(foundThesis.getStudent().getName(),einstein.getName());
+	}
+
 	
 }
