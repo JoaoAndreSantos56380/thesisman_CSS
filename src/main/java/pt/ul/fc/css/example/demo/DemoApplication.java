@@ -63,6 +63,7 @@ public class DemoApplication {
           new DissertationTopic("Futebol radiante", "description", 99999, rq7Professor, mastersArr);
 
       userRepository.save(consultant);
+      userRepository.save(presiJuri);
       userRepository.save(cr7Professor);
       userRepository.save(rq7Professor);
       mastersRepository.save(theBestMaster);
