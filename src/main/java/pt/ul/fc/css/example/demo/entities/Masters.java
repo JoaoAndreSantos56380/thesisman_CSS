@@ -22,7 +22,7 @@ public class Masters {
 
   // associacao 1-1 com o professor
   @NonNull
-  @OneToOne // (cascade = CascadeType.PERSIST)
+  @OneToOne
   @JoinColumn(name = "fk_professor_id", referencedColumnName = "id", nullable = false)
   private Professor coordinator;
 
