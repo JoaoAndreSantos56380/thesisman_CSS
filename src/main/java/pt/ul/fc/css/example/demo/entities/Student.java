@@ -40,8 +40,9 @@ public class Student extends AppUser {
   @NonNull private int studentNumber;
 
   // associacao many-to-one
-  @NonNull
-  @ManyToOne // (cascade = CascadeType.PERSIST)
+  @Nullable
+  
+  @ManyToOne
   @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
   private Masters master;
 
