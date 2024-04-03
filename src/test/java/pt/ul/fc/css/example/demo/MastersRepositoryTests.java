@@ -62,14 +62,6 @@ class MastersRepositoryTests {
   }
 
   @Test
-  void testFindByMasterId() {
-	Masters master = mastersRepository.findByName("the best").get(0);
-	Student marie = (Student) userRepository.findByMasterId(master.getId()).get(0);
-	assertEquals(marie.getAverageGrade(), 19.99);
-	assertEquals(marie.getName(), "Marie Curie");
-  }
-
-  @Test
   void testFindByMaster() {
 	Masters master = mastersRepository.findByName("the best").get(0);
 	Student marie = (Student) userRepository.findByMaster(master).get(0);
