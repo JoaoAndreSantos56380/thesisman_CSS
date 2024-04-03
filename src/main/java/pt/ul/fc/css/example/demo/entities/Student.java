@@ -40,7 +40,7 @@ public class Student extends AppUser {
   @NonNull private int studentNumber;
 
   // associacao many-to-one
-  @Nullable
+  @NonNull
   
   @ManyToOne
   @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
