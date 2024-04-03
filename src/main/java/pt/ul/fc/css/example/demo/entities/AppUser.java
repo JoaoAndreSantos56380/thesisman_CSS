@@ -17,7 +17,7 @@ public abstract class AppUser {
   private Long id;
 
   @NonNull
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String username;
 
   @NonNull
