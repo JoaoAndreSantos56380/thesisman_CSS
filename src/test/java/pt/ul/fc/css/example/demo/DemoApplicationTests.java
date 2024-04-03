@@ -11,6 +11,7 @@ import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
 
 import pt.ul.fc.css.example.demo.entities.Consultant;
+import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
@@ -151,6 +152,44 @@ class DemoApplicationTests {
 	Masters master = (Masters) mastersRepository.findByCoordinator(cr7Professor).get(0);
 	assertEquals(master.getName(), "the best");
   }
+
+  @Test
+  void findDissertationTopicByTitle() {
+    Professor testCoordinator = new Professor("username", "password", "test coordinator");
+    userRepository.save(testCoordinator);
+
+    Masters testMaster = new Masters("Test Masters", testCoordinator);
+    mastersRepository.save(testMaster);
+
+    assertEquals(1, dissertationTopicRepository.findByTitle("Futebol radiante").size());
+  }
+
+  @Test
+  void findDissertationTopicBySubmitter() {
+    Professor test = (Professor) userRepository.findByName("ricardo quaresma").get(0);
+
+    assertEquals(1, dissertationTopicRepository.findBySubmitter(test).size());
+  }
+  /* 
+  @Test
+  void findDissertationTopicBySubmitter2() {
+    Professor test = (Professor) userRepository.findByName("presi juri").get(0);
+    DissertationTopic topicTest = dissertationTopicRepository.findBySubmitter(test).get(0);
+    System.out.println(topicTest.getDescription());
+    assertEquals("description", topicTest.getDescription());
+  }
+
+  @Test
+  void findDissertationTopicBCompatibleMasters() {
+    Professor testCoordinator = new Professor("username", "password", "test coordinator");
+    userRepository.save(testCoordinator);
+
+    Masters testMaster = mastersRepository.findByName("the best").get(0);
+    DissertationTopic test = dissertationTopicRepository.findByCompatibleMasters(testMaster).get(0);
+
+    assertEquals("description", test.getDescription());
+  }*/
+
 
 }
 
