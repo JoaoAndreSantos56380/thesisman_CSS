@@ -53,5 +53,18 @@ public class ThesisExecution {
     this.internalAdvisor = (Professor) topic.getSubmitter();
   }
 
+  public ThesisExecution(
+      Student student, DissertationTopic topic, String yearOfExecution, Professor internalAdvisor) {
+    if (topic.getType() == DissertationTopicType.DISSERTATION) {
+      throw new IllegalArgumentException("This constructor is for Project Topics!");
+    }
+    this.student = student;
+    this.topic = topic;
+    this.yearOfExecution = yearOfExecution;
+    this.student = student;
+    this.topic = topic;
+    this.internalAdvisor = internalAdvisor;
+  }
+
   public ThesisExecution() {}
 }

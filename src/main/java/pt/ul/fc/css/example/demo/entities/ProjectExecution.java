@@ -16,8 +16,9 @@ public class ProjectExecution extends ThesisExecution {
     super();
   }
 
-  public ProjectExecution(Student student, DissertationTopic topic, String yearOfExecution) {
-    super(student, topic, yearOfExecution);
+  public ProjectExecution(
+      Student student, DissertationTopic topic, String yearOfExecution, Professor internalAdvisor) {
+    super(student, topic, yearOfExecution, internalAdvisor);
     this.consultant = (Consultant) topic.getSubmitter();
   }
 
