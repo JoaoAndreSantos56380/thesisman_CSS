@@ -10,13 +10,14 @@ import org.springframework.lang.NonNull;
 public class FinalDefense extends ThesisDefense {
   // associacao many-to-one
   @NonNull
-  @ManyToOne // (cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "fk_president_id", referencedColumnName = "id")
   private Professor president;
 
   public FinalDefense(
       ThesisExecution thesisExecution, String location, Date time, Professor president) {
     super(thesisExecution, location, time);
+    this.president = president;
   }
 
   public FinalDefense() {}
