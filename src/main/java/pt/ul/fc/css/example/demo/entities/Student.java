@@ -1,6 +1,5 @@
 package pt.ul.fc.css.example.demo.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -24,13 +23,24 @@ public class Student extends AppUser {
     this.master = master;
   }
 
+  public Student(
+      @NonNull String username,
+      @NonNull String password,
+      @NonNull String name,
+      @NonNull int studentNumber,
+      @Nullable Masters master) {
+    super(username, password, name);
+    this.studentNumber = studentNumber;
+    this.master = master;
+  }
+
   public Student() {}
 
   @NonNull private int studentNumber;
 
   // associacao many-to-one
   @NonNull
-  @ManyToOne //(cascade = CascadeType.PERSIST)
+  @ManyToOne // (cascade = CascadeType.PERSIST)
   @JoinColumn(name = "fk_masters_id", referencedColumnName = "id")
   private Masters master;
 
