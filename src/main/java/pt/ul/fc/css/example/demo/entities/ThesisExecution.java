@@ -48,8 +48,6 @@ public class ThesisExecution {
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;
-    this.student = student;
-    this.topic = topic;
     this.internalAdvisor = (Professor) topic.getSubmitter();
   }
 
@@ -61,8 +59,6 @@ public class ThesisExecution {
     this.student = student;
     this.topic = topic;
     this.yearOfExecution = yearOfExecution;
-    this.student = student;
-    this.topic = topic;
     this.internalAdvisor = internalAdvisor;
   }
 
