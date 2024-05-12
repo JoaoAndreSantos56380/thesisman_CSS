@@ -41,7 +41,7 @@ class UserRepositoryTests {
   @Test
   void testFindByUserName() {
     Professor professor = (Professor) userRepository.findByUserName("cr7").get(0);
-    assertEquals("cr7", professor.getUserName());
+    assertEquals("cr7", professor.getUsername());
   }
 
   @Test
