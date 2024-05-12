@@ -61,6 +61,10 @@ public class DissertationTopic {
     return this.title;
   }
 
+  public double getSalary(){
+	return this.salary;
+  }
+
   public void setTitle(String title) {
     this.title = title;
   }
