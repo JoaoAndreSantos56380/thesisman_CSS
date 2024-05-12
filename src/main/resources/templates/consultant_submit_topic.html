@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!-- <html th:replace="~{layout :: layout(~{::section})}"> -->
+
+<body>
+	<section>
+		<h2>Submeter topico de tese:</h2>
+
+		<div class="error" th:text="${error}"></div>
+
+		<form action="#" th:action="@{/consultant/submit}" th:object="${dissertation_topic}" method="post">
+			<label for="title">Title:</label><input name="title" th:field="*{title}" /><br />
+			<label for="description">Description:</label><input name="description" th:field="*{description}" /><br />
+			<label for="salary">Salary:</label><input name="salary" th:field="*{salary}" /><br />
+			<!-- <label for="compatible_masters">Compatible Masters:</label><input name="compatible_masters" th:field="*{compatibleMasters}" /><br /> -->
+			<input type="submit" value="submit" />
+		</form>
+	</section>
+</body>
+
+</html>

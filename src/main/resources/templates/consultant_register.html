@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!-- <html th:replace="~{layout :: layout(~{::section})}"> -->
+
+<body>
+	<section>
+		<h2>Registar consultor:</h2>
+
+		<div class="error" th:text="${error}"></div>
+
+		<form action="#" th:action="@{/consultant/new}" th:object="${consultant}" method="post">
+			<label for="username">username:</label><input name="username" th:field="*{username}" /><br />
+			<label for="password">Password:</label><input name="password" th:field="*{password}" /><br />
+			<label for="name">Name:</label><input name="name" th:field="*{name}" /><br />
+			<label for="company">Empresa:</label><input name="company" th:field="*{company}" /><br />
+			<input type="submit" value="Add" />
+		</form>
+	</section>
+</body>
+
+</html>
