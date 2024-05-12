@@ -7,8 +7,8 @@ import org.springframework.lang.NonNull;
 @Entity
 @DiscriminatorValue("CONSULTANT")
 public class Consultant extends AppUser {
-  public Consultant(String email, String password, String name, @NonNull String company) {
-    super(email, password, name);
+  public Consultant(String username, String password, String name, @NonNull String company) {
+    super(username, password, name);
 	this.company = company;
   }
 
