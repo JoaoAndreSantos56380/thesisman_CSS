@@ -14,19 +14,19 @@ import org.springframework.lang.NonNull;
 public abstract class AppUser {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private Long id;
+  protected Long id;
 
   @NonNull
   @Column(nullable = false, unique = true)
-  private String username;
+  protected String username;
 
   @NonNull
   @Column(nullable = false)
-  private String password;
+  protected String password;
 
   @NonNull
   @Column(nullable = false)
-  private String name;
+  protected String name;
 
   public AppUser(@NonNull String username, @NonNull String password, @NonNull String name) {
     this.username = username;
@@ -40,16 +40,24 @@ public abstract class AppUser {
     return id;
   }
 
-  public String getUserName() {
+  public void setId(Long id) {
+  	this.id = id;
+  }
+
+  public String getUsername() {
     return username;
   }
 
-  public String getName() {
-    return name;
+  public void setUsername(String username) {
+  	this.username = username;
   }
 
-  public void setName(String username) {
-    this.username = username;
+  public String getName() {
+  	return name;
+  }
+
+  public void setName(String name) {
+  	this.name = name;
   }
 
   public String getPassword() {
