@@ -10,8 +10,8 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import pt.ul.fc.css.example.demo.entities.Application;
-import pt.ul.fc.css.example.demo.entities.Consultant;
+/* import pt.ul.fc.css.example.demo.entities.Application;
+import pt.ul.fc.css.example.demo.entities.Consultant; */
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
@@ -19,7 +19,7 @@ import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
-import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
+/* import pt.ul.fc.css.example.demo.repositories.ApplicationRepository; */
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
 import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
@@ -35,8 +35,8 @@ public class DefenseRepositoryTests {
     private MastersRepository mastersRepository;
     @Autowired
     private DissertationTopicRepository dissertationTopicRepository;
-    @Autowired
-    private ApplicationRepository applicationRepository;
+/*     @Autowired
+    private ApplicationRepository applicationRepository; */
     @Autowired
     private ThesisExecutionRepository thesisExecutionRepository;
     @Autowired

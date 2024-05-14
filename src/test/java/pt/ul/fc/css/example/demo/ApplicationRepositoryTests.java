@@ -3,7 +3,7 @@ package pt.ul.fc.css.example.demo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.transaction.Transactional;
-import java.util.ArrayList;
+/* import java.util.ArrayList; */
 import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;

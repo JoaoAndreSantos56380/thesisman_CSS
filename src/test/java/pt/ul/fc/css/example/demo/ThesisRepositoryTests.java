@@ -12,10 +12,10 @@ import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
-import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
-import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
+/* import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
+import pt.ul.fc.css.example.demo.repositories.DefenseRepository; */
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
-import pt.ul.fc.css.example.demo.repositories.MastersRepository;
+/* import pt.ul.fc.css.example.demo.repositories.MastersRepository; */
 import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
 
@@ -25,16 +25,16 @@ public class ThesisRepositoryTests {
 
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired
-	private MastersRepository mastersRepository;
+/* 	@Autowired
+	private MastersRepository mastersRepository; */
 	@Autowired
 	private DissertationTopicRepository dissertationTopicRepository;
 	@Autowired
 	private ThesisExecutionRepository thesisExecutionRepository;
-	@Autowired
+/* 	@Autowired
 	private ApplicationRepository ApplicationRepository;
 	@Autowired
-	private DefenseRepository defenseRepository;
+	private DefenseRepository defenseRepository; */
 
 	@Test
 	void testUserListIsNotEmpty() {
@@ -154,5 +154,5 @@ public class ThesisRepositoryTests {
 		assertEquals(foundThesis.getStudent().getName(),einstein.getName());
 	}
 
-	
+
 }

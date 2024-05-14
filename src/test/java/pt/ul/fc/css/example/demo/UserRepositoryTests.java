@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
-import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
+/* import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
-import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
+import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository; */
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
 
 @Transactional
@@ -21,11 +21,11 @@ import pt.ul.fc.css.example.demo.repositories.UserRepository;
 class UserRepositoryTests {
 
   @Autowired private UserRepository userRepository;
-  @Autowired private MastersRepository mastersRepository;
+  /* @Autowired private MastersRepository mastersRepository;
   @Autowired private DissertationTopicRepository dissertationTopicRepository;
   @Autowired private ThesisExecutionRepository thesisExecutionRepository;
   @Autowired private ApplicationRepository ApplicationRepository;
-  @Autowired private DefenseRepository defenseRepository;
+  @Autowired private DefenseRepository defenseRepository; */
 
   @Test
   void testUserListIsNotEmpty() {
@@ -40,8 +40,8 @@ class UserRepositoryTests {
 
   @Test
   void testFindByUserName() {
-    Professor professor = (Professor) userRepository.findByUserName("cr7").get(0);
-    assertEquals("cr7", professor.getUsername());
+    Professor professor = (Professor) userRepository.findByUserName("ronaldo").orElseThrow();
+    assertEquals("ronaldo", professor.getUsername());
   }
 
   @Test

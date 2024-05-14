@@ -2,9 +2,9 @@ package pt.ul.fc.css.example.demo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+/*
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List; */
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -13,16 +13,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
 
-import pt.ul.fc.css.example.demo.entities.Consultant;
+/* import pt.ul.fc.css.example.demo.entities.Consultant;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
-import pt.ul.fc.css.example.demo.entities.Professor;
+import pt.ul.fc.css.example.demo.entities.Professor; */
 import pt.ul.fc.css.example.demo.entities.Student;
-import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
+/* import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
-import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
+import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository; */
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
-import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
+/* import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository; */
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
 
 @Transactional
@@ -31,10 +31,10 @@ class MastersRepositoryTests {
 
   @Autowired private UserRepository userRepository;
   @Autowired private MastersRepository mastersRepository;
-  @Autowired private DissertationTopicRepository dissertationTopicRepository;
+/*   @Autowired private DissertationTopicRepository dissertationTopicRepository;
   @Autowired private ThesisExecutionRepository thesisExecutionRepository;
   @Autowired private ApplicationRepository ApplicationRepository;
-  @Autowired private DefenseRepository defenseRepository;
+  @Autowired private DefenseRepository defenseRepository; */
 
     @Test
     void testMastersListIsNotEmpty() {
