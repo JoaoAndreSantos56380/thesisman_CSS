@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt_PT">
+
+<head>
+	<meta charset="ISO-8859-1" />
+	<link href="css/style.css" rel="stylesheet" />
+	<title>Spring Boot Application</title>
+</head>
+
+<body>
+	<h1>el homem da defesa da tese</h1>
+	<div th:replace="fragments/header :: header"></div>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Location</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="defense : ${defenses}">
+				<td th:text="${defense.id}"> </td>
+				<td th:text="${defense.location}" > </td>
+				<!-- <td th:text="${defense.name}"></td>
+				<td th:text="${defense.email}"></td> -->
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- <form action="#" th:action="@{/consultant/thesis_defense}" th:object="${thesis_defense}" method="post">
+		<label for="location">location:</label><input name="location" th:field="*{location}" /><br />
+		<input type="submit" value="submit" />
+	</form> -->
+</body>
+
+</html>

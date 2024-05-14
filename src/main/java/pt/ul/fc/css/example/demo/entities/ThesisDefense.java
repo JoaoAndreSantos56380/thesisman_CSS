@@ -65,4 +65,16 @@ public class ThesisDefense {
   public double getGrade() {
     return grade;
   }
+
+  public String getLocation(){
+	return location;
+  }
+
+  public void setLocation(String location) {
+  	this.location = location;
+  }
+
+  public Date getTime() {
+  	return this.time;
+  }
 }
