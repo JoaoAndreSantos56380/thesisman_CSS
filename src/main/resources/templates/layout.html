@@ -2,17 +2,18 @@
 <html lang="pt_PT">
 
 <head>
-    <meta charset="ISO-8859-1" />
-    <link href="css/style.css" rel="stylesheet" />
-    <title>Spring Boot Application</title>
+	<meta charset="ISO-8859-1" />
+	<link href="css/style.css" rel="stylesheet" />
+	<title>Spring Boot Application</title>
 </head>
 
 <body>
-    <h1>ThesisMan</h1>
-	<ol>
-		<li><a th:href="@{/consultant/new}">Registar consultor</a></li>
+	<h1>ThesisMan</h1>
+	<div th:replace="fragments/header :: header"></div>
+	<!-- <ol>
 		<li><a th:href="@{/consultant/login}">Log in consultor</a></li>
-	</ol>
+		<li><a th:href="@{/consultant/home}">Consultant home</a></li>
+	</ol> -->
 </body>
 
 </html>

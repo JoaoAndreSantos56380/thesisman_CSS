@@ -1,12 +1,13 @@
 package pt.ul.fc.css.example.demo.handlers;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
-import pt.ul.fc.css.example.demo.entities.Consultant;
+/* import pt.ul.fc.css.example.demo.entities.Consultant; */
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
@@ -27,5 +28,9 @@ public class TopicSubmissionByConsultantHandlerE {
 				DissertationTopic dt = new DissertationTopic(title, description, salary, submitter, compatibleMasters);
 
 				return dissertationTopicRepository.save(dt);
+	}
+
+	public Optional<AppUser> findConsultantByUsername(String username) {
+		return userRepository.findByUserName(username);
 	}
 }

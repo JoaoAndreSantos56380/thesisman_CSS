@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+	<header th:fragment="header">
+		<div sec:authorize="isAnonymous()">
+			<a th:href="@{/consultant/login}">Log in</a>
+			<a th:href="@{/consultant/register}">Create consultant account</a>
+		</div>
+		<div sec:authorize="isAuthenticated()">
+			<p th:inline="text">Hello <span th:remove="tag" sec:authentication="name">username</span>!</p>
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" />
+			</form>
+		</div>
+	</header>
+</body>
+
+</html>

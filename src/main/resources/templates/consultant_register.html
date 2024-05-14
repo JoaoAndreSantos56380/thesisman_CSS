@@ -1,17 +1,36 @@
 <!DOCTYPE html>
-<!-- <html th:replace="~{layout :: layout(~{::section})}"> -->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Register Consultant</title>
+</head>
 
 <body>
+	<div th:replace="fragments/header :: header"></div>
 	<section>
-		<h2>Registar consultor:</h2>
+		<h2>Register Consultant:</h2>
+		<form th:action="@{/consultant/register}" th:object="${consultant}" method="post">
 
-		<div class="error" th:text="${error}"></div>
-
-		<form action="#" th:action="@{/consultant/new}" th:object="${consultant}" method="post">
-			<label for="username">username:</label><input name="username" th:field="*{username}" /><br />
-			<label for="password">Password:</label><input name="password" th:field="*{password}" /><br />
-			<label for="name">Name:</label><input name="name" th:field="*{name}" /><br />
-			<label for="company">Empresa:</label><input name="company" th:field="*{company}" /><br />
+			<div>
+				<label for="username">Username:</label>
+				<input id="username" name="username" th:field="*{username}" />
+				<div th:errorclass="usernameError" th:errors="*{username}" style="color: red;"></div>
+			</div>
+			<div>
+				<label for="password">Password:</label>
+				<input id="password" name="password" th:field="*{password}" type="password" />
+				<div th:errorclass="passwordError" th:errors="*{password}" style="color: red;"></div>
+			</div>
+			<div>
+				<label for="name">Name:</label>
+				<input id="name" name="name" th:field="*{name}" />
+				<div th:errorclass="nameError" th:errors="*{name}" style="color: red;"></div>
+			</div>
+			<div>
+				<label for="company">Company:</label>
+				<input id="company" name="company" th:field="*{company}" />
+				<div th:errorclass="companyError" th:errors="*{company}" style="color: red;"></div>
+			</div>
 			<input type="submit" value="Add" />
 		</form>
 	</section>
