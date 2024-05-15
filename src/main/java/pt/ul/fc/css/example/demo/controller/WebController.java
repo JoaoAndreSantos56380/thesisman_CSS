@@ -52,41 +52,19 @@ public class WebController {
 		return "consultant_register";
 	}
 
-	/*
-	 * @PostMapping("/consultant/register")
-	 * public String newConsultantAction(final Model model, @ModelAttribute
-	 * Consultant c) {
-	 * try {
-	 * userService.addConsultant(c.getUsername(), c.getName(), c.getPassword(),
-	 * c.getCompany());
-	 * return "user_login";
-	 * } catch (ApplicationException e) {
-	 * model.addAttribute("error", e.getMessage());
-	 * return "consultant_register";
-	 * }
-	 * }
-	 */
-
 	@PostMapping("/consultant/register")
 	public String registerUserAccount(@ModelAttribute("consultant") Consultant consultant) {
 		userService.addConsultant(consultant);
-		return "redirect:/consultant/login";
+		return "redirect:/user/login";
 	}
 
-	@GetMapping({ "/consultant/login" })
-	public String consultantLoginScreen(final Model model) {
+	@GetMapping("/user/login")
+	public String userLoginScreen(final Model model) {
 		model.addAttribute("appuser", new Consultant());
 		return "user_login";
 	}
 
-	/*
-	 * @PostMapping("/consultant/login")
-	 * public String login(final Model model, @ModelAttribute Consultant c) {
-	 * return "redirect:/consultant/home";
-	 * }
-	 */
-
-	@GetMapping({ "/consultant/home" })
+	@GetMapping("/user/home")
 	public String home(final Model model) {
 		return "consultant_home";
 	}

@@ -20,8 +20,8 @@ public class WebSecurityConfig {
 						.permitAll()
 						.anyRequest().authenticated())
 				.formLogin((form) -> form
-						.loginPage("/consultant/login")
-						.defaultSuccessUrl("/consultant/home", true)
+						.loginPage("/user/login")
+						.defaultSuccessUrl("/user/home", true)
 						.permitAll())
 				.logout((logout) -> logout.permitAll());
 
