@@ -32,3 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 .cache
+node_modules
+package-lock.json
+package.json
+reload.js
