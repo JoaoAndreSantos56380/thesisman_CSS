@@ -74,7 +74,7 @@ public class WebController {
 	}
 
 	@GetMapping({ "/user/login" })
-	public String consultantLoginScreen(final Model model) {
+	public String userLoginScreen(final Model model) {
 		model.addAttribute("appuser", new Consultant());
 		return "user_login";
 	}
