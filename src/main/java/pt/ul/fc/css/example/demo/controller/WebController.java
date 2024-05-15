@@ -73,7 +73,7 @@ public class WebController {
 		return "redirect:/consultant/login";
 	}
 
-	@GetMapping({ "/consultant/login" })
+	@GetMapping({ "/user/login" })
 	public String consultantLoginScreen(final Model model) {
 		model.addAttribute("appuser", new Consultant());
 		return "user_login";
@@ -96,7 +96,7 @@ public class WebController {
 		model.addAttribute("dissertation_topic", new DissertationTopic());
 		return "consultant_submit_topic";
 	}
-	
+
 
 	@PostMapping("/consultant/submit")
 	public String newTopicByConsultantAction(final Model model, @ModelAttribute DissertationTopic dt,
