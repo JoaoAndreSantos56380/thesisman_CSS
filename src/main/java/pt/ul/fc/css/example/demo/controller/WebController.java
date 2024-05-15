@@ -86,7 +86,7 @@ public class WebController {
 	 * }
 	 */
 
-	@GetMapping({ "/consultant/home" })
+	@GetMapping({ "/user/home" })
 	public String home(final Model model) {
 		return "consultant_home";
 	}
