@@ -96,43 +96,7 @@ public class WebController {
 		model.addAttribute("dissertation_topic", new DissertationTopic());
 		return "consultant_submit_topic";
 	}
-
-	// nao apagar
-	/*
-	 * @PostMapping("/consultant/submit")
-	 * public String newTopicByConsultantAction(final Model model, @ModelAttribute
-	 * DissertationTopic dt,
-	 * Authentication authentication) {
-	 * // Get the logged-in consultant
-	 * Consultant loggedInConsultant = null;
-	 * if (authentication != null && authentication.getPrincipal() instanceof
-	 * UserDetails) {
-	 * String username = ((UserDetails)
-	 * authentication.getPrincipal()).getUsername();
-	 * // Assuming you have a method to find Consultant by username
-	 * loggedInConsultant = userService.findConsultantByUsername(username);
-	 * }
-	 *
-	 * DissertationTopic dt2;
-	 * try {
-	 * // Use the retrieved logged-in consultant
-	 * dt2 = DissertationTopicService.addTopic(dt.getTitle(), dt.getDescription(),
-	 * dt.getSalary(),
-	 * loggedInConsultant,
-	 * dt.getCompatibleMasters());
-	 * // return "redirect:/customers/" + dt2.getId(); // Uncomment to redirect to
-	 * the
-	 * // specific customer ID page
-	 * return "layout";
-	 * } catch (Exception e) {
-	 * dt2 = new DissertationTopic();
-	 * model.addAttribute("dissertationTopic", dt2);
-	 * model.addAttribute("error", e.getMessage());
-	 * System.out.println(e.getMessage());
-	 * return "consultant_home";
-	 * }
-	 * }
-	 */
+	
 
 	@PostMapping("/consultant/submit")
 	public String newTopicByConsultantAction(final Model model, @ModelAttribute DissertationTopic dt,
