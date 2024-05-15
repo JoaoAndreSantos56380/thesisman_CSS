@@ -19,7 +19,7 @@ public class ThesisDefenseService {
 		return defenseRepository.findAll();
 	}
 
-	public ThesisDefense addDefense(ThesisExecution thesisExecution, String location, Date time) {
-		return defenseRepository.save(new ThesisDefense(thesisExecution, location, time));
+	public ThesisDefense addDefense(ThesisExecution te, String location, Date time) {
+		return defenseRepository.save(new ThesisDefense(te, location, time));
 	}
 }

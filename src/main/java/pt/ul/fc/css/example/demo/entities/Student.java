@@ -56,6 +56,10 @@ public class Student extends AppUser {
 	@NonNull
 	private double averageGrade;
 
+	public String getName() {
+		return name;
+	}
+
 	public int getStudentNumber() {
 		return studentNumber;
 	}

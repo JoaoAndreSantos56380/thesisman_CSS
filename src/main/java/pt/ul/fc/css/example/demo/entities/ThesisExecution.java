@@ -49,6 +49,41 @@ public class ThesisExecution {
     return this.student;
   }
 
+  public Long getId() {
+    return id;
+  }
+
+  public Professor getInternalAdvisor() {
+    return this.internalAdvisor;
+  }
+
+  public void setInternalAdvisor(Professor internalAdvisor) {
+    this.internalAdvisor = internalAdvisor;
+  }
+
+  public int getFinalGrade() {
+    return this.finalGrade;
+  }
+
+  public void setStudent(Student student) {
+    this.student = student;
+  }
+
+  public void setTopic(DissertationTopic topic) {
+    this.topic = topic;
+  }
+
+  public void setYearOfExecution(String yearOfExecution) {
+    this.yearOfExecution = yearOfExecution;
+  }
+  public DissertationTopic getTopic() {
+    return this.topic;
+  }
+
+  public String getYearOfExecution() {
+    return this.yearOfExecution;
+  }
+
   public ThesisExecution(Student student, DissertationTopic topic, String yearOfExecution) {
     if (topic.getType() == DissertationTopicType.PROJECT) {
       throw new IllegalArgumentException(

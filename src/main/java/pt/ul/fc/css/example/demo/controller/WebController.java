@@ -1,6 +1,7 @@
 package pt.ul.fc.css.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
@@ -18,6 +20,7 @@ import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.services.DissertationTopicService;
 import pt.ul.fc.css.example.demo.services.ThesisDefenseService;
+import pt.ul.fc.css.example.demo.services.ThesisExecutionService;
 import pt.ul.fc.css.example.demo.services.UserService;
 
 @Controller
@@ -32,19 +35,13 @@ public class WebController {
 	@Autowired
 	private ThesisDefenseService defenseService;
 
-	// @RequestMapping("/")
+	@Autowired
+	private ThesisExecutionService execService;
+
 	@GetMapping("/")
 	public String getIndex(Model model) {
 		return "layout";
 	}
-
-	/*
-	 * @GetMapping("/consultant/new")
-	 * public String newConsultant(final Model model) {
-	 * model.addAttribute("consultant", new Consultant());
-	 * return "consultant_register";
-	 * }
-	 */
 
 	@GetMapping("/consultant/register")
 	public String consultantRegister(final Model model) {
@@ -75,43 +72,6 @@ public class WebController {
 		return "consultant_submit_topic";
 	}
 
-	// nao apagar
-	/*
-	 * @PostMapping("/consultant/submit")
-	 * public String newTopicByConsultantAction(final Model model, @ModelAttribute
-	 * DissertationTopic dt,
-	 * Authentication authentication) {
-	 * // Get the logged-in consultant
-	 * Consultant loggedInConsultant = null;
-	 * if (authentication != null && authentication.getPrincipal() instanceof
-	 * UserDetails) {
-	 * String username = ((UserDetails)
-	 * authentication.getPrincipal()).getUsername();
-	 * // Assuming you have a method to find Consultant by username
-	 * loggedInConsultant = userService.findConsultantByUsername(username);
-	 * }
-	 *
-	 * DissertationTopic dt2;
-	 * try {
-	 * // Use the retrieved logged-in consultant
-	 * dt2 = DissertationTopicService.addTopic(dt.getTitle(), dt.getDescription(),
-	 * dt.getSalary(),
-	 * loggedInConsultant,
-	 * dt.getCompatibleMasters());
-	 * // return "redirect:/customers/" + dt2.getId(); // Uncomment to redirect to
-	 * the
-	 * // specific customer ID page
-	 * return "layout";
-	 * } catch (Exception e) {
-	 * dt2 = new DissertationTopic();
-	 * model.addAttribute("dissertationTopic", dt2);
-	 * model.addAttribute("error", e.getMessage());
-	 * System.out.println(e.getMessage());
-	 * return "consultant_home";
-	 * }
-	 * }
-	 */
-
 	@PostMapping("/consultant/submit")
 	public String newTopicByConsultantAction(final Model model, @ModelAttribute DissertationTopic dt,
 			Authentication authentication) {
@@ -119,40 +79,53 @@ public class WebController {
 		AppUser loggedInConsultant = null;
 		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
 			String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-			// Assuming you have a method to find Consultant by username
-			// loggedInConsultant = userService.findConsultantByUsername(username);
 			loggedInConsultant = userService.findUsereByUsername(username);
 		}
 
 		DissertationTopic dt2;
 		try {
-			// Use the retrieved logged-in consultant
 			dt2 = DissertationTopicService.addTopic(dt.getTitle(), dt.getDescription(), dt.getSalary(),
 					loggedInConsultant,
 					dt.getCompatibleMasters());
-			// return "redirect:/customers/" + dt2.getId(); // Uncomment to redirect to the
-			// specific customer ID page
-			return "layout";
+			return "consultant_home";
 		} catch (Exception e) {
 			dt2 = new DissertationTopic();
 			model.addAttribute("dissertationTopic", dt2);
 			model.addAttribute("error", e.getMessage());
 			System.out.println(e.getMessage());
-			return "consultant_home";
+			return "error_page";
 		}
 	}
 
 	@GetMapping("/consultant/thesis_defense")
-	public String newThesisDefense(final Model model) {
-		List<ThesisDefense> defenses = defenseService.getAllPersons();
-		model.addAttribute("defenses", defenses);
+	public String newThesisDefense(final Model model, Authentication auth) {
+		AppUser loggedinUser = null;
+		if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+			String username = ((UserDetails) auth.getPrincipal()).getUsername();
+			loggedinUser = userService.findUsereByUsername(username);
+		}
+		List<ThesisExecution> theses = execService.getThesisIAmOrienting(loggedinUser);
+		model.addAttribute("theses", theses);
 		return "consultant_thesis_defense";
 	}
 
-	@PostMapping("/consultant/thesis_defense")
-	public String addNewThesisDefense(final Model model, @ModelAttribute("thesis_defense") ThesisDefense thesisDefense) {
-		defenseService.addDefense(new ThesisExecution()/* thesisDefense.getThesisExecution() */, thesisDefense.getLocation(), thesisDefense.getTime());
-		//model.addAttribute("thesis_defense", new ThesisDefense());
-		return "consultant_thesis_defense";
+	@GetMapping("/consultant/thesis_defense/{id}")
+	public String newThesisDefenseSchedule(final Model model, @PathVariable("id") Long id) {
+		model.addAttribute("thesis_defense", new ThesisDefense());
+		model.addAttribute("id", id);
+		return "consultant_thesis_defense_scheduler";
+	}
+
+	@PostMapping("/consultant/thesis_defense/{id}")
+	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id/* , Authentication auth */, @ModelAttribute ThesisDefense td ) {
+		Optional<ThesisExecution> te = execService.getThesis(id);
+		if (te.isPresent()) {
+			defenseService.addDefense(te.get(), td.getLocation(), td.getTime()/* new Date() */);
+		} else {
+			model.addAttribute("error", "Thesis Execution not found.");
+			return "error_page";
+		}
+		return "redirect:/consultant/thesis_defense";
+		//return "layout";
 	}
 }

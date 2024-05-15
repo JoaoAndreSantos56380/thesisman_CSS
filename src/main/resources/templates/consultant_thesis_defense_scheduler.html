@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!-- <html th:replace="~{layout :: layout(~{::section})}"> -->
+
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<section>
+		<h2>Submeter defesa de tese:</h2>
+
+		<div class="error" th:text="${error}"></div>
+
+		<form action="#" th:action="@{/consultant/thesis_defense/} + ${id}" th:object="${thesis_defense}" method="post">
+			<label for="location">location:</label><input type="text" name="location" th:field="*{location}" /><br />
+			<label for="time">time:</label><input type="datetime-local" name="time" th:field="*{time}" /><br />
+			<input type="submit" value="submit" />
+		</form>
+	</section>
+</body>
+
+</html>
