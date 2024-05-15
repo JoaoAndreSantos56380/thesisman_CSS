@@ -43,7 +43,7 @@ class MastersRepositoryTests {
 
     @Test
   void findMastersByName() {
-    assertTrue(mastersRepository.findByName("mustang").size() > 0);
+    assertTrue(mastersRepository.findByName("STOCK").size() > 0);
   }
 
   @Test
@@ -63,21 +63,21 @@ class MastersRepositoryTests {
 
   @Test
   void testFindByMaster() {
-	Masters master = mastersRepository.findByName("the best").get(0);
+	Masters master = mastersRepository.findByName("GOLDENAI").get(0);
 	Student marie = (Student) userRepository.findByMaster(master).get(0);
 	assertEquals(marie.getName(), "Marie Curie");
   }
 
   @Test
   void testMasterFindByName() {
-	Masters master = (Masters) mastersRepository.findByName("the best").get(0);
-	assertEquals(master.getName(), "the best");
+	Masters master = (Masters) mastersRepository.findByName("GOLDENAI").get(0);
+	assertEquals(master.getName(), "GOLDENAI");
   }
 
   @Test
   void testMasterFindByCoordinator() {
 	Professor cr7Professor = (Professor) userRepository.findByName("cristiano ronaldo").get(0);
 	Masters master = (Masters) mastersRepository.findByCoordinator(cr7Professor).get(0);
-	assertEquals(master.getName(), "the best");
+	assertEquals(master.getName(), "GOLDENAI");
   }
 }
