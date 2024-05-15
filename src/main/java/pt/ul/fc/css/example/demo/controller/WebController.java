@@ -61,7 +61,7 @@ public class WebController {
 		return "user_login";
 	}
 
-	@GetMapping("/user/home")
+	@GetMapping({ "/user/home" })
 	public String home(final Model model) {
 		return "consultant_home";
 	}
@@ -71,6 +71,7 @@ public class WebController {
 		model.addAttribute("dissertation_topic", new DissertationTopic());
 		return "consultant_submit_topic";
 	}
+
 
 	@PostMapping("/consultant/submit")
 	public String newTopicByConsultantAction(final Model model, @ModelAttribute DissertationTopic dt,
