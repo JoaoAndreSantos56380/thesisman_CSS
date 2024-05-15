@@ -60,8 +60,9 @@ public class DemoApplication {
 			Consultant consultant2 = new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol");
 
 			// criar mestrado com esse prof a coordenador
-			Masters theBestMaster = new Masters("the best", cr7Professor);
-			Masters master2 = new Masters("mustang", rq7Professor);
+			Masters theBestMaster = new Masters("GOLDENAI", cr7Professor);
+			Masters master2 = new Masters("INFORMATICA", rq7Professor);
+			Masters master3 = new Masters("STOCK", presiJuri);
 
 			Student mCurieStudent = new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster);
 
@@ -108,6 +109,7 @@ public class DemoApplication {
 			mCurieStudent.setPassword(encodedPassword);
 			userRepository.save(mCurieStudent);
 			mastersRepository.save(master2);
+			mastersRepository.save(master3);
 
 			dissertationTopicRepository.save(dissertationTopicFutebolRadiante);
 

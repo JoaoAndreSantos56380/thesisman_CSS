@@ -1,7 +1,10 @@
 package pt.ul.fc.css.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,13 +15,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.Consultant;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
+import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.services.DissertationTopicService;
+import pt.ul.fc.css.example.demo.services.MastersService;
 import pt.ul.fc.css.example.demo.services.ThesisDefenseService;
 import pt.ul.fc.css.example.demo.services.ThesisExecutionService;
 import pt.ul.fc.css.example.demo.services.UserService;
@@ -37,6 +43,9 @@ public class WebController {
 
 	@Autowired
 	private ThesisExecutionService execService;
+
+	@Autowired
+	private MastersService mastersService;
 
 	@GetMapping("/")
 	public String getIndex(Model model) {
@@ -69,13 +78,23 @@ public class WebController {
 	@GetMapping("/consultant/submit")
 	public String newTopicByConsultant(final Model model) {
 		model.addAttribute("dissertation_topic", new DissertationTopic());
+		Set<Masters> masters = mastersService.getAllMasters();
+		model.addAttribute("masters", masters);
+
 		return "consultant_submit_topic";
 	}
 
-
 	@PostMapping("/consultant/submit")
 	public String newTopicByConsultantAction(final Model model, @ModelAttribute DissertationTopic dt,
-			Authentication authentication) {
+			Authentication authentication, @RequestParam List<Long> master_ids) {
+
+		// Convert masterIds to Masters objects
+		Set<Masters> compatibleMasters = master_ids.stream()
+				.map(mastersService::findById)
+				.collect(Collectors.toSet());
+
+		System.out.println(compatibleMasters);
+
 		// Get the logged-in consultant
 		AppUser loggedInConsultant = null;
 		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -86,8 +105,8 @@ public class WebController {
 		DissertationTopic dt2;
 		try {
 			dt2 = DissertationTopicService.addTopic(dt.getTitle(), dt.getDescription(), dt.getSalary(),
-					loggedInConsultant,
-					dt.getCompatibleMasters());
+					loggedInConsultant, compatibleMasters);
+
 			return "consultant_home";
 		} catch (Exception e) {
 			dt2 = new DissertationTopic();
@@ -118,7 +137,8 @@ public class WebController {
 	}
 
 	@PostMapping("/consultant/thesis_defense/{id}")
-	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id/* , Authentication auth */, @ModelAttribute ThesisDefense td ) {
+	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id/* , Authentication auth */,
+			@ModelAttribute ThesisDefense td) {
 		Optional<ThesisExecution> te = execService.getThesis(id);
 		if (te.isPresent()) {
 			defenseService.addDefense(te.get(), td.getLocation(), td.getTime()/* new Date() */);
@@ -127,6 +147,6 @@ public class WebController {
 			return "error_page";
 		}
 		return "redirect:/consultant/thesis_defense";
-		//return "layout";
+		// return "layout";
 	}
 }

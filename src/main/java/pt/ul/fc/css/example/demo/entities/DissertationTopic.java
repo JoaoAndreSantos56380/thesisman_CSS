@@ -76,6 +76,17 @@ public class DissertationTopic {
   public void setDescription(String description) {
     this.description = description;
   }
+  public void setSalary(double salary) {
+    this.salary = salary;
+  }
+
+  public void setSubmitter(AppUser submitter) {
+    this.submitter = submitter;
+  }
+
+  public void setCompatibleMasters(Set<Masters> compatibleMasters) {
+    this.compatibleMasters = compatibleMasters;
+  }
 
   public Set<Masters> getCompatibleMasters() {
     return this.compatibleMasters;
