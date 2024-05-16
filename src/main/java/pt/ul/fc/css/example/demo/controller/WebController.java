@@ -168,5 +168,15 @@ public class WebController {
 		return "thesis_defense_grading";
 	}
 
-	
+	@GetMapping("/consultant/thesis_defense/grading/{id}")
+	public String thesis_defense_grading_save(final Model model) {
+		int grade = 0;
+		model.addAttribute("grade", grade);
+		return "thesis_defense_grading_id";
+	}
+
+	@PutMapping("/consultant/thesis_defense/grading/{id}")
+	public String thesis_defense_grading_save_put(final Model model, int grade) {
+		return "thesis_defense_grading_id";
+	}
 }
