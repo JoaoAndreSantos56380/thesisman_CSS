@@ -17,4 +17,7 @@ public interface DefenseRepository extends JpaRepository<ThesisDefense, Long> {
 
   @Query("SELECT d FROM ThesisDefense d WHERE d.time = :time")
   List<ThesisDefense> findByTime(@Param("time") Date time);
+
+  @Query("SELECT td FROM ThesisDefense td WHERE td.grade > 9")
+  List<ThesisDefense> findByGradeAboveTen();
 }
