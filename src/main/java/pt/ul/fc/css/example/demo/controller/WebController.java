@@ -163,4 +163,10 @@ public class WebController {
 		return "statistics";
 	}
 
+	@GetMapping("/consultant/thesis_defense/grading")
+	public String thesis_defense_grading(final Model model) {
+		return "thesis_defense_grading";
+	}
+
+	
 }
