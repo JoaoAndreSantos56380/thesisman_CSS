@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt_PT">
+
+<head>
+    <meta charset="ISO-8859-1" />
+    <link href="css/style.css" rel="stylesheet" />
+    <title>Spring Boot Application</title>
+</head>
+
+<h1>Las stats</h1>
+
+<body>
+<div>
+    <ul>
+        <li th:each="defense : ${defenses}">
+            <span th:text="'Defesa ' + ${defense.id} + ': ' + ${defense.grade}"></span>
+        </li>
+    </ul>
+</div>
+
+    <div>
+        <span>Positivas: </span>
+        <span th:text="${positives / total_defenses * 100 + '%'}"></span>
+    </div>
+
+    <div>
+        <span>Média: </span>
+        <span th:text="${average}"></span>
+    </div>
+</body>
