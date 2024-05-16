@@ -17,5 +17,7 @@ public class StatisticsHandlerP {
         return defenseRepository.findAll();
     }
 
-
+    public List<ThesisDefense> findAllPositives() {
+        return defenseRepository.findByGradeAboveTen();
+    }
 }
