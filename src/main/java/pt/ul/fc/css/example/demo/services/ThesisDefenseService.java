@@ -28,7 +28,7 @@ public class ThesisDefenseService {
     public ThesisDefense addDefense(ThesisExecution te, String location, Date time) {
         return defenseRepository.save(new ThesisDefense(te, location, time));
     }
-
+	
     public List<ThesisDefense> findAllPositives() {
         return statsHandler.findAllPositives();
     }
