@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<!-- <html th:replace="~{layout :: layout(~{::section})}"> -->
-<html>
+<html lang="pt_PT">
+
+<head>
+	<meta charset="UTF-8" />
+	<link href="css/style.css" rel="stylesheet"/>
+	<title>Spring Boot Application</title>
+</head>
 
 <body>
 	<div th:replace="fragments/header :: header"></div>
 	<section>
 		<h2>Log in:</h2>
 
-		<div th:if="${param.error}">
+		<div th:if="${param.error}" class="message">
 			Invalid username and password.
 		</div>
-		<div th:if="${param.logout}">
+		<div th:if="${param.logout}" class="message">
 			You have been logged out.
 		</div>
 
