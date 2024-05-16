@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt_PT">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-	<meta charset="ISO-8859-1" />
-	<link href="css/style.css" rel="stylesheet" />
-	<title>Spring Boot Application</title>
+	<meta charset="UTF-8">
+	<title>ThesisMan</title>
+	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-	<h1>ThesisMan</h1>
-	<div th:replace="fragments/header :: header"></div>
-	<!-- <ol>
-		<li><a th:href="@{/consultant/login}">Log in consultor</a></li>
-		<li><a th:href="@{/consultant/home}">Consultant home</a></li>
-	</ol> -->
+	<div class="max-w-[1200px] mx-auto text-center">
+		<div th:replace="fragments/header :: header"></div>
+		<div layout:fragment="content"></div>
+	</div>
 </body>
 
 </html>

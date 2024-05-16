@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-<!-- <html th:replace="~{layout :: layout(~{::section})}"> -->
-
-<head>
-	<meta charset="ISO-8859-1" />
-	<link href="css/style.css" rel="stylesheet" />
-	<title>Spring Boot Application</title>
-</head>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 
 <body>
-	<div th:replace="fragments/header :: header"></div>
-	<section>
-		<h2>Submeter topico de tese:</h2>
+	<div layout:fragment="content">
+		<section>
+			<h2>Submeter topico de tese:</h2>
 
-		<div class="error" th:text="${error}"></div>
+			<div class="error" th:text="${error}"></div>
 
-		<form action="#" th:action="@{/consultant/submit}" th:object="${dissertation_topic}" method="post">
-			<label for="title">Title:</label><input name="title" th:field="*{title}" /><br />
-			<label for="description">Description:</label><input name="description" th:field="*{description}" /><br />
-			<label for="salary">Salary:</label><input name="salary" th:field="*{salary}" /><br />
-			<p>Masters:</p>
-			<div th:each="master : ${masters}">
-				<input type="checkbox" name="master_ids" th:value="${master.id}" th:text="${master.name}" />
-			</div>
-			<input type="submit" value="submit" />
-		</form>
-	</section>
+			<form action="#" th:action="@{/consultant/submit}" th:object="${dissertation_topic}" method="post">
+				<label for="title">Title:</label><input name="title" th:field="*{title}" /><br />
+				<label for="description">Description:</label><input name="description"
+					th:field="*{description}" /><br />
+				<label for="salary">Salary:</label><input name="salary" th:field="*{salary}" /><br />
+				<p>Masters:</p>
+				<div th:each="master : ${masters}">
+					<input type="checkbox" name="master_ids" th:value="${master.id}" th:text="${master.name}" />
+				</div>
+				<input type="submit" value="submit" />
+			</form>
+		</section>
+	</div>
 </body>
 
 </html>

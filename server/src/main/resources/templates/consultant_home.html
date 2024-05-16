@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt_PT">
-
-<head>
-	<meta charset="ISO-8859-1" />
-	<link href="css/style.css" rel="stylesheet" />
-	<title>Spring Boot Application</title>
-</head>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 
 <body>
-	<h1>el homem da tese</h1>
-	<li><a th:href="@{/statistics}">Estatisticas alunos</a></li>
-    <li><a th:href="@{/consultant/submit}">Submeter topico de tese</a></li>
-    <li><a th:href="@{/consultant/thesis_defense}">Marcar defesa de proposta de tese</a></li>
-    <li><a th:href="@{/consultant/thesis_defense/grading}">Anotar defesas</a></li>
-	<div th:replace="fragments/header :: header"></div>
+	<div layout:fragment="content">
+		<h1>el homem da tese</h1>
+		<nav class="flex flex-col gap-6">
+			<a th:href="@{/statistics}" class="underline p-2 hover:bg-cyan-700">Estatisticas alunos</a>
+			<a th:href="@{/consultant/submit}" class="underline p-2 hover:bg-cyan-700">Submeter topico de tese</a>
+			<a th:href="@{/consultant/thesis_defense}" class="underline p-2 hover:bg-cyan-700">Marcar defesa de proposta de tese</a>
+			<a th:href="@{/consultant/thesis_defense/grading}" class="underline p-2 hover:bg-cyan-700">Anotar defesas</a>
+		</nav>
+	</div>
 </body>
 
 </html>

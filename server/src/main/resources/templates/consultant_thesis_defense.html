@@ -1,61 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt_PT">
-
-<head>
-	<meta charset="ISO-8859-1" />
-	<link href="css/style.css" rel="stylesheet" />
-	<title>Spring Boot Application</title>
-</head>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 
 <body>
-	<h1>el homem da defesa da tese</h1>
-	<div th:replace="fragments/header :: header"></div>
+	<div layout:fragment="content">
+		<h1>el homem da defesa da tese</h1>
+		<div th:replace="fragments/header :: header"></div>
 
-	<ul>
-		<li th:each="thesis : ${theses}">
-			<a th:href="@{/consultant/thesis_defense/{id}(id=${thesis.id})}">
-				<!-- <span>Year of Execution: </span>
-				<span th:text="${thesis.yearOfExecution}"></span> -->
-				<span>Student: </span>
-				<span th:text="${thesis.student.name}"></span>
-				<!-- <div>
-					<span>Dissertation Topic: </span>
-					<span th:text="${thesis.topic.title}"></span>
-				</div>
-				<div>
-					<span>Internal Advisor: </span>
-					<span th:text="${thesis.internalAdvisor.name}"></span>
-				</div>
-				<div th:if="${thesis.finalGrade != null}">
-					<span>Final Grade: </span>
-					<span th:text="${thesis.finalGrade}"></span>
-				</div> -->
-			</a>
+		<ul>
+			<li th:each="thesis : ${theses}">
+				<a th:href="@{/consultant/thesis_defense/{id}(id=${thesis.id})}">
+					<!-- <span>Year of Execution: </span>
+						<span th:text="${thesis.yearOfExecution}"></span> -->
+					<span>Student: </span>
+					<span th:text="${thesis.student.name}"></span>
+					<!-- <div>
+							<span>Dissertation Topic: </span>
+							<span th:text="${thesis.topic.title}"></span>
+						</div>
+						<div>
+							<span>Internal Advisor: </span>
+							<span th:text="${thesis.internalAdvisor.name}"></span>
+						</div>
+						<div th:if="${thesis.finalGrade != null}">
+							<span>Final Grade: </span>
+							<span th:text="${thesis.finalGrade}"></span>
+						</div> -->
+				</a>
 
-		</li>
-	</ul>
+			</li>
+		</ul>
 
-	<!-- <table>
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Location</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="defense : ${defenses}">
-				<td th:text="${defense.id}"> </td>
-				<td th:text="${defense.location}" > </td>
-				<td th:text="${defense.name}"></td>
-				<td th:text="${defense.email}"></td>
-			</tr>
-		</tbody>
-	</table> -->
+		<!-- <table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Location</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="defense : ${defenses}">
+						<td th:text="${defense.id}"> </td>
+						<td th:text="${defense.location}" > </td>
+						<td th:text="${defense.name}"></td>
+						<td th:text="${defense.email}"></td>
+					</tr>
+				</tbody>
+			</table> -->
 
-	<!-- <form action="#" th:action="@{/consultant/thesis_defense}" th:object="${thesis_defense}" method="post">
-		<label for="location">location:</label><input name="location" th:field="*{location}" /><br />
-		<input type="submit" value="submit" />
-	</form> -->
+		<!-- <form action="#" th:action="@{/consultant/thesis_defense}" th:object="${thesis_defense}" method="post">
+				<label for="location">location:</label><input name="location" th:field="*{location}" /><br />
+				<input type="submit" value="submit" />
+			</form> -->
+	</div>
 </body>
 
 </html>

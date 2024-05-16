@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt_PT">
-
-<head>
-    <meta charset="ISO-8859-1" />
-    <link href="css/style.css" rel="stylesheet" />
-    <title>Spring Boot Application</title>
-</head>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 
 <body>
-    <h1>Olá Mundo!</h1>
+	<div layout:fragment="content">
+		<h1>Olá Mundo!</h1>
+	</div>
 </body>
 
 </html>

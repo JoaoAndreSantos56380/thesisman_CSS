@@ -1,41 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-	<meta charset="ISO-8859-1" />
-	<link href="css/style.css" rel="stylesheet" />
-	<title> Register Consultant</title>
-</head>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 
 <body>
-	<div th:replace="fragments/header :: header"></div>
-	<section>
-		<h2>Register Consultant:</h2>
-		<form th:action="@{/consultant/register}" th:object="${consultant}" method="post">
+	<div layout:fragment="content">
+		<section>
+			<h2>Register Consultant:</h2>
+			<form th:action="@{/consultant/register}" th:object="${consultant}" method="post">
 
-			<div>
-				<label for="username">Username:</label>
-				<input id="username" name="username" th:field="*{username}" />
-				<div th:errorclass="usernameError" th:errors="*{username}" style="color: red;"></div>
-			</div>
-			<div>
-				<label for="password">Password:</label>
-				<input id="password" name="password" th:field="*{password}" type="password" />
-				<div th:errorclass="passwordError" th:errors="*{password}" style="color: red;"></div>
-			</div>
-			<div>
-				<label for="name">Name:</label>
-				<input id="name" name="name" th:field="*{name}" />
-				<div th:errorclass="nameError" th:errors="*{name}" style="color: red;"></div>
-			</div>
-			<div>
-				<label for="company">Company:</label>
-				<input id="company" name="company" th:field="*{company}" />
-				<div th:errorclass="companyError" th:errors="*{company}" style="color: red;"></div>
-			</div>
-			<input type="submit" value="Add" />
-		</form>
-	</section>
+				<div>
+					<label for="username">Username:</label>
+					<input id="username" name="username" th:field="*{username}" />
+					<div th:errorclass="usernameError" th:errors="*{username}" style="color: red;"></div>
+				</div>
+				<div>
+					<label for="password">Password:</label>
+					<input id="password" name="password" th:field="*{password}" type="password" />
+					<div th:errorclass="passwordError" th:errors="*{password}" style="color: red;"></div>
+				</div>
+				<div>
+					<label for="name">Name:</label>
+					<input id="name" name="name" th:field="*{name}" />
+					<div th:errorclass="nameError" th:errors="*{name}" style="color: red;"></div>
+				</div>
+				<div>
+					<label for="company">Company:</label>
+					<input id="company" name="company" th:field="*{company}" />
+					<div th:errorclass="companyError" th:errors="*{company}" style="color: red;"></div>
+				</div>
+				<input type="submit" value="Add" />
+			</form>
+		</section>
+	</div>
 </body>
 
 </html>
