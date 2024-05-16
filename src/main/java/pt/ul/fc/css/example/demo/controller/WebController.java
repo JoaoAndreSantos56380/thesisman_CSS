@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
@@ -130,23 +131,36 @@ public class WebController {
 	}
 
 	@GetMapping("/consultant/thesis_defense/{id}")
-	public String newThesisDefenseSchedule(final Model model, @PathVariable("id") Long id) {
+	public String newThesisDefenseSchedule(final Model model, @PathVariable Long id) {
 		model.addAttribute("thesis_defense", new ThesisDefense());
 		model.addAttribute("id", id);
 		return "consultant_thesis_defense_scheduler";
 	}
 
 	@PostMapping("/consultant/thesis_defense/{id}")
-	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id/* , Authentication auth */,
+	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id,
 			@ModelAttribute ThesisDefense td) {
 		Optional<ThesisExecution> te = execService.getThesis(id);
 		if (te.isPresent()) {
-			defenseService.addDefense(te.get(), td.getLocation(), td.getTime()/* new Date() */);
+			defenseService.addDefense(te.get(), td.getLocation(), td.getTime());
 		} else {
 			model.addAttribute("error", "Thesis Execution not found.");
 			return "error_page";
 		}
 		return "redirect:/consultant/thesis_defense";
-		// return "layout";
 	}
+
+	@GetMapping("/statistics")
+	public String getStats(final Model model) {
+		ArrayList<ThesisDefense> defenses = (ArrayList<ThesisDefense>) defenseService.findAllDefenses();
+		int total_defenses = defenses.size();
+		int positives = defenseService.findAllPositives().size();
+		double average = (defenses.stream().mapToInt(ThesisDefense::getGrade).sum())/(double)total_defenses;
+		model.addAttribute("positives", positives);
+		model.addAttribute("average", average);
+		model.addAttribute("total_defenses", total_defenses);
+		model.addAttribute("defenses", defenses);
+		return "statistics";
+	}
+
 }
