@@ -15,74 +15,75 @@ import org.springframework.lang.Nullable;
 
 @Entity
 public class ThesisDefense {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
-	@NonNull
-	@ManyToOne
-	@JoinColumn(name = "fk_thesisExecution_id", referencedColumnName = "id", nullable = false)
-	private ThesisExecution thesisExecution;
+    @NonNull
+    @ManyToOne
+    @JoinColumn(name = "fk_thesisExecution_id", referencedColumnName = "id", nullable = false)
+    private ThesisExecution thesisExecution;
 
-	/*
-	 * @NonNull
-	 *
-	 * @Lob
-	 * private File manuscriptFile;
-	 */
+    // TODO COLOCAR ARGUENTE
 
-	@Nullable
-	@Column(nullable = true)
-	private double grade;
+    /*
+     
+@NonNull*
+@Lob
+private File manuscriptFile;*/
 
-	@NonNull
-	@Column(nullable = false)
-	private String location;
+    @Nullable
+    @Column(nullable = true)
+    private int grade;
 
-	@NonNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	@Column(nullable = false)
-	private Date time;
+    @NonNull
+    @Column(nullable = false)
+    private String location;
 
-	public ThesisDefense(ThesisExecution thesisExecution, String location, Date time) {
-		this.thesisExecution = thesisExecution;
-		this.location = location;
-		this.time = time;
-		this.grade = 0; // Including grade in this constructor
-	}
+    @NonNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Column(nullable = false)
+    private Date time;
 
-	public ThesisDefense() {
-	}
+    public ThesisDefense(ThesisExecution thesisExecution, String location, Date time) {
+        this.thesisExecution = thesisExecution;
+        this.location = location;
+        this.time = time;
+        this.grade = 0; // Including grade in this constructor
+    }
 
-	public void assignGrade(int grade) {
-		this.grade = grade;
-	}
+    public ThesisDefense() {
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
 
-	public ThesisExecution getThesisExecution() {
-		return thesisExecution;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public double getGrade() {
-		return grade;
-	}
+    public ThesisExecution getThesisExecution() {
+        return thesisExecution;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    public int getGrade() {
+        return grade;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public String getLocation() {
+        return location;
+    }
 
-	public Date getTime() {
-		return time;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public void setTime(Date time) {
-		this.time = time;
-	}
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 }
