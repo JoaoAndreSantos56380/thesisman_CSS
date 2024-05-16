@@ -119,8 +119,11 @@ public class DemoApplication {
 
 			ThesisDefense defense = new ThesisDefense(thesis, "LOCATION", new Date());
 
-			FinalDefense finalDefense = new FinalDefense(thesis, "FINAL_LOCATION", new Date(), presiJuri);
+            defense.setGrade(17);
 
+            FinalDefense finalDefense = new FinalDefense(thesis, "FINAL_LOCATION", new Date(), presiJuri);
+
+            finalDefense.setGrade(18);
 			defenseRepository.save(defense);
 
 			defenseRepository.save(finalDefense);
