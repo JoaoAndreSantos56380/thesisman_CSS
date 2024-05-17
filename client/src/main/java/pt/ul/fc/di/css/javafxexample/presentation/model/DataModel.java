@@ -16,37 +16,47 @@ public class DataModel {
 	 * for changes and transformed into "update" change of ListChangeListener.	  
 	 * since the phone is not visible, changes in the phone do not need to be propagated	 
 	 */
-	private final ObservableList<Person> personList =	 
-			FXCollections.observableArrayList(person -> 
-			new Observable[] {person.firstNameProperty(), person.lastNameProperty()});
+	private final ObservableList<Student> personList =	 
+			FXCollections.observableArrayList(student -> 
+			new Observable[] {student.usernameProperty(), student.studentNumberProperty()});
 
-	public ObservableList<Person> getCustomerList() {
+	public ObservableList<Student> getStudentList() {
 		return personList;
 	}
 
-	private final ObjectProperty<Person> currentCustomer = new SimpleObjectProperty<>(null);
+	private final ObjectProperty<Student> currentStudent = new SimpleObjectProperty<>(null);
 
-	public ObjectProperty<Person> currentCustomerProperty() {
-		return currentCustomer;
+	
+	public ObjectProperty<Student> currentStudentProperty() {
+		return currentStudent;
 	}
 
-	public final Person getCurrentCustomer() {
-		return currentCustomerProperty().get();
+	public final Student getCurrentStudent() {
+		return currentStudentProperty().get();
 	}
 
-	public final void setCurrentCustomer(Person person) {
-		currentCustomerProperty().set(person);
+	public final void setCurrentStudent(Student student) {
+		currentStudentProperty().set(student);
 	}
 
-	public void loadData(File file) {
-		// mock...
-		personList.setAll(
-				new Person("Jose", "Silva", 934445678 ),
-				new Person("Isabel", "Ramos",912765432), 
-				new Person("Eloi", "Matos", 965436576), 
-				new Person("Ema", "Antunes", 217122121), 
-				new Person("Paulo", "Guerra", 217500504)
-				);
+	public void loadData() {
+		
+		Masters master1 = new Masters("Computer Science", "crisss");
+        Masters master2 = new Masters("Data Science", "jose manel");
+        Masters master3 = new Masters("Software Engineering", "castelo preto");
+
+        personList.setAll(
+            new Student("jose.silva", "password123", "Jose Silva", 1001, 15.5, master1),
+            new Student("isabel.ramos", "password456", "Isabel Ramos", 1002, 17.0, master2),
+            new Student("eloi.matos", "password789", "Eloi Matos", 1003, 14.0, master1),
+            new Student("ema.antunes", "password012", "Ema Antunes", 1004, 18.5, master3),
+            new Student("paulo.guerra", "password345", "Paulo Guerra", 1005, 16.0, master1),
+            new Student("ana.santos", "password678", "Ana Santos", 1006, 19.0, master2),
+            new Student("maria.oliveira", "password901", "Maria Oliveira", 1007, 13.5, master3),
+            new Student("rui.rodrigues", "password234", "Rui Rodrigues", 1008, 16.5, master1),
+            new Student("carlos.lima", "password567", "Carlos Lima", 1009, 15.0, master2),
+            new Student("sofia.pereira", "password890", "Sofia Pereira", 1010, 17.5, master3)
+        );
 	}
 
 	public void saveData(File file) { }

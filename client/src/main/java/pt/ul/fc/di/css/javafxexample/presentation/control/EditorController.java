@@ -6,39 +6,71 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
+import pt.ul.fc.di.css.javafxexample.presentation.model.Student;
 
 public class EditorController {
 
     @FXML
-    private TextField firstNameField ;
+    private TextField usernameField;
     @FXML
-    private TextField lastNameField ;
+    private TextField passwordField;
     @FXML
-    private TextField phoneField ;
+    private TextField nameField;
+    @FXML
+    private TextField studentNumberField;
+    @FXML
+    private TextField averageGradeField;
+    @FXML
+    private TextField masterField;
 
-    private DataModel model ;
+    private DataModel model;
 
     public void initModel(DataModel model) {
         if (this.model != null) {
             throw new IllegalStateException("Model can only be initialized once");
         }
-        this.model = model ;
-        model.currentCustomerProperty().addListener((obs, oldCustomer, newCustomer) -> {
-            if (oldCustomer != null) {
-                firstNameField.textProperty().unbindBidirectional(oldCustomer.firstNameProperty());
-                lastNameField.textProperty().unbindBidirectional(oldCustomer.lastNameProperty());
-                phoneField.textProperty().unbindBidirectional(oldCustomer.phoneNumberProperty());
+        this.model = model;
+        model.currentStudentProperty().addListener((obs, oldStudent, newStudent) -> {
+            if (oldStudent != null) {
+                unbindStudent(oldStudent);
             }
-            if (newCustomer == null) {
-                firstNameField.setText("");
-                lastNameField.setText("");
-                phoneField.setText("");
+            if (newStudent == null) {
+                clearFields();
             } else {
-                firstNameField.textProperty().bindBidirectional(newCustomer.firstNameProperty());
-                lastNameField.textProperty().bindBidirectional(newCustomer.lastNameProperty());
-                phoneField.textProperty().bindBidirectional(newCustomer.phoneNumberProperty(),
-                		new NumberStringConverter(new Locale ("pt", "PT")));
+                bindStudent(newStudent);
             }
         });
+    }
+
+    private void bindStudent(Student student) {
+        usernameField.textProperty().bindBidirectional(student.usernameProperty());
+        passwordField.textProperty().bindBidirectional(student.passwordProperty());
+        nameField.textProperty().bindBidirectional(student.nameProperty());
+        studentNumberField.textProperty().bindBidirectional(student.studentNumberProperty(), new NumberStringConverter(new Locale("pt", "PT")));
+        averageGradeField.textProperty().bindBidirectional(student.averageGradeProperty(), new NumberStringConverter(new Locale("pt", "PT")));
+        // masterField should be bound to master's name property or similar if available
+        if (student.getMaster() != null) {
+            masterField.setText(student.getMaster().getName());
+        } else {
+            masterField.setText("");
+        }
+    }
+
+    private void unbindStudent(Student student) {
+        usernameField.textProperty().unbindBidirectional(student.usernameProperty());
+        passwordField.textProperty().unbindBidirectional(student.passwordProperty());
+        nameField.textProperty().unbindBidirectional(student.nameProperty());
+        studentNumberField.textProperty().unbindBidirectional(student.studentNumberProperty());
+        averageGradeField.textProperty().unbindBidirectional(student.averageGradeProperty());
+        masterField.setText("");
+    }
+
+    private void clearFields() {
+        usernameField.setText("");
+        passwordField.setText("");
+        nameField.setText("");
+        studentNumberField.setText("");
+        averageGradeField.setText("");
+        masterField.setText("");
     }
 }

@@ -23,15 +23,17 @@ public class MenuController {
 
     @FXML
     public void load() {
+        model.loadData();
+        /* 
         FileChooser chooser = new FileChooser();
         File file = chooser.showOpenDialog(menuBar.getScene().getWindow());
         if (file != null) {
             try {
-                model.loadData(file);
+                
             } catch (Exception exc) {
                 // handle exception...
             }
-        }
+        }*/
     }
 
     @FXML

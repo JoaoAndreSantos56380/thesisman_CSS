@@ -3,7 +3,9 @@ package pt.ul.fc.di.css.javafxexample;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import pt.ul.fc.di.css.javafxexample.presentation.control.EditorController;
 import pt.ul.fc.di.css.javafxexample.presentation.control.ListController;
@@ -33,6 +35,10 @@ public class Hello extends Application {
         listController.initModel(model);
         editorController.initModel(model);
         menuController.initModel(model);
+        
+        Button button = new Button("aloooo");
+        HBox bottomBox = new HBox(button);
+        root.setBottom(bottomBox);
 
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
