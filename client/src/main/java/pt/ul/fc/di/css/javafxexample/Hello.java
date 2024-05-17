@@ -41,6 +41,7 @@ public class Hello extends Application {
         root.setBottom(bottomBox);
 
         Scene scene = new Scene(root, 800, 600);
+        primaryStage.setTitle("Student Application");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

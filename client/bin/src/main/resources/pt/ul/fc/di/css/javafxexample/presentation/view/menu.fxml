@@ -8,23 +8,8 @@
 
 <StackPane fx:controller="pt.ul.fc.di.css.javafxexample.presentation.control.MenuController" xmlns:fx="http://javafx.com/fxml/1">
 	<MenuBar fx:id="menuBar">
-		<Menu text="Students">
-			<MenuItem text="List students" onAction="#loadStudents"/>
-			<SeparatorMenuItem />
-			<MenuItem text="Quit" onAction="#exit"/>
-		</Menu>
 		<Menu text="Topics">
 			<MenuItem text="List topics" onAction="#load"/>
-			<SeparatorMenuItem />
-			<MenuItem text="Quit" onAction="#exit"/>
-		</Menu>
-		<Menu text="Masters">
-			<MenuItem text="List masters" onAction="#loadMasters"/>
-			<SeparatorMenuItem />
-			<MenuItem text="Quit" onAction="#exit"/>
-		</Menu>
-		<Menu text="Professors">
-			<MenuItem text="List professors" onAction="#loadProfessors"/>
 			<SeparatorMenuItem />
 			<MenuItem text="Quit" onAction="#exit"/>
 		</Menu>

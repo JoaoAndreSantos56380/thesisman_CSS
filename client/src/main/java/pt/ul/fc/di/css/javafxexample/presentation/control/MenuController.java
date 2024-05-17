@@ -24,6 +24,7 @@ public class MenuController {
     @FXML
     public void load() {
         model.loadData();
+        model.loadProfessors();
         /* 
         FileChooser chooser = new FileChooser();
         File file = chooser.showOpenDialog(menuBar.getScene().getWindow());
@@ -41,6 +42,21 @@ public class MenuController {
 
         // similar to load...
 
+    }
+
+    @FXML
+    public void loadStudents() {
+        model.loadStudents();
+    }
+
+    @FXML
+    public void loadProfessors() {
+        model.loadProfessors();
+    }
+
+    @FXML
+    public void loadMasters() {
+        model.loadMasters();
     }
     
     @FXML
