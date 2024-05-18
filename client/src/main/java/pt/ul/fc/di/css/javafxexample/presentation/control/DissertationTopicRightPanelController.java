@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.beans.property.ObjectProperty;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DissertationTopicModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.MastersModel;
+import pt.ul.fc.di.css.javafxexample.presentation.model.ProfessorModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.AppUserModel;
 
 import java.util.Set;
@@ -32,6 +33,8 @@ public class DissertationTopicRightPanelController {
     private Label submitterLabel;
     @FXML
     private Label compatibleMastersLabel;
+    @FXML
+    private Label dissertationTypeLabel;
 
     @FXML
     private Button applyButton;
@@ -69,6 +72,11 @@ public class DissertationTopicRightPanelController {
                     compatibleMastersLabel.setText(mastersList);
                 } else {
                     compatibleMastersLabel.setText("No compatible masters");
+                }
+                if (submitter instanceof ProfessorModel) {
+                    dissertationTypeLabel.setText("Dissertation");
+                } else {
+                    dissertationTypeLabel.setText("Project");
                 }
             } else {
                 noSelectionLabel.setVisible(true);

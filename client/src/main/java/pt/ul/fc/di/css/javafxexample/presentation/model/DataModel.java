@@ -59,7 +59,7 @@ public class DataModel<T> {
                 "Artificial Intelligence in Wonderland",
                 "Exploring AI concepts through Alice's adventures.",
                 1500.0,
-                new AppUserModel("alice.wonderland", "CheshireCat01", "Alice Wonderland"),
+                new ProfessorModel("alice.wonderland", "CheshireCat01", "Alice Wonderland"),
                 mastersSet1
         );
 
@@ -67,7 +67,7 @@ public class DataModel<T> {
                 "Building Smart Cities",
                 "Technologies and methodologies for constructing smart cities.",
                 1700.0,
-                new AppUserModel("bob.builder", "FixItAll02", "Bob Builder"),
+                new ProfessorModel("bob.builder", "FixItAll02", "Bob Builder"),
                 mastersSet2
         );
 
@@ -75,7 +75,7 @@ public class DataModel<T> {
                 "Chocolate Factory Automation",
                 "Automating processes in chocolate production.",
                 1400.0,
-                new AppUserModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
+                new ProfessorModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
                 mastersSet3
         );
 

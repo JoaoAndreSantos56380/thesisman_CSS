@@ -35,10 +35,14 @@
             <Label fx:id="submitterLabel" wrapText="true" maxWidth="Infinity" />
         </VBox>
         <VBox>
+            <Text text="Type: " style="-fx-font-weight: bold;" />
+            <Label fx:id="dissertationTypeLabel" wrapText="true" maxWidth="Infinity" />
+        </VBox>
+        <VBox>
             <Text text="Compatible Masters: " style="-fx-font-weight: bold;" />
             <Label fx:id="compatibleMastersLabel" wrapText="true" maxWidth="Infinity" />
         </VBox>
-        <Button text="APPLY" style="-fx-background-color: green; -fx-text-fill: white;" onAction="#handleApplyButton"/>
+        <Button text="APPLY" style="-fx-background-color: green; -fx-text-fill: white;" onAction="#handleApplyButton" />
 
     </VBox>
 </VBox>
