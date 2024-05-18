@@ -19,6 +19,13 @@ public class ApplicationService {
         if(studentApplications.size() >= 5) {
             return null;
         }
+
+        for (Application existingApplication : studentApplications) {
+            if (existingApplication.getTopic().equals(application.getTopic())) {
+                return null; // Return null if a matching application is found
+            }
+        }
+        
         return applicationRepository.save(application);
     }
 
