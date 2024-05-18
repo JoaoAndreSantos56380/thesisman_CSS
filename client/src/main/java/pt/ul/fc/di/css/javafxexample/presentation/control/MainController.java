@@ -40,16 +40,6 @@ public class MainController {
     }
 
 
-
-
-    private void showStudentList() {
-        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/StudentListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/StudentRightPanel.fxml", StudentModel.class);
-    }
-
-    private void showProfessorList() {
-        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ProfessorListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/ProfessorRightPanel.fxml", ProfessorModel.class);
-    }
-
     private void showApplicationList() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
     }
@@ -74,13 +64,7 @@ public class MainController {
 
             // Initialize Model and Controller
             DataModel<T> model = new DataModel<>();
-            if (modelClass == StudentModel.class) {
-                ((DataModel<StudentModel>) model).loadStudents();
-            } else if (modelClass == ProfessorModel.class) {
-                ((DataModel<ProfessorModel>) model).loadProfessors();
-            } else if (modelClass == MastersModel.class) {
-                ((DataModel<MastersModel>) model).loadMasters();
-            } else if(modelClass == DissertationTopicModel.class) {
+            if(modelClass == DissertationTopicModel.class) {
                 ((DataModel<DissertationTopicModel>) model).loadDissertationTopics();
             } else if(modelClass == ApplicationModel.class) {
                 ((DataModel<ApplicationModel>) model).loadApplications();
@@ -93,13 +77,7 @@ public class MainController {
             // RightPanelController<T> rightPanelController = rightPanelLoader.getController();
             // rightPanelController.initModel(model);
             Object rightPanelController = rightPanelLoader.getController();
-            if (rightPanelController instanceof StudentRightPanelController) {
-                ((StudentRightPanelController) rightPanelController).initModel((ObjectProperty<StudentModel>) listController.selectedItemProperty());
-            } else if (rightPanelController instanceof ProfessorRightPanelController) {
-                ((ProfessorRightPanelController) rightPanelController).initModel((ObjectProperty<ProfessorModel>) listController.selectedItemProperty());
-            } else if (rightPanelController instanceof MasterRightPanelController) {
-                ((MasterRightPanelController) rightPanelController).initModel((ObjectProperty<MastersModel>) listController.selectedItemProperty());
-            } else if (rightPanelController instanceof DissertationTopicRightPanelController) {
+            if (rightPanelController instanceof DissertationTopicRightPanelController) {
                 ((DissertationTopicRightPanelController) rightPanelController).initModel((ObjectProperty<DissertationTopicModel>) listController.selectedItemProperty());
             } else if (rightPanelController instanceof ApplicationRightPanelController) {
                 ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty());

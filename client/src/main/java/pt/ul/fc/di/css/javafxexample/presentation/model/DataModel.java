@@ -33,14 +33,6 @@ public class DataModel<T> {
         itemsList.setAll(items);
     }
 
-    public void loadStudents() {
-        loadItems(
-            (T)new StudentModel("alice.wonderland", "CheshireCat01", "Alice Wonderland", 1001, 15.5, new MastersModel("Computer Science", new ProfessorModel("Kandonga", "hello", "mantorras"))),
-            (T)new StudentModel("bob.builder", "FixItAll02", "Bob Builder", 1002, 17.0, new MastersModel("Data Science", new ProfessorModel("Casemirao", "deus", "god"))),
-            (T)new StudentModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate", 1003, 14.0, new MastersModel("Software Engineering", new ProfessorModel("Al-çides", "css", "git")))
-            // Add more StudentModel instances as needed
-        );
-    }
 
     public void loadDissertationTopics() {
         Set<MastersModel> mastersSet1 = new HashSet<>();
@@ -85,23 +77,6 @@ public class DataModel<T> {
         loadItems((T)topic1, (T)topic2, (T)topic3);
     }
 
-    public void loadProfessors() {
-        loadItems(
-            (T)new ProfessorModel("Kandonga", "hello", "mantorras"),
-            (T)new ProfessorModel("Casemirao", "deus", "god"),
-            (T)new ProfessorModel("Al-çides", "css", "git")
-            // Add more ProfessorModel instances as needed
-        );
-    }
-
-    public void loadMasters() {
-        loadItems(
-            (T)new MastersModel("Computer Science", new ProfessorModel("Kandonga", "hello", "mantorras")),
-            (T)new MastersModel("Data Science", new ProfessorModel("Casemirao", "deus", "god")),
-            (T)new MastersModel("Software Engineering", new ProfessorModel("Al-çides", "css", "git"))
-            // Add more MastersModel instances as needed
-        );
-    }
 
         public void loadApplications() {
             // Mock data for students
