@@ -15,6 +15,17 @@ public class ApplicationService {
     private ApplicationRepository applicationRepository;
 
     public Application addApplication(Application application) {
+        List<Application> studentApplications = applicationRepository.findByStudent(application.getStudent());
+        if(studentApplications.size() >= 5) {
+            return null;
+        }
+
+        for (Application existingApplication : studentApplications) {
+            if (existingApplication.getTopic().equals(application.getTopic())) {
+                return null; // Return null if a matching application is found
+            }
+        }
+        
         return applicationRepository.save(application);
     }
 
@@ -26,5 +37,8 @@ public class ApplicationService {
         return applicationRepository.findByTopic(topic);
     }
 
+    public void deleteApplication(Application application) {
+        applicationRepository.delete(application);
+    }
 }
 
