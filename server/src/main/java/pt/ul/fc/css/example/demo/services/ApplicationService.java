@@ -2,13 +2,13 @@ package pt.ul.fc.css.example.demo.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
 
-@Service
+@Component
 public class ApplicationService {
 
     @Autowired
