@@ -44,13 +44,16 @@ public class DataModel<T> {
 
     public void loadDissertationTopics() {
         Set<MastersModel> mastersSet1 = new HashSet<>();
-        mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Kandonga", "hello", "mantorras")));
+        mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Prof1", "hello", "mantorras")));
 
         Set<MastersModel> mastersSet2 = new HashSet<>();
-        mastersSet2.add(new MastersModel("Data Science", new ProfessorModel("Casemirao", "deus", "god")));
+        mastersSet2.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
+        mastersSet2.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
 
         Set<MastersModel> mastersSet3 = new HashSet<>();
-        mastersSet3.add(new MastersModel("Software Engineering", new ProfessorModel("Al-çides", "css", "git")));
+        mastersSet3.add(new MastersModel("Artificial Intelligence", new ProfessorModel("Prof4", "ai", "ml")));
+        mastersSet3.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
+        mastersSet3.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
 
         DissertationTopicModel topic1 = new DissertationTopicModel(
                 "Artificial Intelligence in Wonderland",

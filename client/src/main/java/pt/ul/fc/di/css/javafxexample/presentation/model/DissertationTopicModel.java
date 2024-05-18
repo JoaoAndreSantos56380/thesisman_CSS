@@ -22,7 +22,7 @@ public class DissertationTopicModel {
         setDescription(description);
         setSalary(salary);
         setSubmitter(submitter);
-        //setCompatibleMasters(compatibleMasters);
+        setCompatibleMasters(compatibleMasters);
         determineType();
     }
 
