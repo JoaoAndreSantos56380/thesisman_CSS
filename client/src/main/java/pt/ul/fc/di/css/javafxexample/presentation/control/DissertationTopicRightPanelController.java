@@ -41,9 +41,10 @@ public class DissertationTopicRightPanelController {
     
     @FXML
     private void handleApplyButton() {
-        System.out.println("Apply button pressed");
+        System.out.println("Apply button pressed for topic with id: " + currentSelection.getId());
     }
 
+    private DissertationTopicModel currentSelection;
 
     public void initModel(ObjectProperty<DissertationTopicModel> selectedItemProperty) {
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
@@ -63,7 +64,7 @@ public class DissertationTopicRightPanelController {
                 } else {
                     submitterLabel.setText("No submitter");
                 }
-
+                currentSelection = newSelection;
                 Set<MastersModel> compatibleMasters = newSelection.getCompatibleMasters();
                 if (compatibleMasters != null && !compatibleMasters.isEmpty()) {
                     String mastersList = compatibleMasters.stream()

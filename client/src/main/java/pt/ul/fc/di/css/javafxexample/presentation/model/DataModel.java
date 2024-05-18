@@ -71,6 +71,10 @@ public class DataModel<T> {
                 mastersSet3
         );
 
+        topic1.setId(1);
+        topic2.setId(2);
+        topic3.setId(3);
+
         // Add more DissertationTopicModel instances as needed
 
         // Load these topics into your application (for example, into a list or database)
@@ -119,6 +123,8 @@ public class DataModel<T> {
                 new ProfessorModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
                 mastersSet3
         );
+
+       
     
             // Create mock applications
             ApplicationModel application1 = new ApplicationModel(student1, topic1);
