@@ -10,14 +10,14 @@ public class DissertationTopicModel {
     private final StringProperty title = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
     private final DoubleProperty salary = new SimpleDoubleProperty();
-    private final ObjectProperty<AppUser> submitter = new SimpleObjectProperty<>();
-    private final ObjectProperty<Set<Masters>> compatibleMasters = new SimpleObjectProperty<>();
+    private final ObjectProperty<AppUserModel> submitter = new SimpleObjectProperty<>();
+    private final ObjectProperty<Set<MastersModel>> compatibleMasters = new SimpleObjectProperty<>();
 
     // Construtores
     public DissertationTopicModel() {
     }
 
-    public DissertationTopicModel(String title, String description, double salary, AppUser submitter, Set<Masters> compatibleMasters) {
+    public DissertationTopicModel(String title, String description, double salary, AppUserModel submitter, Set<MastersModel> compatibleMasters) {
         setTitle(title);
         setDescription(description);
         setSalary(salary);
@@ -92,35 +92,35 @@ public class DissertationTopicModel {
     }
 
     // Getters e setters para submitter
-    public ObjectProperty<AppUser> submitterProperty() {
+    public ObjectProperty<AppUserModel> submitterProperty() {
         return submitter;
     }
 
-    public AppUser getSubmitter() {
+    public AppUserModel getSubmitter() {
         return submitter.get();
     }
 
-    public void setSubmitter(AppUser submitter) {
+    public void setSubmitter(AppUserModel submitter) {
         this.submitter.set(submitter);
         determineType();
     }
 
     // Getters e setters para compatibleMasters
-    public ObjectProperty<Set<Masters>> compatibleMastersProperty() {
+    public ObjectProperty<Set<MastersModel>> compatibleMastersProperty() {
         return compatibleMasters;
     }
 
-    public Set<Masters> getCompatibleMasters() {
+    public Set<MastersModel> getCompatibleMasters() {
         return compatibleMasters.get();
     }
 
-    public void setCompatibleMasters(Set<Masters> compatibleMasters) {
+    public void setCompatibleMasters(Set<MastersModel> compatibleMasters) {
         this.compatibleMasters.set(compatibleMasters);
     }
 
     private void determineType() {
         if (submitter != null && submitter.get() != null) {
-            if (submitter.get().getClass() == Professor.class) {
+            if (submitter.get().getClass() == ProfessorModel.class) {
                 setType(DissertationTopicType.DISSERTATION);
             } else {
                 setType(DissertationTopicType.PROJECT);

@@ -7,17 +7,17 @@ import javafx.beans.property.StringProperty;
 
 
 //Muito simplificado, apenas para oder usar o Student
-public class Masters {
+public class MastersModel {
     private final StringProperty name = new SimpleStringProperty();
-    private final ObjectProperty<Professor> coordenator = new SimpleObjectProperty<>();
+    private final ObjectProperty<ProfessorModel> coordenator = new SimpleObjectProperty<>();
 
-    public Masters(String name, Professor coordenator) {
+    public MastersModel(String name, ProfessorModel coordenator) {
         setName(name);
         //alterar
         setCoordenator(coordenator);
     }
 
-    public void setCoordenator(Professor coordenator) {
+    public void setCoordenator(ProfessorModel coordenator) {
         this.coordenator.set(coordenator);
     }
 
@@ -25,15 +25,15 @@ public class Masters {
         return name;
     }
 
-    public SimpleObjectProperty<Professor> coordenatorProperty() {
-        return (SimpleObjectProperty<Professor>) coordenator;
+    public SimpleObjectProperty<ProfessorModel> coordenatorProperty() {
+        return (SimpleObjectProperty<ProfessorModel>) coordenator;
     }
 
     public String getName() {
         return name.get();
     }
 
-    public Professor getCoordenator() {
+    public ProfessorModel getCoordenator() {
         return coordenator.get();
     }
 

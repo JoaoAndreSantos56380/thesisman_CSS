@@ -8,34 +8,39 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+//import pt.ul.fc.css.example.demo.entities.AppUser;
+//import pt.ul.fc.css.example.demo.entities.Student;
 
-public class Student extends AppUser {
+
+public class StudentModel extends AppUserModel {
     private final IntegerProperty studentNumber = new SimpleIntegerProperty();
     private final DoubleProperty averageGrade = new SimpleDoubleProperty();
-    private final ObjectProperty<Masters> master = new SimpleObjectProperty<>();
+    private final ObjectProperty<MastersModel> master = new SimpleObjectProperty<>();
 
     // Construtor com averageGrade
-    public Student(String username, String password, String name, int studentNumber, double averageGrade, Masters master) {
+    public StudentModel(String username, String password, String name, int studentNumber, double averageGrade, MastersModel master) {
         super(username, password, name);
+        //Student student = new Student(username, password, name, studentNumber, averageGrade, master);
+    
         setStudentNumber(studentNumber);
         setAverageGrade(averageGrade);
         setMaster(master);
     }
 
     // Construtor com averageGrade
-    public Student(String username, String password, String name, int studentNumber, double averageGrade) {
+    public StudentModel(String username, String password, String name, int studentNumber, double averageGrade) {
         super(username, password, name);
         setStudentNumber(studentNumber);
         setAverageGrade(averageGrade);
     }
 
     // Construtor sem averageGrade
-    public Student(String username, String password, String name, int studentNumber, Masters master) {
+    public StudentModel(String username, String password, String name, int studentNumber, MastersModel master) {
         this(username, password, name, studentNumber, 0.0, master);
     }
 
     // Construtor sem Masters
-    public Student(String username, String password, String name, int studentNumber) {
+    public StudentModel(String username, String password, String name, int studentNumber) {
         this(username, password, name, studentNumber, 0.0);
     }
 
@@ -66,15 +71,15 @@ public class Student extends AppUser {
     }
 
     // Getters e setters para master
-    public ObjectProperty<Masters> masterProperty() {
+    public ObjectProperty<MastersModel> masterProperty() {
         return master;
     }
 
-    public Masters getMaster() {
+    public MastersModel getMaster() {
         return master.get();
     }
 
-    public void setMaster(Masters master) {
+    public void setMaster(MastersModel master) {
         this.master.set(master);
     }
 

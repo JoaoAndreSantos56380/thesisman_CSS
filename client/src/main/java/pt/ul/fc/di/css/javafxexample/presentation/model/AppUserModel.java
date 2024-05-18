@@ -4,14 +4,15 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.StringProperty;
+//import pt.ul.fc.css.example.demo.entities.AppUser;
 
-public class AppUser {
+public class AppUserModel {
     private final LongProperty id = new SimpleLongProperty();
     private final StringProperty username = new SimpleStringProperty();
     private final StringProperty password = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
 
-    public AppUser(String username, String password, String name) {
+    public AppUserModel(String username, String password, String name) {
         setUsername(username);
         setPassword(password);
         setName(name);
