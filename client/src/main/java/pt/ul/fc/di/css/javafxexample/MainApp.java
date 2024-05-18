@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pt.ul.fc.di.css.javafxexample.presentation.control.LoginController;
+import pt.ul.fc.di.css.javafxexample.presentation.control.MainController;
 
 public class MainApp extends Application {
 
@@ -32,15 +33,15 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
-    public void showMainView() throws Exception {
+    public void showMainView(String username) throws Exception {
         String prefix = "/pt/ul/fc/di/css/javafxexample/presentation/view/";
 
-        BorderPane root = new BorderPane();
-        FXMLLoader listLoader = new FXMLLoader(getClass().getResource(prefix + "MainView.fxml"));
-        root.setCenter(listLoader.load());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(prefix + "MainView.fxml"));
+        BorderPane root = loader.load();
+
 
         Scene scene = new Scene(root, 800, 600);
-        primaryStage.setTitle("Student Application");
+        primaryStage.setTitle("Welcome " + username +"!");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

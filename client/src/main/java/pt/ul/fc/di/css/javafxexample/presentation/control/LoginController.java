@@ -28,7 +28,7 @@ public class LoginController {
 
         // Add your authentication logic here
         //if ("user".equals(username) && "password".equals(password)) {
-        mainApp.showMainView();
+        mainApp.showMainView(username);
         //} else {
             // Show error message (this is a simple example, so no error handling is implemented)
         //}

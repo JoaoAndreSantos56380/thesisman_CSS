@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.StudentModel;
@@ -30,12 +31,14 @@ public class MainController {
     @FXML
     private Button masterButton;
 
+
     @FXML
     public void initialize() {
         studentButton.setOnAction(event -> showStudentList());
         professorButton.setOnAction(event -> showProfessorList());
         masterButton.setOnAction(event -> showMasterList());
     }
+
 
     private void showStudentList() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/StudentListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/StudentRightPanel.fxml", StudentModel.class);
