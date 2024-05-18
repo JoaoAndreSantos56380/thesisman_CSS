@@ -3,7 +3,8 @@ package pt.ul.fc.css.example.demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import pt.ul.fc.css.example.demo.entities.Masters;
+import pt.ul.fc.css.example.demo.entities.AppUser;
+import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.handlers.StatisticsHandlerP;
@@ -28,8 +29,20 @@ public class ThesisDefenseService {
     public ThesisDefense addDefense(ThesisExecution te, String location, Date time) {
         return defenseRepository.save(new ThesisDefense(te, location, time));
     }
-	
+
     public List<ThesisDefense> findAllPositives() {
         return statsHandler.findAllPositives();
     }
+
+	public ThesisDefense findById(Long id) {
+		return defenseRepository.findById(id).orElseThrow();
+	}
+
+	public List<ThesisDefense> getDefensesOfTheThesesIAmOrienting(AppUser loggedinUser) {
+		return defenseRepository.getDefensesOfTheThesesIAmOrienting((Professor) loggedinUser);
+	}
+
+	public void addDefense(ThesisDefense defense) {
+		defenseRepository.save(defense);
+	}
 }
