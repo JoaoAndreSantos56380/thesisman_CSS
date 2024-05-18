@@ -3,6 +3,7 @@ package pt.ul.fc.di.css.javafxexample.presentation.control;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -21,6 +22,8 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    @FXML
+    private Label errorMessage;
     private MainApp mainApp;
 
     public void setMainApp(MainApp mainApp) {
@@ -41,7 +44,7 @@ public class LoginController {
             }
         }
         catch(Exception e) {
-            
+
         }
     }
 
@@ -50,11 +53,14 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Add your authentication logic here
-        //if ("user".equals(username) && "password".equals(password)) {
-        mainApp.showMainView(username);
-        //} else {
-            // Show error message (this is a simple example, so no error handling is implemented)
-        //}
+        if (username.isEmpty() || password.isEmpty()) {
+            errorMessage.setVisible(true);
+        } else {
+            errorMessage.setVisible(false);
+
+            mainApp.showMainView(username);
+
+        }
     }
+
 }
