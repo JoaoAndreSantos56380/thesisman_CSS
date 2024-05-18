@@ -4,7 +4,7 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
-import pt.ul.fc.css.example.demo.entities.ThesisDefense;
+import java.util.Scanner;
 
 public class ClientRestController {
 
@@ -14,28 +14,26 @@ public class ClientRestController {
         this.client = ClientBuilder.newClient();
     }
 
-    public String sendGetRequest(String urlString) {
+    public void printUrlContent(String urlString) {
         WebTarget target = client.target(urlString);
         Response response = target.request().get();
-        
+
+        System.out.println("Content of URL: " + urlString);
+
         if (response.getStatus() == 200) {
-            String entity = response.readEntity(String.class);
-            response.close();
-            return entity;
+            String content = response.readEntity(String.class);
+            System.out.println(content);
         } else {
-            response.close();
-            throw new RuntimeException("Failed with HTTP error code : " + response.getStatus());
+            System.err.println("Failed with HTTP error code : " + response.getStatus());
         }
     }
 
-    public static void main(String[] args) {
+    public void alo() {
         ClientRestController clientRestController = new ClientRestController();
-        String url = "http://example.com/api/resource"; // replace with your actual URL
-        try {
-            String response = clientRestController.sendGetRequest(url);
-            System.out.println("Response from server: " + response);
-        } catch (RuntimeException e) {
-            System.err.println("Request failed: " + e.getMessage());
-        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the URL: ");
+        String url = scanner.nextLine();
+
+        clientRestController.printUrlContent(url);
     }
 }

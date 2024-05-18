@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import pt.ul.fc.di.css.javafxexample.presentation.control.ClientRestController;
 import pt.ul.fc.di.css.javafxexample.presentation.control.EditorController;
 import pt.ul.fc.di.css.javafxexample.presentation.control.ListController;
 import pt.ul.fc.di.css.javafxexample.presentation.control.MenuController;
@@ -46,5 +47,8 @@ public class Hello extends Application {
         primaryStage.show();
     }
     
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) { 
+        ClientRestController alo = new ClientRestController();
+        alo.alo();
+        launch(args); }
 }
