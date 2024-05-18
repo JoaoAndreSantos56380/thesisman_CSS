@@ -1,0 +1,24 @@
+<body>
+    <section>
+        <h2>Customers:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Vat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${topics.empty}">
+                    <td colspan="3">No Topics</td>
+                </tr>
+                <tr th:each="c : ${topics}">
+                    <td th:text="${c.title}">...</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+
+</html>

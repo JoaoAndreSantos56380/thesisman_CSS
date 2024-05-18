@@ -35,7 +35,7 @@ class RestApplication {
     ResponseEntity<?> createApplication(@RequestBody Application application) {
         try {
             Application created = applicationService.addApplication(application);
-
+            
             // in case the student already has 5 applications
             if(created == null) {                
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

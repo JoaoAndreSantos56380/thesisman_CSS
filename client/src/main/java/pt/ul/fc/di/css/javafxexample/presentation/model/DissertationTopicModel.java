@@ -22,7 +22,7 @@ public class DissertationTopicModel {
         setDescription(description);
         setSalary(salary);
         setSubmitter(submitter);
-        //setCompatibleMasters(compatibleMasters);
+        setCompatibleMasters(compatibleMasters);
         determineType();
     }
 
@@ -130,6 +130,6 @@ public class DissertationTopicModel {
 
     @Override
     public String toString() {
-        return "DissertationTopic id: " + getId() + ", title:" + getTitle() + ", description:" + getDescription();
+        return getTitle();//"DissertationTopic id: " + getId() + ", title:" + getTitle() + ", description:" + getDescription();
     }
 }

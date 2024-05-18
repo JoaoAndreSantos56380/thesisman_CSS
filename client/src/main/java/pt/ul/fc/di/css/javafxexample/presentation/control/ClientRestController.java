@@ -28,7 +28,7 @@ public class ClientRestController {
         }
     }
 
-    public void alo() {
+    public void testeEndPoints() {
         ClientRestController clientRestController = new ClientRestController();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the URL: ");
