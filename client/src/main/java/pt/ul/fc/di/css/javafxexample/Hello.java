@@ -48,7 +48,7 @@ public class Hello extends Application {
     }
     
     public static void main(String[] args) { 
-        ClientRestController alo = new ClientRestController();
-        alo.alo();
+        ClientRestController client = new ClientRestController();
+        client.testeEndPoints();
         launch(args); }
 }
