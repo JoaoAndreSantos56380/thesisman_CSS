@@ -13,6 +13,7 @@
             <Button fx:id="studentButton" text="Students" />
             <Button fx:id="professorButton" text="Professors" />
             <Button fx:id="masterButton" text="Masters" />
+            <Button fx:id="dissertationTopicButton" text="Dissertation Topics" />
         </HBox>
     </top>
     <center>

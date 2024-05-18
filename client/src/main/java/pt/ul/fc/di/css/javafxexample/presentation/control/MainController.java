@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
+import pt.ul.fc.di.css.javafxexample.presentation.model.DissertationTopicModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.StudentModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ProfessorModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.MastersModel;
@@ -33,11 +34,18 @@ public class MainController {
 
 
     @FXML
+    private Button dissertationTopicButton;
+
+
+    @FXML
     public void initialize() {
         studentButton.setOnAction(event -> showStudentList());
         professorButton.setOnAction(event -> showProfessorList());
         masterButton.setOnAction(event -> showMasterList());
+        dissertationTopicButton.setOnAction(event -> showDissertationTopicList());
     }
+
+
 
 
     private void showStudentList() {
@@ -50,6 +58,10 @@ public class MainController {
 
     private void showMasterList() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/MasterListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/MasterRightPanel.fxml", MastersModel.class);
+    }
+
+    private void showDissertationTopicList() {
+        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicRightPanel.fxml", DissertationTopicModel.class);
     }
 
     private <T> void loadListView(String listViewFxml, String rightPanelFxml, Class<T> modelClass) {
@@ -74,6 +86,8 @@ public class MainController {
                 ((DataModel<ProfessorModel>) model).loadProfessors();
             } else if (modelClass == MastersModel.class) {
                 ((DataModel<MastersModel>) model).loadMasters();
+            } else if(modelClass == DissertationTopicModel.class) {
+                ((DataModel<DissertationTopicModel>) model).loadDissertationTopics();
             }
 
             ListController<T> listController = listViewLoader.getController();
@@ -89,6 +103,8 @@ public class MainController {
                 ((ProfessorRightPanelController) rightPanelController).initModel((ObjectProperty<ProfessorModel>) listController.selectedItemProperty());
             } else if (rightPanelController instanceof MasterRightPanelController) {
                 ((MasterRightPanelController) rightPanelController).initModel((ObjectProperty<MastersModel>) listController.selectedItemProperty());
+            } else if (rightPanelController instanceof DissertationTopicRightPanelController) {
+                ((DissertationTopicRightPanelController) rightPanelController).initModel((ObjectProperty<DissertationTopicModel>) listController.selectedItemProperty());
             }
         } catch (IOException e) {
             e.printStackTrace();
