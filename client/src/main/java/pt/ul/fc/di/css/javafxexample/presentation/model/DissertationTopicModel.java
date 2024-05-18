@@ -130,6 +130,6 @@ public class DissertationTopicModel {
 
     @Override
     public String toString() {
-        return "DissertationTopic id: " + getId() + ", title:" + getTitle() + ", description:" + getDescription();
+        return getTitle();//"DissertationTopic id: " + getId() + ", title:" + getTitle() + ", description:" + getDescription();
     }
 }
