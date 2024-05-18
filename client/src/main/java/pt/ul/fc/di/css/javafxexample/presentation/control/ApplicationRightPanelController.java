@@ -37,12 +37,12 @@ public class ApplicationRightPanelController {
                 noSelectionLabel.setVisible(false);
                 detailsBox.setVisible(true);                
                 applicationDetailsLabel.setText(newSelection.getTopic().getTitle());
+                selection = newSelection;
             } else {
                 noSelectionLabel.setVisible(true);
                 detailsBox.setVisible(false);
                 applicationDetailsLabel.setText("");
             }
-            selection = newSelection;
         });
     }
 }
