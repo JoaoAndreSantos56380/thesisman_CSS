@@ -4,6 +4,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.javafxexample.presentation.control.MasterRightPanelController" prefWidth="200">
-    <Label text="Master Details" />
+    <Label fx:id="masterDetailsLabel" text="Master Details" />
     <!-- Add more components as needed -->
 </VBox>

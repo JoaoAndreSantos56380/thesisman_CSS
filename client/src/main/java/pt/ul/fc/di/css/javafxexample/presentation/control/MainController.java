@@ -1,5 +1,6 @@
 package pt.ul.fc.di.css.javafxexample.presentation.control;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -78,6 +79,14 @@ public class MainController {
             // Optionally, you can initialize the right panel controller if needed
             // RightPanelController<T> rightPanelController = rightPanelLoader.getController();
             // rightPanelController.initModel(model);
+            Object rightPanelController = rightPanelLoader.getController();
+            if (rightPanelController instanceof StudentRightPanelController) {
+                ((StudentRightPanelController) rightPanelController).initModel((ObjectProperty<StudentModel>) listController.selectedItemProperty());
+            } else if (rightPanelController instanceof ProfessorRightPanelController) {
+                ((ProfessorRightPanelController) rightPanelController).initModel((ObjectProperty<ProfessorModel>) listController.selectedItemProperty());
+            } else if (rightPanelController instanceof MasterRightPanelController) {
+                ((MasterRightPanelController) rightPanelController).initModel((ObjectProperty<MastersModel>) listController.selectedItemProperty());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
