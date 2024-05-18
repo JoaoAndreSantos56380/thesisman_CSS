@@ -59,18 +59,71 @@ public class DemoApplication {
 			Consultant consultant = new Consultant("consultant@mail.com", "password", "jorge mendes", " sumol");
 			Consultant consultant2 = new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol");
 
+			Professor prof1 = new Professor("prof1", "password", "prof1");
+			Professor prof2 = new Professor("prof2", "password", "prof2");
+			Professor prof3 = new Professor("prof3", "password", "prof3");
+			Professor prof4 = new Professor("prof4", "password", "prof4");
+			Professor prof5 = new Professor("prof5", "password", "prof5");
+
+			userRepository.save(prof1);
+			userRepository.save(prof2);
+			userRepository.save(prof3);
+			userRepository.save(prof4);
+			userRepository.save(prof5);
+
 			// criar mestrado com esse prof a coordenador
 			Masters theBestMaster = new Masters("GOLDENAI", cr7Professor);
 			Masters master2 = new Masters("INFORMATICA", rq7Professor);
 			Masters master3 = new Masters("STOCK", presiJuri);
 
+			Masters master10 = new Masters("master10", prof1);
+			Masters master9 = new Masters("master9", prof2);
+			Masters master8 = new Masters("master8", prof3);
+			Masters master7 = new Masters("master7", prof4);
+
+			mastersRepository.save(master10);
+			mastersRepository.save(master9);
+			mastersRepository.save(master8);
+			mastersRepository.save(master7);
+
 			Student mCurieStudent = new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster);
+
+			Student student1 = new Student("student1", "password", "student1", 1903, 19.99, master10);
+			Student student2 = new Student("student2", "password", "student2", 1903, 19.99, master9);
+			Student student3 = new Student("student3", "password", "student3", 1903, 19.99, master8);
+			Student student4 = new Student("student4", "password", "student4", 1903, 19.99, master7);
+			Student student5 = new Student("student5", "password", "student5", 1903, 19.99, master7);
+
+			userRepository.save(student1);
+			userRepository.save(student2);
+			userRepository.save(student3);
+			userRepository.save(student4);
+			userRepository.save(student5);
 
 			HashSet<Masters> mastersArr = new HashSet<Masters>();
 			mastersArr.add(theBestMaster);
+			HashSet<Masters> mastersArr2 = new HashSet<Masters>();
+			mastersArr.add(master10);
+			mastersArr.add(master9);
+			mastersArr.add(master8);
+			mastersArr.add(master7);
 
-			DissertationTopic dissertationTopicFutebolRadiante = new DissertationTopic("Futebol radiante",
-					"description", 99999, rq7Professor, mastersArr);
+			DissertationTopic dissertationTopicFutebolRadiante = new DissertationTopic("Futebol radiante", "description", 99999, rq7Professor, mastersArr);
+			DissertationTopic dissertationTopic1 = new DissertationTopic("titulo1", "description", 99999, prof1, mastersArr2);
+			DissertationTopic dissertationTopic2 = new DissertationTopic("titulo2", "description", 99999, prof2, mastersArr2);
+			DissertationTopic dissertationTopic3 = new DissertationTopic("titulo3", "description", 99999, prof3, mastersArr2);
+
+			dissertationTopicRepository.save(dissertationTopic1);
+			dissertationTopicRepository.save(dissertationTopic2);
+			dissertationTopicRepository.save(dissertationTopic3);
+
+			Application application1 = new Application(student1, dissertationTopic1);
+			Application application2 = new Application(student2, dissertationTopic2);
+			Application application3 = new Application(student3, dissertationTopic3);
+
+			applicationRepository.save(application1);
+			applicationRepository.save(application2);
+			applicationRepository.save(application3);
 
 			String encodedPassword = passwordEncoder.encode(consultant.getPassword());
 			consultant.setPassword(encodedPassword);
@@ -97,14 +150,8 @@ public class DemoApplication {
 			rq7Professor.setPassword(encodedPassword);
 			userRepository.save(rq7Professor);
 
-			/* userRepository.save(consultant);
-			userRepository.save(consultant2);
-			userRepository.save(presiJuri);
-			userRepository.save(cr7Professor);
-			userRepository.save(rq7Professor); */
 			mastersRepository.save(theBestMaster);
-			/* userRepository.save(mCurieStudent); */
-			//userService.registerNewUser(mCurieStudent);
+
 			encodedPassword = passwordEncoder.encode(mCurieStudent.getPassword());
 			mCurieStudent.setPassword(encodedPassword);
 			userRepository.save(mCurieStudent);
