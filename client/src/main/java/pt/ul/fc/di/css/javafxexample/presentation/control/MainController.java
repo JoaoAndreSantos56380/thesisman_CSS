@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import pt.ul.fc.di.css.javafxexample.presentation.model.ApplicationModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DissertationTopicModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.StudentModel;
@@ -23,25 +24,18 @@ public class MainController {
     @FXML
     private StackPane rightPane;
 
-    @FXML
-    private Button studentButton;
-
-    @FXML
-    private Button professorButton;
-
-    @FXML
-    private Button masterButton;
-
+  
 
     @FXML
     private Button dissertationTopicButton;
 
+    @FXML
+    private Button applicationsButton;
+
 
     @FXML
     public void initialize() {
-        studentButton.setOnAction(event -> showStudentList());
-        professorButton.setOnAction(event -> showProfessorList());
-        masterButton.setOnAction(event -> showMasterList());
+        applicationsButton.setOnAction(event -> showApplicationList());
         dissertationTopicButton.setOnAction(event -> showDissertationTopicList());
     }
 
@@ -56,8 +50,8 @@ public class MainController {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ProfessorListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/ProfessorRightPanel.fxml", ProfessorModel.class);
     }
 
-    private void showMasterList() {
-        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/MasterListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/MasterRightPanel.fxml", MastersModel.class);
+    private void showApplicationList() {
+        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
     }
 
     private void showDissertationTopicList() {
@@ -88,6 +82,8 @@ public class MainController {
                 ((DataModel<MastersModel>) model).loadMasters();
             } else if(modelClass == DissertationTopicModel.class) {
                 ((DataModel<DissertationTopicModel>) model).loadDissertationTopics();
+            } else if(modelClass == ApplicationModel.class) {
+                ((DataModel<ApplicationModel>) model).loadApplications();
             }
 
             ListController<T> listController = listViewLoader.getController();
@@ -105,6 +101,8 @@ public class MainController {
                 ((MasterRightPanelController) rightPanelController).initModel((ObjectProperty<MastersModel>) listController.selectedItemProperty());
             } else if (rightPanelController instanceof DissertationTopicRightPanelController) {
                 ((DissertationTopicRightPanelController) rightPanelController).initModel((ObjectProperty<DissertationTopicModel>) listController.selectedItemProperty());
+            } else if (rightPanelController instanceof ApplicationRightPanelController) {
+                ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty());
             }
         } catch (IOException e) {
             e.printStackTrace();
