@@ -37,8 +37,8 @@ public class ApplicationService {
         return applicationRepository.findByTopic(topic);
     }
 
-    public Application deleteApplication(Application application) {
-        return applicationRepository.delete(application);
+    public void deleteApplication(Application application) {
+        applicationRepository.delete(application);
     }
 }
 
