@@ -36,6 +36,11 @@
             <artifactId>jersey-client</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>pt.ul.fc.css.example</groupId>
+            <artifactId>demo</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+          </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -1,9 +1,10 @@
-/*package pt.ul.fc.di.css.javafxexample.presentation.control;
+package pt.ul.fc.di.css.javafxexample.presentation.control;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.Response;
+import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 
 public class ClientRestController {
 
@@ -37,4 +38,4 @@ public class ClientRestController {
             System.err.println("Request failed: " + e.getMessage());
         }
     }
-}*/
+}

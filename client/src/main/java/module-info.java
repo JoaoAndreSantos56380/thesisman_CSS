@@ -3,6 +3,8 @@ module pt.ul.fc.di.css.javafxexample {
     requires javafx.fxml;
     requires javafx.web;
     requires javafx.base;
+    requires jakarta.ws.rs;
+    requires demo;
     //server.src.main.java.
     //requires pt.ul.fc.css.example.demo;
 
