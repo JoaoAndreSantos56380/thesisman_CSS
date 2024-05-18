@@ -18,6 +18,16 @@ class RestApplication {
     @Autowired
     private ApplicationService topicService;
 
+    @PostMapping("/createApplication")
+    ResponseEntity<?> deleteApplication(@RequestBody Application application) {
+        try {
+            Application created = topicService.createApplication(application);
+            return ResponseEntity.ok().body(created);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.internalServerError();
+    }
 
     @PostMapping("/deleteApplication")
     ResponseEntity<?> deleteApplication(@RequestBody Application application) {
