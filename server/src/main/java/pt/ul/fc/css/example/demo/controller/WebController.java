@@ -32,6 +32,7 @@ import pt.ul.fc.css.example.demo.services.ThesisDefenseService;
 import pt.ul.fc.css.example.demo.services.ThesisExecutionService;
 import pt.ul.fc.css.example.demo.services.ApplicationService;
 import pt.ul.fc.css.example.demo.services.UserService;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class WebController {
@@ -73,7 +74,7 @@ public class WebController {
 
 	@GetMapping("/user/login")
 	public String userLoginScreen(final Model model) {
-		//model.addAttribute("appuser", new Consultant());
+		// model.addAttribute("appuser", new Consultant());
 		return "user_login";
 	}
 
@@ -143,7 +144,8 @@ public class WebController {
 	}
 
 	@PostMapping("/consultant/thesis_defense/{id}")
-	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id, @ModelAttribute ThesisDefense td) {
+	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id,
+			@ModelAttribute ThesisDefense td) {
 		Optional<ThesisExecution> te = execService.getThesis(id);
 		if (te.isPresent()) {
 			defenseService.addDefense(te.get(), td.getLocation(), td.getTime());
@@ -154,12 +156,40 @@ public class WebController {
 		return "redirect:/consultant/thesis_defense";
 	}
 
+	@GetMapping("/consultant/thesis_defense/grading")
+	public String thesis_defense_grading(final Model model, Authentication auth) {
+		AppUser loggedinUser = null;
+		if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+			String username = ((UserDetails) auth.getPrincipal()).getUsername();
+			loggedinUser = userService.findUsereByUsername(username);
+		}
+		List<ThesisDefense> defenses = defenseService.getDefensesOfTheThesesIAmOrienting(loggedinUser);
+		model.addAttribute("defenses", defenses);
+		return "thesis_defense_grading";
+	}
+
+	@GetMapping("/consultant/thesis_defense/grading/{id}")
+	public String thesis_defense_grading_save(final Model model, @PathVariable Long id) {
+		model.addAttribute("id", id);
+		model.addAttribute("gradeDefense", new ThesisDefense());
+		return "thesis_defense_grading_id";
+	}
+
+	@PutMapping("/consultant/thesis_defense/grading/{id}")
+	public String thesis_defense_grading_save_put(final Model model, @PathVariable Long id,
+			@ModelAttribute ThesisDefense gradeDefense) {
+		ThesisDefense defense = defenseService.findById(id);
+		defense.setGrade(gradeDefense.getGrade());
+		defenseService.addDefense(defense);
+		return "redirect:/user/home";
+	}
+
 	@GetMapping("/statistics")
 	public String getStats(final Model model) {
 		ArrayList<ThesisDefense> defenses = (ArrayList<ThesisDefense>) defenseService.findAllDefenses();
 		int total_defenses = defenses.size();
 		int positives = defenseService.findAllPositives().size();
-		double average = (defenses.stream().mapToInt(ThesisDefense::getGrade).sum())/(double)total_defenses;
+		double average = (defenses.stream().mapToInt(ThesisDefense::getGrade).sum()) / (double) total_defenses;
 		model.addAttribute("positives", positives);
 		model.addAttribute("average", average);
 		model.addAttribute("total_defenses", total_defenses);
@@ -169,8 +199,6 @@ public class WebController {
 
 	@GetMapping("/topics")
 	public String getApplications(final Model model) {
-		//List<Application> applications = applicationService.findAllApplications();
-		//List<DissertationTopic> topics = dissertationTopicService.getTopics();
 		List<DissertationTopic> topics = dissertationTopicService.findFreeTopics();
 		model.addAttribute("topics", topics);
 		return "topics";
@@ -178,8 +206,6 @@ public class WebController {
 
 	@GetMapping("/topic/{id}")
 	public String getApplicationId(final Model model, @PathVariable Long id) {
-		//List<AppUser> students = userService.findAllUsers();
-		//List<AppUser> students = userService.findByType(Student.class);
 		List<AppUser> students = userService.findFreeStudents();
 		DissertationTopic topic = dissertationTopicService.getTopicById(id);
 		model.addAttribute("students", students);
@@ -192,24 +218,7 @@ public class WebController {
 	public String saveThesis(final Model model, @PathVariable Long id, @RequestParam Long studentId) {
 		DissertationTopic topic = dissertationTopicService.getTopicById(id);
 		Student student = userService.findById(studentId);
-		execService.createThesisExecution(topic,student);
+		execService.createThesisExecution(topic, student);
 		return "redirect:/user/home";
-	}
-
-	@GetMapping("/consultant/thesis_defense/grading")
-	public String thesis_defense_grading(final Model model) {
-		return "thesis_defense_grading";
-	}
-
-	@GetMapping("/consultant/thesis_defense/grading/{id}")
-	public String thesis_defense_grading_save(final Model model) {
-		int grade = 0;
-		model.addAttribute("grade", grade);
-		return "thesis_defense_grading_id";
-	}
-
-	@PutMapping("/consultant/thesis_defense/grading/{id}")
-	public String thesis_defense_grading_save_put(final Model model, int grade) {
-		return "thesis_defense_grading_id";
 	}
 }
