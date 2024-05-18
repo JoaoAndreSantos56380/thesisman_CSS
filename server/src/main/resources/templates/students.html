@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<body>
+	<div layout:fragment="content">
+		<h1>Associar aluno a tópico de dissertação</h1>
+
+		<p>Tópico: <span th:text="${topic.title}"></span></p>
+		<form th:action="@{/topic/} + ${id}" method="post">
+			<div th:each="student : ${students}">
+				<input type="radio" name="studentId" th:id="${student.id}" th:value="${student.id}">
+				<label th:for="${student.id}" th:text="${student.name}"></label>
+			</div>
+			<input type="submit" value="associar" />
+		</form>
+	</div>
+</body>
+
+</html>
