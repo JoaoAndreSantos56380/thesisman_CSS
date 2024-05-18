@@ -4,9 +4,9 @@ module pt.ul.fc.di.css.javafxexample {
     requires javafx.web;
     requires javafx.base;
     requires jakarta.ws.rs;
-    requires demo;
+    requires jakarta.xml.bind;
+    //requires demo;
     //server.src.main.java.
-    //requires pt.ul.fc.css.example.demo;
 
     opens pt.ul.fc.di.css.javafxexample to javafx.fxml, javafx.web;
     opens pt.ul.fc.di.css.javafxexample.presentation.control to javafx.fxml;
