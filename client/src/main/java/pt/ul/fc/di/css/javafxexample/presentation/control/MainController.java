@@ -41,11 +41,11 @@ public class MainController {
 
 
     private void showApplicationList() {
-        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
+        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
     }
 
     private void showDissertationTopicList() {
-        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicRightPanel.fxml", DissertationTopicModel.class);
+        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicRightPanel.fxml", DissertationTopicModel.class);
     }
 
     private <T> void loadListView(String listViewFxml, String rightPanelFxml, Class<T> modelClass) {
