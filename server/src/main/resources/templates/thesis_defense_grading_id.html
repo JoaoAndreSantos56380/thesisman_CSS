@@ -11,28 +11,19 @@
 <body>
 	<div layout:fragment="content">
 		<section>
-			<h2>Registo da nota da defesa:</h2>
-
+			<h2>Submeter nota:</h2>
 			<div class="error" th:text="${error}"></div>
 
-			<ul>
-				<li th:each="defense : ${defenses}">
-					<a th:href="@{/consultant/thesis_defense/grading/{id}(id=${defense.id})}">
-						<span>Student: </span>
-						<span th:text="${defense.thesisExecution.student.name}"></span>
-						<span>Localização: </span>
-						<span th:text="${defense.location}"></span>
-					</a>
-				</li>
-			</ul>
+			<form th:action="@{/consultant/thesis_defense/grading/} + ${id}" th:object="${gradeDefense}" method="post">
+				<label for="grade">Nota</label><input type="text" name="grade" th:field="*{grade}" /><br />
+				<input type="submit" value="registar" />
+			</form>
 		</section>
 	</div>
 </body>
 
 </html>
-
  -->
-
 
 <!DOCTYPE html>
 <html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -47,23 +38,17 @@
 <body>
 	<div layout:fragment="content">
 		<section>
-			<h2>Registo da nota da defesa:</h2>
-
+			<h2>Submeter nota:</h2>
 			<div class="error" th:text="${error}"></div>
 
-			<ul>
-				<li th:each="defense : ${defenses}">
-					<a th:href="@{/consultant/thesis_defense/grading/{id}(id=${defense.id})}">
-						<span>Student: </span>
-						<span th:text="${defense.thesisExecution.student.name}"></span>
-						<span>Localização: </span>
-						<span th:text="${defense.location}"></span>
-					</a>
-				</li>
-			</ul>
+			<form th:action="@{/consultant/thesis_defense/grading/{id}(id=${id})}" th:object="${gradeDefense}"
+				method="post">
+				<input type="hidden" name="_method" value="put" />
+				<label for="grade">Nota</label><input type="text" name="grade" th:field="*{grade}" /><br />
+				<input type="submit" value="registar" />
+			</form>
 		</section>
 	</div>
 </body>
 
 </html>
-
