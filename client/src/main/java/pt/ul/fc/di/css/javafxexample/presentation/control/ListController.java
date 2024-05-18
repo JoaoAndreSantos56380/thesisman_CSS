@@ -3,14 +3,14 @@ package pt.ul.fc.di.css.javafxexample.presentation.control;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
-import pt.ul.fc.di.css.javafxexample.presentation.model.Professor;
-import pt.ul.fc.di.css.javafxexample.presentation.model.Student;
+import pt.ul.fc.di.css.javafxexample.presentation.model.ProfessorModel;
+import pt.ul.fc.di.css.javafxexample.presentation.model.StudentModel;
 
 public class ListController {
 
 	//atencao ao nome
 	@FXML
-	private ListView<Student> listView ;
+	private ListView<StudentModel> listView ;
 
 	private DataModel model;
 

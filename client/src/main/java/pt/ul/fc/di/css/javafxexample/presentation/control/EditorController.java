@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
-import pt.ul.fc.di.css.javafxexample.presentation.model.Student;
+import pt.ul.fc.di.css.javafxexample.presentation.model.StudentModel;
 
 public class EditorController {
 
@@ -42,7 +42,7 @@ public class EditorController {
         });
     }
 
-    private void bindStudent(Student student) {
+    private void bindStudent(StudentModel student) {
         usernameField.textProperty().bindBidirectional(student.usernameProperty());
         passwordField.textProperty().bindBidirectional(student.passwordProperty());
         nameField.textProperty().bindBidirectional(student.nameProperty());
@@ -56,7 +56,7 @@ public class EditorController {
         }
     }
 
-    private void unbindStudent(Student student) {
+    private void unbindStudent(StudentModel student) {
         usernameField.textProperty().unbindBidirectional(student.usernameProperty());
         passwordField.textProperty().unbindBidirectional(student.passwordProperty());
         nameField.textProperty().unbindBidirectional(student.nameProperty());
