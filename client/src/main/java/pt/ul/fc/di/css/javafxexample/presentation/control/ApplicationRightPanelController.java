@@ -26,20 +26,23 @@ public class ApplicationRightPanelController {
 
     @FXML
     private void handleCancelButton() {
-        System.out.println("Cancel button pressed");
+        System.out.println("Cancel button pressed for application with id: " + selection.getId());
     }
+
+    private ApplicationModel selection;
 
     public void initModel(ObjectProperty<ApplicationModel> selectedItemProperty) {
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 noSelectionLabel.setVisible(false);
-                detailsBox.setVisible(true);
+                detailsBox.setVisible(true);                
                 applicationDetailsLabel.setText(newSelection.getTopic().getTitle());
             } else {
                 noSelectionLabel.setVisible(true);
                 detailsBox.setVisible(false);
                 applicationDetailsLabel.setText("");
             }
+            selection = newSelection;
         });
     }
 }

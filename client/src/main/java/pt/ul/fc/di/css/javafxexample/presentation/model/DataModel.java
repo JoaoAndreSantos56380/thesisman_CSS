@@ -124,7 +124,9 @@ public class DataModel<T> {
             ApplicationModel application1 = new ApplicationModel(student1, topic1);
             ApplicationModel application2 = new ApplicationModel(student2, topic2);
             ApplicationModel application3 = new ApplicationModel(student3, topic3);
-    
+            application1.setId(1);
+            application2.setId(2);
+            application3.setId(3);
             // Add more ApplicationModel instances as needed
             loadItems((T)application1, (T)application2, (T)application3);
         }
