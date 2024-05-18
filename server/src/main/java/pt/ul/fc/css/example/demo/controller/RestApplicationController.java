@@ -22,6 +22,11 @@ class RestApplication {
     ResponseEntity<?> deleteApplication(@RequestBody Application application) {
         try {
             Application created = topicService.createApplication(application);
+
+            // in case the student already has 5 applications
+            if(created == null) {                
+                return ResponseEntity.ok();
+            }
             return ResponseEntity.ok().body(created);
         } catch(Exception e) {
             e.printStackTrace();
