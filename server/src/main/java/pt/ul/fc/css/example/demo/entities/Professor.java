@@ -15,6 +15,18 @@ public class Professor extends AppUser {
 
 	public Professor(String username, String password, String name) {
 		super(username, password, name);
+		isAdmin = false;
+	}
+
+	public Professor(String username, String password, String name, boolean isAdmin) {
+		super(username, password, name);
+		this.isAdmin = isAdmin;
+	}
+
+	private boolean isAdmin;
+
+	public boolean getIsAdmin() {
+		return isAdmin;
 	}
 
 	public Professor() {

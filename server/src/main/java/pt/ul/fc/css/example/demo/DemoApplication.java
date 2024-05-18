@@ -60,12 +60,16 @@ public class DemoApplication {
 			Consultant consultant2 = new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol");
 
 			Professor prof1 = new Professor("prof1", "password", "prof1");
+			Professor SUPERADMIN = new Professor("admin", "password", "vescomosouadmin", true);
 			Professor prof2 = new Professor("prof2", "password", "prof2");
 			Professor prof3 = new Professor("prof3", "password", "prof3");
 			Professor prof4 = new Professor("prof4", "password", "prof4");
 			Professor prof5 = new Professor("prof5", "password", "prof5");
 
 			userRepository.save(prof1);
+			String encodedPassword = passwordEncoder.encode(SUPERADMIN.getPassword());
+			SUPERADMIN.setPassword(encodedPassword);
+			userRepository.save(SUPERADMIN);
 			userRepository.save(prof2);
 			userRepository.save(prof3);
 			userRepository.save(prof4);
@@ -125,7 +129,7 @@ public class DemoApplication {
 			applicationRepository.save(application2);
 			applicationRepository.save(application3);
 
-			String encodedPassword = passwordEncoder.encode(consultant.getPassword());
+			encodedPassword = passwordEncoder.encode(consultant.getPassword());
 			consultant.setPassword(encodedPassword);
 			userRepository.save(consultant);
 
