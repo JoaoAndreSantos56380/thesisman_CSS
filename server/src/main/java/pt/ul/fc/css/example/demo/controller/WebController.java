@@ -19,15 +19,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
+import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.Consultant;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
+import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.services.DissertationTopicService;
 import pt.ul.fc.css.example.demo.services.MastersService;
 import pt.ul.fc.css.example.demo.services.ThesisDefenseService;
 import pt.ul.fc.css.example.demo.services.ThesisExecutionService;
+import pt.ul.fc.css.example.demo.services.ApplicationService;
 import pt.ul.fc.css.example.demo.services.UserService;
 
 @Controller
@@ -37,7 +40,7 @@ public class WebController {
 	private UserService userService;
 
 	@Autowired
-	private DissertationTopicService DissertationTopicService;
+	private DissertationTopicService dissertationTopicService;
 
 	@Autowired
 	private ThesisDefenseService defenseService;
@@ -47,6 +50,9 @@ public class WebController {
 
 	@Autowired
 	private MastersService mastersService;
+
+	@Autowired
+	private ApplicationService applicationService;
 
 	@GetMapping("/")
 	public String getIndex(Model model) {
@@ -67,11 +73,11 @@ public class WebController {
 
 	@GetMapping("/user/login")
 	public String userLoginScreen(final Model model) {
-		model.addAttribute("appuser", new Consultant());
+		//model.addAttribute("appuser", new Consultant());
 		return "user_login";
 	}
 
-	@GetMapping({ "/user/home" })
+	@GetMapping("/user/home")
 	public String home(final Model model) {
 		return "consultant_home";
 	}
@@ -105,7 +111,7 @@ public class WebController {
 
 		DissertationTopic dt2;
 		try {
-			dt2 = DissertationTopicService.addTopic(dt.getTitle(), dt.getDescription(), dt.getSalary(),
+			dt2 = dissertationTopicService.addTopic(dt.getTitle(), dt.getDescription(), dt.getSalary(),
 					loggedInConsultant, compatibleMasters);
 
 			return "consultant_home";
@@ -133,13 +139,11 @@ public class WebController {
 	@GetMapping("/consultant/thesis_defense/{id}")
 	public String newThesisDefenseSchedule(final Model model, @PathVariable Long id) {
 		model.addAttribute("thesis_defense", new ThesisDefense());
-		model.addAttribute("id", id);
 		return "consultant_thesis_defense_scheduler";
 	}
 
 	@PostMapping("/consultant/thesis_defense/{id}")
-	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id,
-			@ModelAttribute ThesisDefense td) {
+	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id, @ModelAttribute ThesisDefense td) {
 		Optional<ThesisExecution> te = execService.getThesis(id);
 		if (te.isPresent()) {
 			defenseService.addDefense(te.get(), td.getLocation(), td.getTime());
@@ -161,6 +165,35 @@ public class WebController {
 		model.addAttribute("total_defenses", total_defenses);
 		model.addAttribute("defenses", defenses);
 		return "statistics";
+	}
+
+	@GetMapping("/topics")
+	public String getApplications(final Model model) {
+		//List<Application> applications = applicationService.findAllApplications();
+		//List<DissertationTopic> topics = dissertationTopicService.getTopics();
+		List<DissertationTopic> topics = dissertationTopicService.findFreeTopics();
+		model.addAttribute("topics", topics);
+		return "topics";
+	}
+
+	@GetMapping("/topic/{id}")
+	public String getApplicationId(final Model model, @PathVariable Long id) {
+		//List<AppUser> students = userService.findAllUsers();
+		//List<AppUser> students = userService.findByType(Student.class);
+		List<AppUser> students = userService.findFreeStudents();
+		DissertationTopic topic = dissertationTopicService.getTopicById(id);
+		model.addAttribute("students", students);
+		model.addAttribute("topic", topic);
+		model.addAttribute("id", id);
+		return "students";
+	}
+
+	@PostMapping("/topic/{id}")
+	public String saveThesis(final Model model, @PathVariable Long id, @RequestParam Long studentId) {
+		DissertationTopic topic = dissertationTopicService.getTopicById(id);
+		Student student = userService.findById(studentId);
+		execService.createThesisExecution(topic,student);
+		return "redirect:/user/home";
 	}
 
 	@GetMapping("/consultant/thesis_defense/grading")

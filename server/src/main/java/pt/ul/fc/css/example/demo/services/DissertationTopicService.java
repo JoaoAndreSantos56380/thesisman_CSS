@@ -32,4 +32,12 @@ public class DissertationTopicService {
 		return dissertationTopicRepository.findAll();
 	}
 
+	public DissertationTopic getTopicById(Long id) {
+		return dissertationTopicRepository.findById(id).orElseThrow();
+	}
+
+	public List<DissertationTopic> findFreeTopics() {
+		return dissertationTopicRepository.findFreeTopics();
+	}
+
 }

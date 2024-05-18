@@ -14,19 +14,18 @@
 				You have been logged out.
 			</div>
 
-			<form th:action="@{/user/login}" method="post" th:object="${appuser}" class="contents">
+			<form th:action="@{/user/login}" method="post" class="contents">
 				<div class="flex gap-6">
 					<label for="username">username:</label>
-					<input type="text" name="username" th:field="*{username}" class="p-2 border rounded-md" />
+					<input type="text" name="username" class="p-2 border rounded-md" />
 				</div>
 				<div class="flex gap-6">
 					<label for="password">Password:</label>
-					<input type="password" name="password" th:field="*{password}" class="p-2 border rounded-md" />
+					<input type="password" name="password" class="p-2 border rounded-md" />
 				</div>
 				<input type="submit" value="Log in"
 					class="rounded-lg bg-cyan-700 hover:bg-cyan-800 active:bg-cyan-900 text-white p-2" />
 			</form>
-
 		</section>
 	</div>
 </body>

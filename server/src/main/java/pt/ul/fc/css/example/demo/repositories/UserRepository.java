@@ -32,4 +32,10 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 	@Query("SELECT a FROM AppUser a WHERE a.company LIKE %:company% ")
 	List<AppUser> findByCompany(@Param("company") String company);
 
+	@Query("SELECT a FROM AppUser a WHERE TYPE(a) = :type")
+	List<AppUser> findByType(@Param("type") Class<? extends AppUser> type);
+
+	@Query("SELECT a FROM AppUser a LEFT JOIN ThesisExecution te ON a.id = te.student.id WHERE TYPE(a) = 'STUDENT' AND te.id IS NULL")
+	List<AppUser> findFreeStudents();
+
 }

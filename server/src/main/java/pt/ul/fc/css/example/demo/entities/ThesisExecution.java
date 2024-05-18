@@ -34,7 +34,7 @@ public class ThesisExecution {
   private Professor internalAdvisor;
 
   @NonNull
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String yearOfExecution;
 
   @Nullable

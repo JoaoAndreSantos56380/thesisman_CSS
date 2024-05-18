@@ -2,6 +2,7 @@ package pt.ul.fc.css.example.demo.services;
 
 /* import java.util.Optional;
  */
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.Consultant;
+import pt.ul.fc.css.example.demo.entities.Student;
 /* import pt.ul.fc.css.example.demo.handlers.ConsultantRegisterHandlerB; */
 import pt.ul.fc.css.example.demo.handlers.TopicSubmissionByConsultantHandlerE;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
@@ -21,9 +23,6 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-/* 	@Autowired
-	private ConsultantRegisterHandlerB consultantRegister; */
 
 	@Autowired
 	private TopicSubmissionByConsultantHandlerE topicsub;
@@ -62,6 +61,22 @@ public class UserService implements UserDetailsService {
 		AppUser user = topicsub.findConsultantByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found!"));
 		return user;
+	}
+
+	public List<AppUser> findAllUsers() {
+		return userRepository.findAll();
+	}
+
+	public Student findById(Long id) {
+		return (Student) userRepository.findById(id).orElseThrow();
+	}
+
+	public List<AppUser> findByType(Class<? extends AppUser> type) {
+		return userRepository.findByType(Student.class);
+	}
+
+	public List<AppUser> findFreeStudents() {
+		return userRepository.findFreeStudents();
 	}
 
 }
