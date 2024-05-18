@@ -59,10 +59,12 @@ public class ApplicationModel {
 
     @Override
     public String toString() {
+        return getStudent().getName() + " : " + getTopic().getTitle();/*
+
         return "ApplicationModel[" +
                 "id=" + getId() +
                 ", student=" + getStudent() +
                 ", topic=" + getTopic() +
-                ']';
+                ']';*/
     }
 }

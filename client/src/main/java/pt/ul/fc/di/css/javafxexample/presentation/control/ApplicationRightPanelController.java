@@ -1,21 +1,45 @@
 package pt.ul.fc.di.css.javafxexample.presentation.control;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.beans.property.ObjectProperty;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ApplicationModel;
-import pt.ul.fc.di.css.javafxexample.presentation.model.MastersModel;
 
 public class ApplicationRightPanelController {
     @FXML
+    private Label noSelectionLabel;
+    @FXML
+    private VBox detailsBox;
+    @FXML
     private Label applicationDetailsLabel;
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private void initialize() {
+        // Set initial visibility
+        noSelectionLabel.setVisible(true);
+        detailsBox.setVisible(false);
+    }
+
+    @FXML
+    private void handleCancelButton() {
+        System.out.println("Cancel button pressed");
+    }
 
     public void initModel(ObjectProperty<ApplicationModel> selectedItemProperty) {
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                applicationDetailsLabel.setText("Master: " + newSelection.getTopic().getTitle());
+                noSelectionLabel.setVisible(false);
+                detailsBox.setVisible(true);
+                applicationDetailsLabel.setText(newSelection.getTopic().getTitle());
             } else {
-                applicationDetailsLabel.setText("No application selected");
+                noSelectionLabel.setVisible(true);
+                detailsBox.setVisible(false);
+                applicationDetailsLabel.setText("");
             }
         });
-    }}
+    }
+}
