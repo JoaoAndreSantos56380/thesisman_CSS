@@ -32,6 +32,12 @@ public class MainController {
     @FXML
     private Button applicationsButton;
 
+    @FXML
+    private Button defensesButton;
+
+    @FXML
+    private Button executionsButton;
+
     private Pane overlay;
 
     public void setOverlay(Pane overlay) {
@@ -43,6 +49,8 @@ public class MainController {
         MainControllerSingleton.mainController = this;
         applicationsButton.setOnAction(event -> showApplicationList());
         dissertationTopicButton.setOnAction(event -> showDissertationTopicList());
+        defensesButton.setOnAction(event -> showApplicationList());
+        executionsButton.setOnAction(event -> showDissertationTopicList());
     }
 
     public void showApplicationList() {

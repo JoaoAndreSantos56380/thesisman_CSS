@@ -12,6 +12,8 @@
         <HBox spacing="10">
             <Button fx:id="dissertationTopicButton" text="Dissertation Topics" />
             <Button fx:id="applicationsButton" text="My Applications" />
+            <Button fx:id="executionsButton" text="My Executions" />
+            <Button fx:id="defensesButton" text="My Defenses" />
         </HBox>
     </top>
     <center>
