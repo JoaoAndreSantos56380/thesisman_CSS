@@ -97,7 +97,7 @@ public class MainController {
                 if (rightPanelController instanceof DissertationTopicRightPanelController) {
                     ((DissertationTopicRightPanelController) rightPanelController).initModel((ObjectProperty<DissertationTopicModel>) listController.selectedItemProperty());
                 } else if (rightPanelController instanceof ApplicationRightPanelController) {
-                    ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty(), this);
+                    ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty());
                 }
             });
 

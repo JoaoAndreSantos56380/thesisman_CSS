@@ -26,8 +26,6 @@ public class ApplicationRightPanelController {
     @FXML
     private Button cancelButton;
 
-    private MainController mainController;
-
     @FXML
     private void initialize() {
         // Set initial visibility
@@ -65,13 +63,13 @@ private void handleCancelButton() {
         controller.setSelectedId(selection.getId());
 
         // Show the overlay
-        mainController.showOverlay();
+        MainControllerSingleton.mainController.showOverlay();
 
         // Show the dialog and wait for it to be closed
         dialogStage.showAndWait();
 
         // Hide the overlay
-        mainController.hideOverlay();
+        MainControllerSingleton.mainController.hideOverlay();
 
         // Check if the action was confirmed
         if (controller.isConfirmed()) {
@@ -86,8 +84,8 @@ private void handleCancelButton() {
 
     private ApplicationModel selection;
 
-    public void initModel(ObjectProperty<ApplicationModel> selectedItemProperty, MainController mainController) {
-        this.mainController = mainController;
+    public void initModel(ObjectProperty<ApplicationModel> selectedItemProperty) {
+        
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 noSelectionLabel.setVisible(false);
