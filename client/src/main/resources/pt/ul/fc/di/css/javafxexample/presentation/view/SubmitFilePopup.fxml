@@ -14,7 +14,7 @@
         <VBox fx:id="contentBox" spacing="10" alignment="CENTER">
             <HBox spacing="10">
                 <Text text="Selected Document: " style="-fx-font-weight: bold;" />
-                <Label fx:id="selectedDocumentLabel" text="None" wrapText="true" />
+<Label fx:id="selectedDocumentLabel" text="None" minWidth="200" maxWidth="Infinity"/>
                 <Button text="Choose file" onAction="#handleChooseFile" style="-fx-background-color: green; -fx-text-fill: white;" />
             </HBox>
             
