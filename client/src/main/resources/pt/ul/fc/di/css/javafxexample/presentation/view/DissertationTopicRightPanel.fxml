@@ -42,7 +42,7 @@
             <Text text="Compatible Masters: " style="-fx-font-weight: bold;" />
             <Label fx:id="compatibleMastersLabel" wrapText="true" maxWidth="Infinity" />
         </VBox>
-        <Button text="APPLY" style="-fx-background-color: green; -fx-text-fill: white;" onAction="#handleApplyButton" />
+        <Button fx:id="applyButton" text="APPLY" style="-fx-background-color: green; -fx-text-fill: white;" onAction="#handleApplyButton" />
 
     </VBox>
 </VBox>
