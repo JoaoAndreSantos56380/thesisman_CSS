@@ -8,11 +8,14 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
@@ -102,6 +105,24 @@ public class SubmitFilePopupController {
 
     @FXML
     public void handleChooseFile() {
-        System.out.println("Choose file!");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File file = fileChooser.showOpenDialog(dialogStage);
+
+        if (file != null) {
+            String fileName = file.getName();
+            System.out.println("Selected file: " + fileName);
+            selectedDocumentLabel.setText(fileName);
+            try {
+                byte[] fileContent = Files.readAllBytes(file.toPath());
+                System.out.println("File content: " + fileContent.length + " bytes.");
+                
+                System.out.println();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            selectedDocumentLabel.setText("None");
+        }
     }
 }
