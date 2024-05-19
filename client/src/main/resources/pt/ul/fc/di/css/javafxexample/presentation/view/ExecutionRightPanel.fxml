@@ -20,5 +20,7 @@
             <Text text="Execution Year: " style="-fx-font-weight: bold;" />
             <Label fx:id="yearLabel" wrapText="true" maxWidth="Infinity" />
         </VBox>
+        <Button fx:id="newFileButton" text="UPLOAD THESIS" style="-fx-background-color: grey; -fx-text-fill: white;" onAction="#handleSubmitFile" />
+
     </VBox>
 </VBox>
