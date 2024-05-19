@@ -12,8 +12,8 @@
         <VBox fx:id="contentBox" spacing="10" alignment="CENTER">
             <Label fx:id="messageLabel" text="Are you sure you want to cancel the application?" wrapText="true" />
             <HBox spacing="10">
-                <Button text="Cancel" onAction="#handleCancelAction" />
-                <Button text="Confirm" onAction="#handleConfirmAction" style="-fx-background-color: red; -fx-text-fill: white;" />
+                <Button text="Go back" onAction="#handleCancelAction" />
+                <Button text="Cancel the application" onAction="#handleConfirmAction" style="-fx-background-color: red; -fx-text-fill: white;" />
             </HBox>
         </VBox>
         <ProgressIndicator fx:id="loadingIndicator" visible="false"/>
