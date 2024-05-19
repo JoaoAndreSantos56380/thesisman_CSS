@@ -1,10 +1,18 @@
 package pt.ul.fc.di.css.javafxexample.presentation.control;
 
+import java.io.IOException;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ApplicationModel;
 
 public class ApplicationRightPanelController {
@@ -17,6 +25,9 @@ public class ApplicationRightPanelController {
     @FXML
     private Button cancelButton;
 
+    private MainController mainController;
+
+
     @FXML
     private void initialize() {
         // Set initial visibility
@@ -26,12 +37,49 @@ public class ApplicationRightPanelController {
 
     @FXML
     private void handleCancelButton() {
-        System.out.println("Cancel button pressed for application with id: " + selection.getId());
+        try {
+            String popupFxml = "/pt/ul/fc/di/css/javafxexample/presentation/view/ConfirmationPopup.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(popupFxml));
+            Parent root = loader.load();
+
+            // Create a new stage for the popup dialog
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initStyle(StageStyle.UTILITY);
+            dialogStage.setTitle("Confirm Cancel");
+            dialogStage.setScene(new Scene(root));
+            dialogStage.setResizable(false);
+
+            // Center the dialog on the parent window
+            dialogStage.centerOnScreen();
+
+            // Set the dialog stage in the controller
+            ConfirmationPopupController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            // Show the overlay
+            mainController.showOverlay();
+
+            // Show the dialog and wait for it to be closed
+            dialogStage.showAndWait();
+
+            // Hide the overlay
+            mainController.hideOverlay();
+
+            // Check if the action was confirmed
+            if (controller.isConfirmed()) {
+                System.out.println("Cancel button pressed for application with id: " + selection.getId());
+                // Perform the cancellation logic here
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private ApplicationModel selection;
 
-    public void initModel(ObjectProperty<ApplicationModel> selectedItemProperty) {
+    public void initModel(ObjectProperty<ApplicationModel> selectedItemProperty, MainController mainController) {
+        this.mainController = mainController;
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 noSelectionLabel.setVisible(false);

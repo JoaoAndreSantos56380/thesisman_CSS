@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ApplicationModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
@@ -30,6 +31,9 @@ public class MainController {
 
     @FXML
     private Button applicationsButton;
+
+    @FXML
+    private Pane overlay;
 
     @FXML
     public void initialize() {
@@ -62,9 +66,6 @@ public class MainController {
         String listViewFxml = "/pt/ul/fc/di/css/javafxexample/presentation/view/ListView.fxml";
 
         try {
-            // Simulate loading delay
-            Thread.sleep(2000);
-
             // Load ListView
             FXMLLoader listViewLoader = new FXMLLoader(getClass().getResource(listViewFxml));
             Parent listViewRoot = listViewLoader.load();
@@ -90,7 +91,7 @@ public class MainController {
                 if (rightPanelController instanceof DissertationTopicRightPanelController) {
                     ((DissertationTopicRightPanelController) rightPanelController).initModel((ObjectProperty<DissertationTopicModel>) listController.selectedItemProperty());
                 } else if (rightPanelController instanceof ApplicationRightPanelController) {
-                    ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty());
+                    ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty(), this);
                 }
             });
 
@@ -101,7 +102,7 @@ public class MainController {
                 rightPane.getChildren().clear();
                 rightPane.getChildren().add(rightPanelRoot);
             });
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -116,5 +117,13 @@ public class MainController {
         progressIndicator.setVisible(false);
         contentPane.setDisable(false);
         rightPane.setDisable(false);
+    }
+
+    public void showOverlay() {
+        overlay.setVisible(true);
+    }
+
+    public void hideOverlay() {
+        overlay.setVisible(false);
     }
 }

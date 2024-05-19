@@ -4,9 +4,11 @@
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.javafxexample.presentation.control.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.javafxexample.presentation.control.MainController">
+
     <top>
         <HBox spacing="10">
             <Button fx:id="dissertationTopicButton" text="Dissertation Topics" />
@@ -15,11 +17,14 @@
     </top>
     <center>
         <StackPane>
-            <StackPane fx:id="contentPane" />
-            <ProgressIndicator fx:id="progressIndicator" StackPane.alignment="CENTER" visible="false"/>
+            <StackPane fx:id="contentPane">
+                <ProgressIndicator fx:id="progressIndicator" StackPane.alignment="CENTER" visible="false"/>
+            </StackPane>
+            <Pane fx:id="overlay" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false"/>
         </StackPane>
     </center>
     <right>
         <StackPane fx:id="rightPane" />
     </right>
 </BorderPane>
+
