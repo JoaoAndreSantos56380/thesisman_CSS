@@ -87,7 +87,7 @@ private void handleApplyButton() {
         // Check if the action was confirmed
         if (controller.isConfirmed()) {
             System.out.println("Cancel button pressed for application with id: " + selection.getId());
-            MainControllerSingleton.mainController.showApplicationList();
+            MainControllerSingleton.mainController.showDissertationTopicList();
             // Perform the cancellation logic here
         }
     } catch (IOException e) {

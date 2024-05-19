@@ -96,23 +96,23 @@ public class DataModel<T> {
     }
 
 
-        public void loadApplications() {
+    public void loadApplications() {
 
-            try {
-                URL url = new URL("https://www.youtube.com");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                int responseCode = connection.getResponseCode();
-                connection.disconnect();
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-            // Mock data for students
-            StudentModel student1 = new StudentModel("1", "Alice Wonderland", "a", 58226, 1);
-            StudentModel student2 = new StudentModel("2", "Bob Builder", "Bob", 58227, 1);
-            StudentModel student3 = new StudentModel("3", "Charlie Chocolate", "Charlo", 58229, 1);
-    
-            Set<MastersModel> mastersSet1 = new HashSet<>();
+        try {
+            URL url = new URL("https://www.youtube.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        // Mock data for students
+        StudentModel student1 = new StudentModel("1", "Alice Wonderland", "a", 58226, 1);
+        StudentModel student2 = new StudentModel("2", "Bob Builder", "Bob", 58227, 1);
+        StudentModel student3 = new StudentModel("3", "Charlie Chocolate", "Charlo", 58229, 1);
+
+        Set<MastersModel> mastersSet1 = new HashSet<>();
         mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Prof1", "hello", "mantorras")));
 
         Set<MastersModel> mastersSet2 = new HashSet<>();
@@ -160,5 +160,31 @@ public class DataModel<T> {
             // Add more ApplicationModel instances as needed
             loadItems((T)application1, (T)application2, (T)application3);
         }
+
+        public void loadThesisExecutions() {
+            // Mock data for students
+            StudentModel student1 = new StudentModel("Alice Wonderland", "b", "c", 58);
+            StudentModel student2 = new StudentModel("Bob Builder", "", "", 2);
+            StudentModel student3 = new StudentModel("Charlie Chocolate", "", "", 4);
     
+            ProfessorModel professor1 = new ProfessorModel("Prof. AI", "", "Prof. AI");
+            ProfessorModel professor2 = new ProfessorModel("Prof. Cities","", "Prof. Cities");
+            ProfessorModel professor3 = new ProfessorModel("Prof. Chocolate", "", "Prof. Chocolate");
+            // Mock data for topics
+            DissertationTopicModel topic1 = new DissertationTopicModel("AI in Wonderland", "aa", 10, professor1, null);
+            DissertationTopicModel topic2 = new DissertationTopicModel("Smart Cities", "", 1, professor2, null);
+            DissertationTopicModel topic3 = new DissertationTopicModel("Chocolate Automation", "", 1, professor3, null);
+    
+            // Mock data for ThesisExecution
+            ThesisExecutionModel execution1 = new ThesisExecutionModel(student1, topic1, "2023", professor1);
+            ThesisExecutionModel execution2 = new ThesisExecutionModel(student2, topic2, "2023", professor2);
+            ThesisExecutionModel execution3 = new ThesisExecutionModel(student3, topic3, "2023", professor3);
+            execution1.setInternalAdvisor(professor1);
+            execution2.setInternalAdvisor(professor2);
+            execution3.setInternalAdvisor(professor3);
+            // Load these executions into your application
+            loadItems((T)execution1, (T)execution2, (T)execution3);
+        }
+    
+        
 }
