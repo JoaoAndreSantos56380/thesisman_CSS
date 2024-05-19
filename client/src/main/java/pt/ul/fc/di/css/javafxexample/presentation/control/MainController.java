@@ -32,8 +32,11 @@ public class MainController {
     @FXML
     private Button applicationsButton;
 
-    @FXML
     private Pane overlay;
+
+    public void setOverlay(Pane overlay) {
+        this.overlay = overlay;
+    }
 
     @FXML
     public void initialize() {
@@ -111,12 +114,14 @@ public class MainController {
         progressIndicator.setVisible(true);
         contentPane.setDisable(true);
         rightPane.setDisable(true);
+        //showOverlay(); // Show overlay when loading
     }
 
     private void hideLoading() {
         progressIndicator.setVisible(false);
         contentPane.setDisable(false);
         rightPane.setDisable(false);
+        //hideOverlay(); // Hide overlay when loading is done
     }
 
     public void showOverlay() {

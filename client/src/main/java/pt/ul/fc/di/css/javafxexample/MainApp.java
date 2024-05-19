@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import pt.ul.fc.di.css.javafxexample.presentation.control.LoginController;
 import pt.ul.fc.di.css.javafxexample.presentation.control.MainController;
@@ -13,7 +15,6 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
 
-    
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -40,9 +41,22 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(prefix + "MainView.fxml"));
         BorderPane root = loader.load();
 
+        // Wrap the BorderPane in a StackPane
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().add(root);
 
-        Scene scene = new Scene(root, 800, 600);
-        primaryStage.setTitle("Welcome " + username +"!");
+        // Create the overlay Pane and add it to the StackPane
+        Pane overlay = new Pane();
+        overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        overlay.setVisible(false);
+        stackPane.getChildren().add(overlay);
+
+        // Pass the overlay Pane to the controller
+        MainController controller = loader.getController();
+        controller.setOverlay(overlay);
+
+        Scene scene = new Scene(stackPane, 800, 600);
+        primaryStage.setTitle("Welcome " + username + "!");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
