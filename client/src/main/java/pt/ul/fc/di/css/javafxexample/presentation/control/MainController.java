@@ -47,10 +47,12 @@ public class MainController {
 
     public void showApplicationList() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
+        applicationsButton.requestFocus();
     }
 
     public void showDissertationTopicList() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicRightPanel.fxml", DissertationTopicModel.class);
+        dissertationTopicButton.requestFocus();
     }
 
     private <T> void loadListView(String rightPanelFxml, Class<T> modelClass) {
