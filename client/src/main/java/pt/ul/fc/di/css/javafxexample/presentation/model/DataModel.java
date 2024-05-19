@@ -1,126 +1,190 @@
 package pt.ul.fc.di.css.javafxexample.presentation.model;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
-import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class DataModel {
+public class DataModel<T> {
 
-	/* in this way studentsList also reports 
-	 * mutations of the elements in it by using the given extractor. 
-	 * Observable objects returned by extractor (applied to each list element) are listened 
-	 * for changes and transformed into "update" change of ListChangeListener.	  
-	 * since the phone is not visible, changes in the phone do not need to be propagated	 
-	 */
-	private final ObservableList<StudentModel> studentsList =	 
-			FXCollections.observableArrayList(student -> 
-			new Observable[] {student.usernameProperty(), student.studentNumberProperty()});
+    private final ObservableList<T> itemsList = FXCollections.observableArrayList();
+    private final ObjectProperty<T> currentItem = new SimpleObjectProperty<>(null);
 
-	private final ObservableList<ProfessorModel> profsList =	 
-			FXCollections.observableArrayList(professor -> 
-			new Observable[] {professor.usernameProperty(), professor.nameProperty()});
+    public ObservableList<T> getItemsList() {
+        return itemsList;
+    }
 
-	private final ObservableList<MastersModel> mastersList =	 
-			FXCollections.observableArrayList(master -> 
-			new Observable[] {master.nameProperty(), master.coordenatorProperty()});
+    public ObjectProperty<T> currentItemProperty() {
+        return currentItem;
+    }
 
+    public T getCurrentItem() {
+        return currentItem.get();
+    }
 
-	public ObservableList getList() {
-		if (!this.mastersList.isEmpty()) {
-			return mastersList;
-		}
-		if (!this.profsList.isEmpty()) {
-			return mastersList;
-		}
-		return studentsList;
-	}
+    public void setCurrentItem(T item) {
+        currentItem.set(item);
+    }
 
-	public ObservableList<ProfessorModel> getProfessorsList() {
-		return profsList;
-	}
-
-	private final ObjectProperty<StudentModel> currentStudent = new SimpleObjectProperty<>(null);
-
-	
-	public ObjectProperty<StudentModel> currentStudentProperty() {
-		return currentStudent;
-	}
-
-	public final StudentModel getCurrentStudent() {
-		return currentStudentProperty().get();
-	}
-
-	public final void setCurrentStudent(StudentModel student) {
-		currentStudentProperty().set(student);
-	}
-
-	public void loadData() {
-		
-		System.out.println("alooo");
-		this.studentsList.setAll();
-	}
-
-	public void saveData(File file) { }
+    public void loadItems(T... items) {
+        itemsList.setAll(items);
+    }
 
 
-	public void loadProfessors() {
+    public void loadDissertationTopics() {
 
-		ProfessorModel prof1 = new ProfessorModel("Kandonga", "hello", "mantorras");
-		ProfessorModel prof2 = new ProfessorModel("Casemirao", "deus", "god");
-		ProfessorModel prof3 = new ProfessorModel("Al-çides", "css", "git");
+         try {
+            URL url = new URL("https://www.youtube.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        Set<MastersModel> mastersSet1 = new HashSet<>();
+        mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Prof1", "hello", "mantorras")));
 
-		//this.profsList.setAll(prof1, prof2, prof3);
-		this.profsList.setAll(prof1, prof2, prof3);
-	}
+        Set<MastersModel> mastersSet2 = new HashSet<>();
+        mastersSet2.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
+        mastersSet2.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
 
-	public void loadStudents() {
+        Set<MastersModel> mastersSet3 = new HashSet<>();
+        mastersSet3.add(new MastersModel("Artificial Intelligence", new ProfessorModel("Prof4", "ai", "ml")));
+        mastersSet3.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
+        mastersSet3.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
 
-		ProfessorModel prof1 = new ProfessorModel("Kandonga", "hello", "mantorras");
-		ProfessorModel prof2 = new ProfessorModel("Casemirao", "deus", "god");
-		ProfessorModel prof3 = new ProfessorModel("Al-çides", "css", "git");
+        DissertationTopicModel topic1 = new DissertationTopicModel(
+                "Artificial Intelligence in Wonderland",
+                "Exploring AI concepts through Alice's adventures.",
+                1500.0,
+                new ProfessorModel("alice.wonderland", "CheshireCat01", "Alice Wonderland"),
+                mastersSet1
+        );
 
-		MastersModel master1 = new MastersModel("Computer Science", prof1);
-        MastersModel master2 = new MastersModel("Data Science", prof2);
-        MastersModel master3 = new MastersModel("Software Engineering", prof3);
+        DissertationTopicModel topic2 = new DissertationTopicModel(
+                "Building Smart Cities",
+                "Technologies and methodologies for constructing smart cities.",
+                1700.0,
+                new ProfessorModel("bob.builder", "FixItAll02", "Bob Builder"),
+                mastersSet2
+        );
 
-        studentsList.setAll(
-			new StudentModel("alice.wonderland", "CheshireCat01", "Alice Wonderland", 1001, 15.5, master1),
-			new StudentModel("bob.builder", "FixItAll02", "Bob Builder", 1002, 17.0, master2),
-			new StudentModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate", 1003, 14.0, master1),
-			new StudentModel("dora.explorer", "MapQuest04", "Dora Explorer", 1004, 18.5, master3),
-			new StudentModel("elmo.sesame", "TickleMe05", "Elmo Sesame", 1005, 16.0, master1),
-			new StudentModel("frodo.ring", "ShireHobbit06", "Frodo Ring", 1006, 19.0, master2),
-			new StudentModel("gandalf.grey", "YouShallPass07", "Gandalf Grey", 1007, 13.5, master3),
-			new StudentModel("harry.potter", "Expelliarmus08", "Harry Potter", 1008, 16.5, master1),
-			new StudentModel("irene.adler", "Sherlocked09", "Irene Adler", 1009, 15.0, master2),
-			new StudentModel("jack.sparrow", "PirateLife10", "Jack Sparrow", 1010, 17.5, master3),
-			new StudentModel("katniss.everdeen", "Mockingjay11", "Katniss Everdeen", 1011, 18.0, master1),
-			new StudentModel("legolas.greenleaf", "ElvenArcher12", "Legolas Greenleaf", 1012, 16.5, master2),
-			new StudentModel("merlin.wizard", "MagicStaff13", "Merlin Wizard", 1013, 14.5, master3),
-			new StudentModel("nemo.clownfish", "JustKeepSwimming14", "Nemo Clownfish", 1014, 17.0, master1),
-			new StudentModel("oliver.twist", "PleaseSir15", "Oliver Twist", 1015, 15.5, master2),
-			new StudentModel("peter.pan", "NeverGrowUp16", "Peter Pan", 1016, 19.0, master3),
-			new StudentModel("quentin.quirrell", "TurbansRock17", "Quentin Quirrell", 1017, 13.0, master1),
-			new StudentModel("rapunzel.tower", "LetDownYourHair18", "Rapunzel Tower", 1018, 18.5, master2),
-			new StudentModel("sherlock.holmes", "221BakerStreet19", "Sherlock Holmes", 1019, 17.5, master3),
-			new StudentModel("tony.stark", "IronMan20", "Tony Stark", 1020, 16.0, master1)
-		);
-	}
+        DissertationTopicModel topic3 = new DissertationTopicModel(
+                "Chocolate Factory Automation",
+                "Automating processes in chocolate production.",
+                1400.0,
+                new ProfessorModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
+                mastersSet3
+        );
 
-	public void loadMasters() {
+        topic1.setId(1);
+        topic2.setId(2);
+        topic3.setId(3);
 
-		ProfessorModel prof1 = new ProfessorModel("Kandonga", "hello", "mantorras");
-		ProfessorModel prof2 = new ProfessorModel("Casemirao", "deus", "god");
-		ProfessorModel prof3 = new ProfessorModel("Al-çides", "css", "git");
+        // Add more DissertationTopicModel instances as needed
 
-		MastersModel master1 = new MastersModel("Computer Science", prof1);
-        MastersModel master2 = new MastersModel("Data Science", prof2);
-        MastersModel master3 = new MastersModel("Software Engineering", prof3);
+        // Load these topics into your application (for example, into a list or database)
+        loadItems((T)topic1, (T)topic2, (T)topic3);
+    }
 
-        mastersList.setAll(master1, master2, master3);
-	}
+
+    public void loadApplications() {
+
+        try {
+            URL url = new URL("https://www.youtube.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        // Mock data for students
+        StudentModel student1 = new StudentModel("1", "Alice Wonderland", "a", 58226, 1);
+        StudentModel student2 = new StudentModel("2", "Bob Builder", "Bob", 58227, 1);
+        StudentModel student3 = new StudentModel("3", "Charlie Chocolate", "Charlo", 58229, 1);
+
+        Set<MastersModel> mastersSet1 = new HashSet<>();
+        mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Prof1", "hello", "mantorras")));
+
+        Set<MastersModel> mastersSet2 = new HashSet<>();
+        mastersSet2.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
+        mastersSet2.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
+
+        Set<MastersModel> mastersSet3 = new HashSet<>();
+        mastersSet3.add(new MastersModel("Artificial Intelligence", new ProfessorModel("Prof4", "ai", "ml")));
+        mastersSet3.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
+        mastersSet3.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
+
+        DissertationTopicModel topic1 = new DissertationTopicModel(
+                "Artificial Intelligence in Wonderland",
+                "Exploring AI concepts through Alice's adventures.",
+                1500.0,
+                new ProfessorModel("alice.wonderland", "CheshireCat01", "Alice Wonderland"),
+                mastersSet1
+        );
+
+        DissertationTopicModel topic2 = new DissertationTopicModel(
+                "Building Smart Cities",
+                "Technologies and methodologies for constructing smart cities.",
+                1700.0,
+                new ProfessorModel("bob.builder", "FixItAll02", "Bob Builder"),
+                mastersSet2
+        );
+
+        DissertationTopicModel topic3 = new DissertationTopicModel(
+                "Chocolate Factory Automation",
+                "Automating processes in chocolate production.",
+                1400.0,
+                new ProfessorModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
+                mastersSet3
+        );
+
+       
+    
+            // Create mock applications
+            ApplicationModel application1 = new ApplicationModel(student1, topic1);
+            ApplicationModel application2 = new ApplicationModel(student2, topic2);
+            ApplicationModel application3 = new ApplicationModel(student3, topic3);
+            application1.setId(1);
+            application2.setId(2);
+            application3.setId(3);
+            // Add more ApplicationModel instances as needed
+            loadItems((T)application1, (T)application2, (T)application3);
+        }
+
+        public void loadThesisExecutions() {
+            // Mock data for students
+            StudentModel student1 = new StudentModel("Alice Wonderland", "b", "c", 58);
+            StudentModel student2 = new StudentModel("Bob Builder", "", "", 2);
+            StudentModel student3 = new StudentModel("Charlie Chocolate", "", "", 4);
+    
+            ProfessorModel professor1 = new ProfessorModel("Prof. AI", "", "Prof. AI");
+            ProfessorModel professor2 = new ProfessorModel("Prof. Cities","", "Prof. Cities");
+            ProfessorModel professor3 = new ProfessorModel("Prof. Chocolate", "", "Prof. Chocolate");
+            // Mock data for topics
+            DissertationTopicModel topic1 = new DissertationTopicModel("AI in Wonderland", "aa", 10, professor1, null);
+            DissertationTopicModel topic2 = new DissertationTopicModel("Smart Cities", "", 1, professor2, null);
+            DissertationTopicModel topic3 = new DissertationTopicModel("Chocolate Automation", "", 1, professor3, null);
+    
+            // Mock data for ThesisExecution
+            ThesisExecutionModel execution1 = new ThesisExecutionModel(student1, topic1, "2023", professor1);
+            ThesisExecutionModel execution2 = new ThesisExecutionModel(student2, topic2, "2023", professor2);
+            ThesisExecutionModel execution3 = new ThesisExecutionModel(student3, topic3, "2023", professor3);
+            execution1.setInternalAdvisor(professor1);
+            execution2.setInternalAdvisor(professor2);
+            execution3.setInternalAdvisor(professor3);
+            // Load these executions into your application
+            loadItems((T)execution1, (T)execution2, (T)execution3);
+        }
+    
+        
 }

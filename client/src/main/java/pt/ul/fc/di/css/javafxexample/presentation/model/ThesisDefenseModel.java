@@ -1,7 +1,6 @@
 package pt.ul.fc.di.css.javafxexample.presentation.model;
 
 import javafx.beans.property.*;
-
 import java.util.Date;
 
 public class ThesisDefenseModel {
@@ -11,18 +10,17 @@ public class ThesisDefenseModel {
     private final StringProperty location = new SimpleStringProperty();
     private final ObjectProperty<Date> time = new SimpleObjectProperty<>();
 
-    // Construtores
     public ThesisDefenseModel() {
+        // Default constructor
     }
 
     public ThesisDefenseModel(ThesisExecutionModel thesisExecution, String location, Date time) {
-        setThesisExecution(thesisExecution);
-        setLocation(location);
-        setTime(time);
-        setGrade(0); // Default grade to 0
+        this.thesisExecution.set(thesisExecution);
+        this.location.set(location);
+        this.time.set(time);
+        this.grade.set(0); // Default grade
     }
 
-    // Getters e setters para id
     public LongProperty idProperty() {
         return id;
     }
@@ -35,7 +33,6 @@ public class ThesisDefenseModel {
         this.id.set(id);
     }
 
-    // Getters e setters para thesisExecution
     public ObjectProperty<ThesisExecutionModel> thesisExecutionProperty() {
         return thesisExecution;
     }
@@ -48,7 +45,6 @@ public class ThesisDefenseModel {
         this.thesisExecution.set(thesisExecution);
     }
 
-    // Getters e setters para grade
     public IntegerProperty gradeProperty() {
         return grade;
     }
@@ -61,7 +57,6 @@ public class ThesisDefenseModel {
         this.grade.set(grade);
     }
 
-    // Getters e setters para location
     public StringProperty locationProperty() {
         return location;
     }
@@ -74,7 +69,6 @@ public class ThesisDefenseModel {
         this.location.set(location);
     }
 
-    // Getters e setters para time
     public ObjectProperty<Date> timeProperty() {
         return time;
     }
@@ -89,7 +83,12 @@ public class ThesisDefenseModel {
 
     @Override
     public String toString() {
-        return "ThesisDefense id: " + getId() + ", thesisExecution: " + getThesisExecution() +
-               ", location: " + getLocation() + ", time: " + getTime() + ", grade: " + getGrade();
+        return "ThesisDefenseModel{" +
+                "id=" + id.get() +
+                ", thesisExecution=" + thesisExecution.get() +
+                ", grade=" + grade.get() +
+                ", location='" + location.get() + '\'' +
+                ", time=" + time.get() +
+                '}';
     }
 }

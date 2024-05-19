@@ -10,31 +10,18 @@ public class ThesisExecutionModel {
     private final StringProperty yearOfExecution = new SimpleStringProperty();
     private final IntegerProperty finalGrade = new SimpleIntegerProperty();
 
-    // Construtores
     public ThesisExecutionModel() {
-    }
-
-    public ThesisExecutionModel(StudentModel student, DissertationTopicModel topic, String yearOfExecution) {
-        setStudent(student);
-        setTopic(topic);
-        setYearOfExecution(yearOfExecution);
-        setInternalAdvisor((ProfessorModel) topic.getSubmitter());
+        // Default constructor
     }
 
     public ThesisExecutionModel(StudentModel student, DissertationTopicModel topic, String yearOfExecution, ProfessorModel internalAdvisor) {
-        setStudent(student);
-        setTopic(topic);
-        setYearOfExecution(yearOfExecution);
-        setInternalAdvisor(internalAdvisor);
+        this.student.set(student);
+        this.topic.set(topic);
+        this.yearOfExecution.set(yearOfExecution);
+        this.internalAdvisor.set(internalAdvisor);
+        this.finalGrade.set(0); // Default final grade
     }
 
-    //MOCKKK
-    public ThesisExecutionModel(StudentModel student, String yearOfExecution) {
-        setStudent(student);
-        setYearOfExecution(yearOfExecution);
-    }
-
-    // Getters e setters para id
     public LongProperty idProperty() {
         return id;
     }
@@ -47,7 +34,6 @@ public class ThesisExecutionModel {
         this.id.set(id);
     }
 
-    // Getters e setters para student
     public ObjectProperty<StudentModel> studentProperty() {
         return student;
     }
@@ -60,7 +46,6 @@ public class ThesisExecutionModel {
         this.student.set(student);
     }
 
-    // Getters e setters para topic
     public ObjectProperty<DissertationTopicModel> topicProperty() {
         return topic;
     }
@@ -73,7 +58,6 @@ public class ThesisExecutionModel {
         this.topic.set(topic);
     }
 
-    // Getters e setters para internalAdvisor
     public ObjectProperty<ProfessorModel> internalAdvisorProperty() {
         return internalAdvisor;
     }
@@ -86,7 +70,6 @@ public class ThesisExecutionModel {
         this.internalAdvisor.set(internalAdvisor);
     }
 
-    // Getters e setters para yearOfExecution
     public StringProperty yearOfExecutionProperty() {
         return yearOfExecution;
     }
@@ -99,7 +82,6 @@ public class ThesisExecutionModel {
         this.yearOfExecution.set(yearOfExecution);
     }
 
-    // Getters e setters para finalGrade
     public IntegerProperty finalGradeProperty() {
         return finalGrade;
     }
@@ -114,8 +96,13 @@ public class ThesisExecutionModel {
 
     @Override
     public String toString() {
-        return "ThesisExecution id: " + getId() + ", student: " + getStudent() +
-               ", topic: " + getTopic() + ", internalAdvisor: " + getInternalAdvisor() +
-               ", yearOfExecution: " + getYearOfExecution() + ", finalGrade: " + getFinalGrade();
+        return "ThesisExecutionModel{" +
+                "id=" + id.get() +
+                ", student=" + student.get() +
+                ", topic=" + topic.get() +
+                ", internalAdvisor=" + internalAdvisor.get() +
+                ", yearOfExecution='" + yearOfExecution.get() + '\'' +
+                ", finalGrade=" + finalGrade.get() +
+                '}';
     }
 }
