@@ -40,15 +40,16 @@ public class MainController {
 
     @FXML
     public void initialize() {
+        MainControllerSingleton.mainController = this;
         applicationsButton.setOnAction(event -> showApplicationList());
         dissertationTopicButton.setOnAction(event -> showDissertationTopicList());
     }
 
-    private void showApplicationList() {
+    public void showApplicationList() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
     }
 
-    private void showDissertationTopicList() {
+    public void showDissertationTopicList() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicRightPanel.fxml", DissertationTopicModel.class);
     }
 
