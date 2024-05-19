@@ -1,5 +1,9 @@
 package pt.ul.fc.di.css.javafxexample.presentation.model;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +39,18 @@ public class DataModel<T> {
 
 
     public void loadDissertationTopics() {
+
+         try {
+            HttpURLConnection connection = (HttpURLConnection) new URL("https://www.youtube.com/").openConnection();
+            connection.setRequestMethod("GET");
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            while (in.readLine() != null) {
+                // Just reading the response to introduce a delay
+            }
+            in.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         Set<MastersModel> mastersSet1 = new HashSet<>();
         mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Prof1", "hello", "mantorras")));
 
@@ -83,6 +99,18 @@ public class DataModel<T> {
 
 
         public void loadApplications() {
+
+            try {
+                HttpURLConnection connection = (HttpURLConnection) new URL("https://www.youtube.com/").openConnection();
+                connection.setRequestMethod("GET");
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                while (in.readLine() != null) {
+                    // Just reading the response to introduce a delay
+                }
+                in.close();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
             // Mock data for students
             StudentModel student1 = new StudentModel("1", "Alice Wonderland", "a", 58226, 1);
             StudentModel student2 = new StudentModel("2", "Bob Builder", "Bob", 58227, 1);
