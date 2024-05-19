@@ -176,9 +176,9 @@ public class DataModel<T> {
             DissertationTopicModel topic3 = new DissertationTopicModel("Chocolate Automation", "", 1, professor3, null);
     
             // Mock data for ThesisExecution
-            ThesisExecutionModel execution1 = new ThesisExecutionModel(student1, topic1, "2023", professor1);
-            ThesisExecutionModel execution2 = new ThesisExecutionModel(student2, topic2, "2023", professor2);
-            ThesisExecutionModel execution3 = new ThesisExecutionModel(student3, topic3, "2023", professor3);
+            ThesisExecutionModel execution1 = new ThesisExecutionModel(student1, topic1, "2021/2022", professor1);
+            ThesisExecutionModel execution2 = new ThesisExecutionModel(student2, topic2, "2022/2023", professor2);
+            ThesisExecutionModel execution3 = new ThesisExecutionModel(student3, topic3, "2023/2024", professor3);
             execution1.setInternalAdvisor(professor1);
             execution2.setInternalAdvisor(professor2);
             execution3.setInternalAdvisor(professor3);

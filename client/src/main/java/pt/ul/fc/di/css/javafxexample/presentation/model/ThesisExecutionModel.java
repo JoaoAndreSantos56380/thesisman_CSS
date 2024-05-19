@@ -96,13 +96,14 @@ public class ThesisExecutionModel {
 
     @Override
     public String toString() {
-        return "ThesisExecutionModel{" +
+        return yearOfExecution.get() + " - " + topic.get().getTitle();
+        /*return "ThesisExecutionModel{" +
                 "id=" + id.get() +
                 ", student=" + student.get() +
                 ", topic=" + topic.get() +
                 ", internalAdvisor=" + internalAdvisor.get() +
                 ", yearOfExecution='" + yearOfExecution.get() + '\'' +
                 ", finalGrade=" + finalGrade.get() +
-                '}';
+                '}';*/
     }
 }
