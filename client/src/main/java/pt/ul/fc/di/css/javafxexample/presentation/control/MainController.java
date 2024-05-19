@@ -109,10 +109,12 @@ public class MainController {
     private void showLoading() {
         progressIndicator.setVisible(true);
         contentPane.setDisable(true);
+        rightPane.setDisable(true);
     }
 
     private void hideLoading() {
         progressIndicator.setVisible(false);
         contentPane.setDisable(false);
+        rightPane.setDisable(false);
     }
 }
