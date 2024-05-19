@@ -37,7 +37,6 @@ public class ExecutionRightPanelController {
         
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {    
-                System.out.println("selected");            
                 selection = newSelection;
                 executionTopicNameLabel.setText(String.valueOf(newSelection.getTopic().getTitle()));
                 advisorNameLabel.setText(String.valueOf(newSelection.getInternalAdvisor().getName()));

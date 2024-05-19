@@ -31,7 +31,6 @@ public class ThesisDefenseRightPanelController {
         
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {    
-                System.out.println("selected");            
                 selection = newSelection;
                 topicLabel.setText(String.valueOf(newSelection.getThesisExecution().getTopic().getTitle()));
                 
