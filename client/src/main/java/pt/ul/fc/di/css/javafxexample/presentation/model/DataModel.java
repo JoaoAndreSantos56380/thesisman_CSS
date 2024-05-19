@@ -163,6 +163,15 @@ public class DataModel<T> {
         }
 
         public void loadThesisExecutions() {
+            try {
+                URL url = new URL("https://www.youtube.com");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                int responseCode = connection.getResponseCode();
+                connection.disconnect();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
             // Mock data for students
             StudentModel student1 = new StudentModel("Alice Wonderland", "b", "c", 58);
             StudentModel student2 = new StudentModel("Bob Builder", "", "", 2);
@@ -189,6 +198,15 @@ public class DataModel<T> {
     
         
         public void loadThesisDefenses() {
+            try {
+                URL url = new URL("https://www.youtube.com");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                int responseCode = connection.getResponseCode();
+                connection.disconnect();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
             // Mock data for professors
             StudentModel student1 = new StudentModel("Alice Wonderland", "b", "c", 58);
             StudentModel student2 = new StudentModel("Bob Builder", "", "", 2);
