@@ -41,13 +41,11 @@ public class DataModel<T> {
     public void loadDissertationTopics() {
 
          try {
-            HttpURLConnection connection = (HttpURLConnection) new URL("https://www.youtube.com/").openConnection();
+            URL url = new URL("https://www.youtube.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            while (in.readLine() != null) {
-                // Just reading the response to introduce a delay
-            }
-            in.close();
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -101,13 +99,11 @@ public class DataModel<T> {
         public void loadApplications() {
 
             try {
-                HttpURLConnection connection = (HttpURLConnection) new URL("https://www.youtube.com/").openConnection();
+                URL url = new URL("https://www.youtube.com");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                while (in.readLine() != null) {
-                    // Just reading the response to introduce a delay
-                }
-                in.close();
+                int responseCode = connection.getResponseCode();
+                connection.disconnect();
             } catch(Exception e) {
                 e.printStackTrace();
             }

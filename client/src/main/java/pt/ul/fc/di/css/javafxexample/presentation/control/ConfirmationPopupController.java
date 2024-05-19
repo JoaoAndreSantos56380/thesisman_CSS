@@ -20,6 +20,7 @@ public class ConfirmationPopupController {
 
     private Stage dialogStage;
     private boolean confirmed;
+    private long selectedId; // Add this field to store the selected ID
 
     @FXML
     private StackPane contentPane;
@@ -44,6 +45,7 @@ public class ConfirmationPopupController {
     @FXML
     private void handleConfirmAction() {
         confirmed = true;
+        System.out.println("Confirm button pressed for application with id: " + selectedId); // Print the selected ID
         showLoadingIndicator(true);
         executorService.submit(this::makeGetRequest);
     }
@@ -88,5 +90,10 @@ public class ConfirmationPopupController {
 
     public boolean isConfirmed() {
         return confirmed;
+    }
+
+    // Add this method to set the selected ID
+    public void setSelectedId(long selectedId) {
+        this.selectedId = selectedId;
     }
 }

@@ -62,6 +62,8 @@ private void handleCancelButton() {
         ConfirmationPopupController controller = loader.getController();
         controller.setDialogStage(dialogStage);
 
+        controller.setSelectedId(selection.getId());
+
         // Show the overlay
         mainController.showOverlay();
 
