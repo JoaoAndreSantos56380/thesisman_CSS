@@ -38,7 +38,7 @@ public class ApplicationRightPanelController {
     @FXML
 private void handleCancelButton() {
     try {
-        String popupFxml = "/pt/ul/fc/di/css/javafxexample/presentation/view/ConfirmationPopup.fxml";
+        String popupFxml = "/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationDeletionPopup.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(popupFxml));
         Parent root = loader.load();
 
