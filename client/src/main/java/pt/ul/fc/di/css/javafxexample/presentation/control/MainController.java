@@ -38,27 +38,29 @@ public class MainController {
     }
 
     private void showApplicationList() {
-        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
+        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ApplicationRightPanel.fxml", ApplicationModel.class);
     }
 
     private void showDissertationTopicList() {
-        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ListView.fxml", "/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicRightPanel.fxml", DissertationTopicModel.class);
+        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/DissertationTopicRightPanel.fxml", DissertationTopicModel.class);
     }
 
-    private <T> void loadListView(String listViewFxml, String rightPanelFxml, Class<T> modelClass) {
+    private <T> void loadListView(String rightPanelFxml, Class<T> modelClass) {
         showLoading();
         
         // Run the data loading in a separate thread
         new Thread(() -> {
             try {
-                loadData(listViewFxml, rightPanelFxml, modelClass);
+                loadData(rightPanelFxml, modelClass);
             } finally {
                 Platform.runLater(this::hideLoading);
             }
         }).start();
     }
 
-    private <T> void loadData(String listViewFxml, String rightPanelFxml, Class<T> modelClass) {
+    private <T> void loadData(String rightPanelFxml, Class<T> modelClass) {
+        String listViewFxml = "/pt/ul/fc/di/css/javafxexample/presentation/view/ListView.fxml";
+
         try {
             // Simulate loading delay
             Thread.sleep(2000);
@@ -66,18 +68,10 @@ public class MainController {
             // Load ListView
             FXMLLoader listViewLoader = new FXMLLoader(getClass().getResource(listViewFxml));
             Parent listViewRoot = listViewLoader.load();
-            Platform.runLater(() -> {
-                contentPane.getChildren().clear();
-                contentPane.getChildren().add(listViewRoot);
-            });
 
             // Load Right Panel
             FXMLLoader rightPanelLoader = new FXMLLoader(getClass().getResource(rightPanelFxml));
             Parent rightPanelRoot = rightPanelLoader.load();
-            Platform.runLater(() -> {
-                rightPane.getChildren().clear();
-                rightPane.getChildren().add(rightPanelRoot);
-            });
 
             // Initialize Model and Controller
             DataModel<T> model = new DataModel<>();
@@ -99,6 +93,14 @@ public class MainController {
                     ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty());
                 }
             });
+
+            // Update the UI with both parts together
+            Platform.runLater(() -> {
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(listViewRoot);
+                rightPane.getChildren().clear();
+                rightPane.getChildren().add(rightPanelRoot);
+            });
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -107,12 +109,10 @@ public class MainController {
     private void showLoading() {
         progressIndicator.setVisible(true);
         contentPane.setDisable(true);
-        System.out.println("show loading");
     }
 
     private void hideLoading() {
         progressIndicator.setVisible(false);
         contentPane.setDisable(false);
-        System.out.println("hide loading");
     }
 }
