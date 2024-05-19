@@ -83,12 +83,15 @@ public class ThesisDefenseModel {
 
     @Override
     public String toString() {
-        return "ThesisDefenseModel{" +
+        return time.get().toString() + " in " + location.get() + " : " +
+        thesisExecution.get().getTopic().getTitle();
+        
+        /*return "ThesisDefenseModel{" +
                 "id=" + id.get() +
                 ", thesisExecution=" + thesisExecution.get() +
                 ", grade=" + grade.get() +
                 ", location='" + location.get() + '\'' +
                 ", time=" + time.get() +
-                '}';
+                '}';*/
     }
 }

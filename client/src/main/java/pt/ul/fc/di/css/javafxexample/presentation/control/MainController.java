@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ApplicationModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DissertationTopicModel;
+import pt.ul.fc.di.css.javafxexample.presentation.model.ThesisDefenseModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ThesisExecutionModel;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class MainController {
         MainControllerSingleton.mainController = this;
         applicationsButton.setOnAction(event -> showApplicationList());
         dissertationTopicButton.setOnAction(event -> showDissertationTopicList());
-        defensesButton.setOnAction(event -> showApplicationList());
+        defensesButton.setOnAction(event -> showDefenses());
         executionsButton.setOnAction(event -> showExecutions());
     }
 
@@ -67,6 +68,11 @@ public class MainController {
     public void showExecutions() {
         loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ExecutionRightPanel.fxml", ThesisExecutionModel.class);
         executionsButton.requestFocus();
+    }
+
+    public void showDefenses() {
+        loadListView("/pt/ul/fc/di/css/javafxexample/presentation/view/ThesisDefenseRightPanel.fxml", ThesisDefenseModel.class);
+        defensesButton.requestFocus();
     }
 
     private <T> void loadListView(String rightPanelFxml, Class<T> modelClass) {
@@ -102,6 +108,8 @@ public class MainController {
                 ((DataModel<ApplicationModel>) model).loadApplications();
             } else if (modelClass == ThesisExecutionModel.class) {
                 ((DataModel<ThesisExecutionModel>) model).loadThesisExecutions();
+            } else if (modelClass == ThesisDefenseModel.class) {
+                ((DataModel<ThesisDefenseModel>) model).loadThesisDefenses();
             }
 
             ListController<T> listController = listViewLoader.getController();
@@ -116,6 +124,8 @@ public class MainController {
                     ((ApplicationRightPanelController) rightPanelController).initModel((ObjectProperty<ApplicationModel>) listController.selectedItemProperty());
                 } else if (rightPanelController instanceof ExecutionRightPanelController) {
                     ((ExecutionRightPanelController) rightPanelController).initModel((ObjectProperty<ThesisExecutionModel>) listController.selectedItemProperty());
+                } else if (rightPanelController instanceof ThesisDefenseRightPanelController) {
+                    ((ThesisDefenseRightPanelController) rightPanelController).initModel((ObjectProperty<ThesisDefenseModel>) listController.selectedItemProperty());
                 } 
             });
 
