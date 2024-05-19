@@ -3,6 +3,7 @@ package pt.ul.fc.di.css.javafxexample.presentation.control;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.HBox;
@@ -21,10 +22,26 @@ import java.util.concurrent.ExecutorService;
 
 public class SubmitFilePopupController {
 
+    public enum DocumentType {
+        PROPOSAL("Proposal"),
+        FINAL_VERSION("Final Version");
+
+        private final String displayName;
+
+        DocumentType(String displayName) {
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
+    }
+
     private Stage dialogStage;
     private boolean confirmed;
-    private long selectedId; // Add this field to store the selected ID
-
+    private long selectedId;
+    
     @FXML
     private StackPane contentPane;
 
@@ -43,6 +60,15 @@ public class SubmitFilePopupController {
     private Label selectedDocumentLabel;
 
     @FXML
+    private ComboBox<DocumentType> documentTypeComboBox;
+
+    @FXML
+    private void initialize() {
+        documentTypeComboBox.getItems().setAll(DocumentType.values());
+        documentTypeComboBox.getSelectionModel().select(DocumentType.PROPOSAL);
+    }
+
+    @FXML
     private void handleCancelAction() {
         confirmed = false;
         dialogStage.close();
@@ -51,7 +77,8 @@ public class SubmitFilePopupController {
     @FXML
     private void handleConfirmAction() {
         confirmed = true;
-        System.out.println("Confirm button pressed for application with id: " + selectedId); // Print the selected ID
+        DocumentType selectedDocumentType = documentTypeComboBox.getSelectionModel().getSelectedItem();
+        System.out.println("Confirm button pressed for application with id: " + selectedId + " and document type: " + selectedDocumentType);
         showLoadingIndicator(true);
         executorService.submit(this::makeGetRequest);
     }
@@ -68,10 +95,8 @@ public class SubmitFilePopupController {
             connection.setRequestMethod("GET");
             int responseCode = connection.getResponseCode();
             if (responseCode == 200) {
-                // Request was successful
                 Platform.runLater(() -> showConfirmationMessage(true));
             } else {
-                // Request failed
                 Platform.runLater(() -> showConfirmationMessage(false));
             }
         } catch (IOException e) {
@@ -98,7 +123,6 @@ public class SubmitFilePopupController {
         return confirmed;
     }
 
-    // Add this method to set the selected ID
     public void setSelectedId(long selectedId) {
         this.selectedId = selectedId;
     }
@@ -116,8 +140,6 @@ public class SubmitFilePopupController {
             try {
                 byte[] fileContent = Files.readAllBytes(file.toPath());
                 System.out.println("File content: " + fileContent.length + " bytes.");
-                
-                System.out.println();
             } catch (IOException e) {
                 e.printStackTrace();
             }

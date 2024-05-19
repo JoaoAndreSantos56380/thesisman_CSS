@@ -65,6 +65,7 @@ public class ExecutionRightPanelController {
             Scene scene = new Scene(root);
             dialogStage.setScene(scene);
             dialogStage.setResizable(false);
+ 
     
             // Center the dialog on the parent window
             Stage primaryStage = (Stage) newFileButton.getScene().getWindow();
@@ -91,7 +92,7 @@ public class ExecutionRightPanelController {
             // Check if the action was confirmed
             if (controller.isConfirmed()) {
                 System.out.println("Cancel button pressed for application with id: " + selection.getId());
-                MainControllerSingleton.mainController.showDissertationTopicList();
+                MainControllerSingleton.mainController.showExecutions();
                 // Perform the cancellation logic here
             }
         } catch (IOException e) {
