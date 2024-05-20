@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.Executors;
@@ -57,10 +58,22 @@ public class ApplyToTopicPopupController {
     }
 
     private void makeGetRequest() {
+        System.err.println("Tring to");
         try {
-            URL url = new URL("https://www.youtube.com");
+            URL url = new URL("http://localhost:8080/api/createApplication/" +selectedId);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+
+        // Create JSON object with studentId
+            String jsonInputString = String.valueOf(MainControllerSingleton.user_id);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
             int responseCode = connection.getResponseCode();
             if (responseCode == 200) {
                 // Request was successful
