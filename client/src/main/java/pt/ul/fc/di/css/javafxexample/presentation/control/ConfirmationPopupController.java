@@ -57,9 +57,10 @@ public class ConfirmationPopupController {
 
     private void makeGetRequest() {
         try {
-            URL url = new URL("https://www.youtube.com");
+
+            URL url = new URL("http://localhost:8080/api/deleteApplication/" + this.selectedId);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
             int responseCode = connection.getResponseCode();
             if (responseCode == 200) {
                 // Request was successful
