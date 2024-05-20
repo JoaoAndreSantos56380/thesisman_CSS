@@ -38,4 +38,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 	@Query("SELECT a FROM AppUser a LEFT JOIN ThesisExecution te ON a.id = te.student.id WHERE TYPE(a) = 'STUDENT' AND te.id IS NULL")
 	List<AppUser> findFreeStudents();
 
+	@Query("SELECT a FROM AppUser a WHERE TYPE(a) = 'TEACHER' AND a.id <> :id")
+	List<AppUser> findAllProfessorsExceptMe(Long id);
+
 }
