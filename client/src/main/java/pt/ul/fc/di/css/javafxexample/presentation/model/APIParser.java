@@ -1,6 +1,8 @@
 package pt.ul.fc.di.css.javafxexample.presentation.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -196,6 +198,7 @@ public class APIParser {
     }
 
     private static ThesisExecutionModel parseThesisExecution(JsonObject thesisExecutionObject) {
+
         long id = thesisExecutionObject.get("id").getAsLong();
         
         // Parse student
@@ -284,5 +287,49 @@ public class APIParser {
         thesisExecution.setFinalGrade(finalGrade);
         
         return thesisExecution;
+    }
+
+    public static List<ThesisDefenseModel> parseThesisDefenses(String content) {
+        try {
+            // Parse the JSON response
+            JsonArray thesisDefensesArray = JsonParser.parseString(content).getAsJsonArray();
+            System.err.println(thesisDefensesArray.size());
+            // Create a list to hold the ThesisDefenseModel instances
+            List<ThesisDefenseModel> thesisDefenses = new ArrayList<>();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+
+            // Process each thesis defense
+            for (JsonElement thesisDefenseElement : thesisDefensesArray) {
+                JsonObject thesisDefenseObject = thesisDefenseElement.getAsJsonObject();
+
+                long id = thesisDefenseObject.get("id").getAsLong();
+
+                // Parse thesis execution
+                JsonObject thesisExecutionObject = thesisDefenseObject.getAsJsonObject("thesisExecution");
+                ThesisExecutionModel thesisExecution = parseThesisExecution(thesisExecutionObject);
+
+                // Parse location
+                String location = thesisDefenseObject.get("location").getAsString();
+
+                // Parse time
+                Date time = dateFormat.parse(thesisDefenseObject.get("time").getAsString());
+
+                // Parse grade
+                int grade = thesisDefenseObject.get("grade").getAsInt();
+
+                // Create thesis defense model
+                ThesisDefenseModel thesisDefense = new ThesisDefenseModel(thesisExecution, location, time);
+                thesisDefense.setId(id);
+                thesisDefense.setGrade(grade);
+
+                // Add to the list
+                thesisDefenses.add(thesisDefense);
+            }
+            System.err.println(thesisDefenses.size());
+            return thesisDefenses;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 }

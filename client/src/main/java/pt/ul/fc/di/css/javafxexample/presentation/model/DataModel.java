@@ -63,15 +63,19 @@ public class DataModel<T> {
                 }
                 in.close();
 
-                List<DissertationTopicModel> dissertationTopics = new ArrayList<>();
-                dissertationTopics = APIParser.parseDissertationTopics(content.toString());
-                // Call loadItems with the created dissertation topics
+                List<DissertationTopicModel> dissertationTopics = APIParser.parseDissertationTopics(content.toString());
+
+                // Collect all items
+                List<T> items = new ArrayList<>();
                 if (!dissertationTopics.isEmpty()) {
-                    // Convert list to array
-                    DissertationTopicModel[] topicsArray2 = dissertationTopics.toArray(new DissertationTopicModel[0]);
-                    // Cast to T[] and call loadItems
-                    loadItems((T[]) topicsArray2);
+                    for (DissertationTopicModel topic : dissertationTopics) {
+                        items.add((T) topic);
+                    }
                 }
+
+                // Process all items at once
+                itemsList.setAll(items);  
+              
             } else {
                 System.out.println("GET request failed. Response Code: " + responseCode);
             }
@@ -104,12 +108,16 @@ public class DataModel<T> {
                 List<ApplicationModel> applications = APIParser.parseApplications(content.toString());
 
 
-                // Call loadItems with the created application models
+                // Collect all items
+                List<T> items = new ArrayList<>();
                 if (!applications.isEmpty()) {
                     for (ApplicationModel application : applications) {
-                        loadItems((T) application);
+                        items.add((T) application);
                     }
                 }
+
+                // Process all items at once
+                itemsList.setAll(items);             
             } else {
                 System.out.println("GET request failed. Response Code: " + responseCode);
             }
@@ -140,12 +148,16 @@ public class DataModel<T> {
                     List<ThesisExecutionModel> executions = APIParser.parseThesisExecutions(content.toString());
     
     
-                    // Call loadItems with the created application models
+                    // Collect all items
+                    List<T> items = new ArrayList<>();
                     if (!executions.isEmpty()) {
                         for (ThesisExecutionModel execution : executions) {
-                            loadItems((T) execution);
+                            items.add((T) execution);
                         }
                     }
+
+                    // Process all items at once
+                    itemsList.setAll(items);
                 } else {
                     System.out.println("GET request failed. Response Code: " + responseCode);
                 }
@@ -158,72 +170,41 @@ public class DataModel<T> {
         
         public void loadThesisDefenses() {
             try {
-                URL url = new URL("https://www.youtube.com");
+                // Replace with the correct URL for thesis defenses
+                URL url = new URL("http://localhost:8080/api/thesisDefenses/" + MainControllerSingleton.user_id);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+    
                 int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+    
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+    
+                    // Create a list to hold the ThesisDefenseModel instances
+                    List<ThesisDefenseModel> defenses = APIParser.parseThesisDefenses(content.toString());
+
+                    // Collect all items
+                    List<T> items = new ArrayList<>();
+                    if (!defenses.isEmpty()) {
+                        for (ThesisDefenseModel defense : defenses) {
+                            items.add((T) defense);
+                        }
+                    }
+
+                    // Process all items at once
+                    itemsList.setAll(items);
+                } else {
+                    System.out.println("GET request failed. Response Code: " + responseCode);
+                }
                 connection.disconnect();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            // Mock data for professors
-            StudentModel student1 = new StudentModel("Alice Wonderland", "b", "c", 58);
-            StudentModel student2 = new StudentModel("Bob Builder", "", "", 2);
-            StudentModel student3 = new StudentModel("Charlie Chocolate", "", "", 4);
-    
-            ProfessorModel professor1 = new ProfessorModel("Prof. AI", "", "Prof. AI");
-            ProfessorModel professor2 = new ProfessorModel("Prof. Cities","", "Prof. Cities");
-            ProfessorModel professor3 = new ProfessorModel("Prof. Chocolate", "", "Prof. Chocolate");
-           
-            // Mock data for compatible masters
-            Set<MastersModel> mastersSet1 = new HashSet<>();
-            mastersSet1.add(new MastersModel("Computer Science", professor1));
-    
-            Set<MastersModel> mastersSet2 = new HashSet<>();
-            mastersSet2.add(new MastersModel("Data Science", professor2));
-            mastersSet2.add(new MastersModel("Software Engineering", professor2));
-    
-            Set<MastersModel> mastersSet3 = new HashSet<>();
-            mastersSet3.add(new MastersModel("Artificial Intelligence", professor3));
-            mastersSet3.add(new MastersModel("Data Science", professor2));
-            mastersSet3.add(new MastersModel("Software Engineering", professor3));
-    
-            // Mock data for topics
-            DissertationTopicModel topic1 = new DissertationTopicModel(
-                "AI in Wonderland",
-                "Exploring AI concepts through Alice's adventures.",
-                1500.0,
-                new AppUserModel("alice.wonderland", "CheshireCat01", "Alice Wonderland"),
-                mastersSet1
-            );
-    
-            DissertationTopicModel topic2 = new DissertationTopicModel(
-                "Building Smart Cities",
-                "Technologies and methodologies for constructing smart cities.",
-                1700.0,
-                new AppUserModel("bob.builder", "FixItAll02", "Bob Builder"),
-                mastersSet2
-            );
-    
-            DissertationTopicModel topic3 = new DissertationTopicModel(
-                "Chocolate Factory Automation",
-                "Automating processes in chocolate production.",
-                1400.0,
-                new AppUserModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
-                mastersSet3
-            );
-    
-            // Mock data for ThesisExecution
-            ThesisExecutionModel execution1 = new ThesisExecutionModel(student1, topic1, "2023", professor1);
-            ThesisExecutionModel execution2 = new ThesisExecutionModel(student2, topic2, "2023", professor2);
-            ThesisExecutionModel execution3 = new ThesisExecutionModel(student3, topic3, "2023", professor3);
-    
-            // Mock data for ThesisDefense
-            ThesisDefenseModel defense1 = new ThesisDefenseModel(execution1, "Room 101", new Date());
-            ThesisDefenseModel defense2 = new ThesisDefenseModel(execution2, "Room 102", new Date());
-            ThesisDefenseModel defense3 = new ThesisDefenseModel(execution3, "Room 103", new Date());
-    
-            // Load these defenses into your application
-            loadItems((T)defense1, (T)defense2, (T)defense3);
         }
 }
