@@ -45,6 +45,8 @@ public class DefenseRepositoryTests {
     @Test
     void testDefenseRepoIsNotEmpty() {
         Professor masterCoordinator = new Professor("ProfessorUsername", "ProfessorPW", "ProfessorName");
+        Professor arguente = new Professor("arguente0", "password", "arguente0");
+		userRepository.save(arguente);
         userRepository.save(masterCoordinator);
 
         Masters masters = new Masters("TestMasters", masterCoordinator);
@@ -66,7 +68,7 @@ public class DefenseRepositoryTests {
         ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");
         thesisExecutionRepository.save(execution);
 
-        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date());
+        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date(), arguente);
         defenseRepository.deleteAll();
         defenseRepository.save(defense);
 
@@ -76,6 +78,8 @@ public class DefenseRepositoryTests {
     @Test
     void testFindByStudent() {
         Professor masterCoordinator = new Professor("ProfessorUsername", "ProfessorPW", "ProfessorName");
+        Professor arguente2 = new Professor("arguente1", "password", "arguente1");
+		userRepository.save(arguente2);
         userRepository.save(masterCoordinator);
 
         Masters masters = new Masters("TestMasters", masterCoordinator);
@@ -97,7 +101,7 @@ public class DefenseRepositoryTests {
         ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");
         thesisExecutionRepository.save(execution);
 
-        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date());
+        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date(), arguente2);
         defenseRepository.save(defense);
 
         assertTrue(defenseRepository.findByStudent(student).contains(defense));
@@ -106,6 +110,8 @@ public class DefenseRepositoryTests {
     @Test
     void testFindByLocation() {
         Professor masterCoordinator = new Professor("ProfessorUsername", "ProfessorPW", "ProfessorName");
+        Professor arguente1 = new Professor("arguente2", "password", "arguente2");
+		userRepository.save(arguente1);
         userRepository.save(masterCoordinator);
 
         Masters masters = new Masters("TestMasters", masterCoordinator);
@@ -127,7 +133,7 @@ public class DefenseRepositoryTests {
         ThesisExecution execution = new ThesisExecution(student, topic, "2023/2024");
         thesisExecutionRepository.save(execution);
 
-        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date());
+        ThesisDefense defense = new ThesisDefense(execution, "remote", new Date(), arguente1);
         defenseRepository.save(defense);
 
         assertTrue(defenseRepository.findByLocation("remote").contains(defense));
