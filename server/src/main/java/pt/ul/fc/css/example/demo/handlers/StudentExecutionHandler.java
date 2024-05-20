@@ -3,13 +3,10 @@ package pt.ul.fc.css.example.demo.handlers;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.Application;
-/* import pt.ul.fc.css.example.demo.entities.Consultant; */
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Student;
@@ -51,4 +48,3 @@ public class StudentExecutionHandler {
         return executionRepository.findByStudent(student);
     }
 }
-

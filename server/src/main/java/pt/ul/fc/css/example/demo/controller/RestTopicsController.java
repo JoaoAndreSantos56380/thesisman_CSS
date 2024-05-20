@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Student;
+import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.services.DissertationTopicService;
+import pt.ul.fc.css.example.demo.services.ThesisExecutionService;
 import pt.ul.fc.css.example.demo.services.UserService;
 
 @RestController()
@@ -22,6 +24,9 @@ class RestMasters {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ThesisExecutionService executionService;
 
     @GetMapping("/dissertationTopics")
     List<DissertationTopic> all() {
@@ -42,4 +47,9 @@ class RestMasters {
             return s.getId();
         }
 	}
+
+    @GetMapping("/thesisExecutions/{studentid}")
+    List<ThesisExecution> thesisExecutions(@PathVariable long studentid) {        
+        return executionService.getStudentExecutions(studentid);
+    }
 }

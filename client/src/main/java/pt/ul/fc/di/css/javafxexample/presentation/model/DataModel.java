@@ -121,36 +121,38 @@ public class DataModel<T> {
 
         public void loadThesisExecutions() {
             try {
-                URL url = new URL("https://www.youtube.com");
+                URL url = new URL("http://localhost:8080/api/thesisExecutions/" + MainControllerSingleton.user_id);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+    
                 int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+    
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+    
+                    // Create a list to hold the ApplicationModel instances
+                    List<ThesisExecutionModel> executions = APIParser.parseThesisExecutions(content.toString());
+    
+    
+                    // Call loadItems with the created application models
+                    if (!executions.isEmpty()) {
+                        for (ThesisExecutionModel execution : executions) {
+                            loadItems((T) execution);
+                        }
+                    }
+                } else {
+                    System.out.println("GET request failed. Response Code: " + responseCode);
+                }
                 connection.disconnect();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            // Mock data for students
-            StudentModel student1 = new StudentModel("Alice Wonderland", "b", "c", 58);
-            StudentModel student2 = new StudentModel("Bob Builder", "", "", 2);
-            StudentModel student3 = new StudentModel("Charlie Chocolate", "", "", 4);
-    
-            ProfessorModel professor1 = new ProfessorModel("Prof. AI", "", "Prof. AI");
-            ProfessorModel professor2 = new ProfessorModel("Prof. Cities","", "Prof. Cities");
-            ProfessorModel professor3 = new ProfessorModel("Prof. Chocolate", "", "Prof. Chocolate");
-            // Mock data for topics
-            DissertationTopicModel topic1 = new DissertationTopicModel("AI in Wonderland", "aa", 10, professor1, null);
-            DissertationTopicModel topic2 = new DissertationTopicModel("Smart Cities", "", 1, professor2, null);
-            DissertationTopicModel topic3 = new DissertationTopicModel("Chocolate Automation", "", 1, professor3, null);
-    
-            // Mock data for ThesisExecution
-            ThesisExecutionModel execution1 = new ThesisExecutionModel(student1, topic1, "2021/2022", professor1);
-            ThesisExecutionModel execution2 = new ThesisExecutionModel(student2, topic2, "2022/2023", professor2);
-            ThesisExecutionModel execution3 = new ThesisExecutionModel(student3, topic3, "2023/2024", professor3);
-            execution1.setInternalAdvisor(professor1);
-            execution2.setInternalAdvisor(professor2);
-            execution3.setInternalAdvisor(professor3);
-            // Load these executions into your application
-            loadItems((T)execution1, (T)execution2, (T)execution3);
         }
     
         
