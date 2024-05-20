@@ -27,17 +27,13 @@ public interface ThesisExecutionRepository extends JpaRepository<ThesisExecution
 	@Query("SELECT t FROM ThesisExecution t WHERE t.internalAdvisor = :internalAdvisor")
 	List<ThesisExecution> findByInternalAdvisor(@Param("internalAdvisor") Professor internalAdvisor);
 
-	@Query("SELECT t FROM ThesisExecution t LEFT JOIN ThesisDefense d ON t.id = d.thesisExecution.id WHERE t.internalAdvisor = :internalAdvisor AND (d.id IS NULL OR (d.id IS NOT NULL AND d.grade < 10 AND d.grade != -1))")
+	@Query("SELECT t FROM ThesisExecution t LEFT JOIN ThesisDefense d ON t.id = d.thesisExecution.id WHERE t.internalAdvisor = :internalAdvisor AND (d.id IS NULL OR TYPE(d) = 'FIRST' AND (NOT EXISTS (SELECT d2.id FROM ThesisDefense d2 WHERE d2.thesisExecution.id = t.id AND d2.grade = -1) AND NOT EXISTS (SELECT d2.id FROM ThesisDefense d2 WHERE d2.thesisExecution.id = t.id AND d2.grade >= 10)))")
 	List<ThesisExecution> findUnscheduledTheses(@Param("internalAdvisor") Professor internalAdvisor);
 
-	@Query("SELECT te FROM ThesisExecution te LEFT JOIN ThesisDefense td ON te.id = td.thesisExecution.id WHERE (td.grade = -1 AND te.internalAdvisor = :internalAdvisor)")
-	List<ThesisExecution> findScheduledTheses(@Param("internalAdvisor") Professor internalAdvisor);
-
-	//@Query("SELECT te FROM ThesisExecution te LEFT JOIN FinalDefense td ON te.id = td.thesisExecution.id WHERE td.id IS NULL AND te.internalAdvisor = :internalAdvisor")
-	//@Query("SELECT te FROM ThesisExecution te JOIN te.thesisDefenses td WHERE td.grade > 10 AND te.id NOT IN (SELECT fe.thesisExecution.id FROM FinalDefense fe")
-	//@Query("SELECT te FROM ThesisExecution te LEFT JOIN te.thesisDefenses td WHERE td IS NULL OR td.grade < 10")
-	//@Query("SELECT te FROM ThesisExecution te LEFT JOIN FinalDefense fd ON fd.thesisExecution= te WHERE fd.id IS NULL")
 	@Query("SELECT te FROM ThesisExecution te LEFT JOIN FinalDefense fd ON fd.thesisExecution.id = te.id WHERE fd.id IS NULL AND te.internalAdvisor = :internalAdvisor")
 	List<ThesisExecution> findScheduledFinal(@Param("internalAdvisor") Professor internalAdvisor);
+
+	@Query("SELECT t FROM ThesisExecution t LEFT JOIN ThesisDefense d ON t.id = d.thesisExecution.id WHERE t.internalAdvisor = :internalAdvisor AND EXISTS (SELECT d2.id FROM ThesisDefense d2 WHERE d2.thesisExecution.id = t.id AND d2.grade > 9) AND NOT EXISTS (SELECT d2.id FROM ThesisDefense d2 WHERE d2.thesisExecution.id = t.id AND TYPE(d2) = 'FINAL')")
+	List<ThesisExecution> findUnscheduledFinalTheses(@Param("internalAdvisor") Professor internalAdvisor);
 
 }
