@@ -55,4 +55,12 @@ public class ThesisDefenseService {
 	public FinalDefense addFinalDefense(ThesisExecution te, String location, Date time, Professor arguente, Professor president) {
 		return defenseRepository.save(new FinalDefense(te, location, time, president, arguente));
 	}
+
+	public List<ThesisDefense> getScheduledTheses(Professor loggedinUser) {
+		return defenseRepository.findScheduledTheses(loggedinUser);
+	}
+
+	public List<FinalDefense> getScheduledFinal(AppUser loggedinUser) {
+		return defenseRepository.findScheduledFinalDefenses((Professor)loggedinUser);
+	}
 }
