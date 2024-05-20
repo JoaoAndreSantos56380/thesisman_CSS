@@ -39,6 +39,10 @@ public class ApplyToTopicPopupController {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @FXML
+    private Label result;
+
+
+    @FXML
     private void handleCancelAction() {
         confirmed = false;
         dialogStage.close();
@@ -94,6 +98,11 @@ public class ApplyToTopicPopupController {
     }
 
     private void showConfirmationMessage(boolean success) {
+        if(success) {
+            result.setText("Application created successfully.");
+        } else {
+            result.setText("Failed to create application!");
+        }
         loadingIndicator.setVisible(false);
         confirmationBox.setVisible(true);
     }

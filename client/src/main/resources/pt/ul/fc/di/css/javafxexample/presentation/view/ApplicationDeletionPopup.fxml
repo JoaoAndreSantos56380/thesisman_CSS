@@ -18,7 +18,7 @@
         </VBox>
         <ProgressIndicator fx:id="loadingIndicator" visible="false"/>
         <VBox fx:id="confirmationBox" spacing="10" visible="false" alignment="CENTER">
-            <Label text="Request completed."/>
+            <Label text="Application Deleted."/>
             <Button text="OK" onAction="#handleOkAction" />
         </VBox>
     </StackPane>
