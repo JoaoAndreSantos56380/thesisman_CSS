@@ -28,6 +28,11 @@ class RestMasters {
         return topicService.getTopics();
     }
 
+    @GetMapping("/dissertationTopics/{studentid}")
+    List<DissertationTopic> all(@PathVariable long studentid) {        
+        return topicService.getCompatibleTopicsForStudent(studentid);
+    }
+
     @GetMapping("/login/{username}")
 	public long loginOrCreateStudentId(@PathVariable String username) {
         Student s = userService.loginOrCreateStudent(username);
