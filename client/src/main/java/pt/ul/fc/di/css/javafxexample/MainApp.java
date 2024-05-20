@@ -53,6 +53,7 @@ public class MainApp extends Application {
 
         // Pass the overlay Pane to the controller
         MainController controller = loader.getController();
+        controller.setMainApp(this);
         controller.setOverlay(overlay);
 
         Scene scene = new Scene(stackPane, 800, 600);

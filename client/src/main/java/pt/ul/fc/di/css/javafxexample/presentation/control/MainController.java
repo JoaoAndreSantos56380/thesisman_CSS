@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import pt.ul.fc.di.css.javafxexample.MainApp;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ApplicationModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DissertationTopicModel;
@@ -161,5 +162,15 @@ public class MainController {
 
     public void hideOverlay() {
         overlay.setVisible(false);
+    }
+
+    MainApp mainApp;
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    public void showLogin() throws Exception {
+        mainApp.showLoginView();
     }
 }

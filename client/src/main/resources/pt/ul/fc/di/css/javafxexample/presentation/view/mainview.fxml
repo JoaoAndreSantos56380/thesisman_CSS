@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.javafxexample.presentation.control.MainController">
     <top>
@@ -14,11 +15,14 @@
             <Button fx:id="applicationsButton" text="My Applications" />
             <Button fx:id="executionsButton" text="My Executions" />
             <Button fx:id="defensesButton" text="My Defenses" />
+            <Button text="Log out" onAction="#showLogin" />
         </HBox>
     </top>
     <center>
         <StackPane>
-            <StackPane fx:id="contentPane" />
+            <StackPane fx:id="contentPane">                        
+
+            </StackPane>
             <ProgressIndicator fx:id="progressIndicator" StackPane.alignment="CENTER" visible="false"/>
         </StackPane>
     </center>
