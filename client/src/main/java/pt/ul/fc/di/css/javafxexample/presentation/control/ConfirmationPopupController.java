@@ -2,10 +2,7 @@ package pt.ul.fc.di.css.javafxexample.presentation.control;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;

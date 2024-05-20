@@ -135,8 +135,4 @@ public class LoginController {
         contentPane.setDisable(true);
     }
 
-    private void hideLoading() {
-        progressIndicator.setVisible(false);
-        contentPane.setDisable(false);
-    }
 }
