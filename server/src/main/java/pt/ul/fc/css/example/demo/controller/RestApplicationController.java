@@ -48,10 +48,10 @@ class RestApplication {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/deleteApplication")
-    ResponseEntity<?> deleteApplication(@RequestBody Application application) {
+    @PostMapping("/deleteApplication/{applicationid}")
+    ResponseEntity<?> deleteApplication(@PathVariable long applicationid) {
         try {
-            applicationService.deleteApplication(application);
+            applicationService.deleteApplication(applicationid);
             return ResponseEntity.ok("Application deleted successfully");
         } catch(Exception e) {
             e.printStackTrace();

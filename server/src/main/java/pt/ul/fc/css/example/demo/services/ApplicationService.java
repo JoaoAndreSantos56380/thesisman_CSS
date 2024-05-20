@@ -41,8 +41,8 @@ public class ApplicationService {
         return applicationRepository.findByTopic(topic);
     }
 
-    public void deleteApplication(Application application) {
-        applicationRepository.delete(application);
+    public void deleteApplication(long applicationId) {
+        viewAndCancelApplicationsHandler.deleteApplication(applicationId);
     }
 }
 

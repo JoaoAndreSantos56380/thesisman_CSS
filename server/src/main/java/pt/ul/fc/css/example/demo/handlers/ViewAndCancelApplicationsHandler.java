@@ -44,6 +44,10 @@ public class ViewAndCancelApplicationsHandler {
 		Student student = (Student) user;
 		
 		return applicationRepository.findByStudent(student);
-	}	
+	}
+
+	public void deleteApplication(long applicationId) {
+		applicationRepository.deleteById(applicationId);
+	}
 }
  
