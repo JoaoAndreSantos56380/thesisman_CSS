@@ -20,7 +20,6 @@ public class ThesisExecutionService {
 	ThesisExecutionRepository thesisRep;
 
 	public List<ThesisExecution> getThesisIAmOrienting(AppUser advisor) {
-		// return thesisRep.findByInternalAdvisor((Professor)advisor);
 		return thesisRep.findUnscheduledTheses((Professor) advisor);
 	}
 
@@ -43,12 +42,12 @@ public class ThesisExecutionService {
 		return thesisRep.findUnscheduledTheses((Professor) loggedinUser);
 	}
 
-	public List<ThesisExecution> getScheduledTheses(AppUser loggedinUser) {
-		return thesisRep.findScheduledTheses((Professor) loggedinUser);
-	}
-
 	public List<ThesisExecution> getScheduledFinal(AppUser loggedinUser) {
 		return thesisRep.findScheduledFinal((Professor) loggedinUser);
+	}
+
+	public List<ThesisExecution> findUnscheduledFinalTheses(AppUser user) {
+		return thesisRep.findUnscheduledFinalTheses((Professor) user);
 	}
 
 }
