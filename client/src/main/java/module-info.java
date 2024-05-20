@@ -5,6 +5,8 @@ module pt.ul.fc.di.css.javafxexample {
     requires javafx.base;
     requires jakarta.ws.rs;
     requires jakarta.xml.bind;
+    requires com.google.gson;
+
     requires javafx.graphics;
     //requires demo;
     //server.src.main.java.

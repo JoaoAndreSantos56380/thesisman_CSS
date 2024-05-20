@@ -10,6 +10,7 @@ import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.handlers.TopicSubmissionByConsultantHandlerE;
+import pt.ul.fc.css.example.demo.handlers.ViewAvailableTopicsHandler;
 import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 @Component
 public class DissertationTopicService {
@@ -19,6 +20,9 @@ public class DissertationTopicService {
 
 	@Autowired
 	DissertationTopicRepository dissertationTopicRepository;
+
+	@Autowired
+	ViewAvailableTopicsHandler availableTopicsHandler;
 
 	public DissertationTopic addTopic(String title, String description, double salary, AppUser submitter,
 			Set<Masters> compatibleMasters) {
@@ -30,7 +34,7 @@ public class DissertationTopicService {
 	// CREATE A HANDLER TO DO THIS
 	public List<DissertationTopic> getTopics() {
 		return dissertationTopicRepository.findAll();
-	}
+	}	
 
 	public DissertationTopic getTopicById(Long id) {
 		return dissertationTopicRepository.findById(id).orElseThrow();
@@ -38,6 +42,10 @@ public class DissertationTopicService {
 
 	public List<DissertationTopic> findFreeTopics() {
 		return dissertationTopicRepository.findFreeTopics();
+	}
+
+	public List<DissertationTopic> getCompatibleTopicsForStudent(long studentId) {
+		return availableTopicsHandler.viewTopicsAvailableToStudent(studentId);
 	}
 
 }

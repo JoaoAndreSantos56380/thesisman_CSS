@@ -6,10 +6,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-//import pt.ul.fc.css.example.demo.entities.AppUser;
-//import pt.ul.fc.css.example.demo.entities.Student;
 
 
 public class StudentModel extends AppUserModel {

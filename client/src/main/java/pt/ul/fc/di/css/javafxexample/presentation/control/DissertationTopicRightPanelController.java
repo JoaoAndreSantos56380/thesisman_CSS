@@ -1,7 +1,9 @@
 package pt.ul.fc.di.css.javafxexample.presentation.control;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -10,7 +12,11 @@ import pt.ul.fc.di.css.javafxexample.presentation.model.DissertationTopicModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.MastersModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ProfessorModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.AppUserModel;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,11 +46,55 @@ public class DissertationTopicRightPanelController {
     private Button applyButton;
     
     @FXML
-    private void handleApplyButton() {
-        System.out.println("Apply button pressed for topic with id: " + currentSelection.getId());
-    }
+private void handleApplyButton() {
+    try {
+        String popupFxml = "/pt/ul/fc/di/css/javafxexample/presentation/view/ApplyToTopicPopup.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(popupFxml));
+        Parent root = loader.load();
 
-    private DissertationTopicModel currentSelection;
+        // Create a new stage for the popup dialog
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.initStyle(StageStyle.UNDECORATED); // Use UNDECORATED to prevent moving
+        dialogStage.setTitle("Confirm Cancel");
+        Scene scene = new Scene(root);
+        dialogStage.setScene(scene);
+        dialogStage.setResizable(false);
+
+        // Center the dialog on the parent window
+        Stage primaryStage = (Stage) applyButton.getScene().getWindow();
+        scene.getWindow().setOnShown(event -> {
+            dialogStage.setX(primaryStage.getX() + primaryStage.getWidth() / 2 - scene.getWidth() / 2);
+            dialogStage.setY(primaryStage.getY() + primaryStage.getHeight() / 2 - scene.getHeight() / 2);
+        });
+
+        // Set the dialog stage in the controller
+        ApplyToTopicPopupController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+
+        controller.setSelectedId(selection.getId());
+
+        // Show the overlay
+        MainControllerSingleton.mainController.showOverlay();
+
+        // Show the dialog and wait for it to be closed
+        dialogStage.showAndWait();
+
+        // Hide the overlay
+        MainControllerSingleton.mainController.hideOverlay();
+
+        // Check if the action was confirmed
+        if (controller.isConfirmed()) {
+            System.out.println("Cancel button pressed for application with id: " + selection.getId());
+            MainControllerSingleton.mainController.showDissertationTopicList();
+            // Perform the cancellation logic here
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    private DissertationTopicModel selection;
 
     public void initModel(ObjectProperty<DissertationTopicModel> selectedItemProperty) {
         selectedItemProperty.addListener((obs, oldSelection, newSelection) -> {
@@ -64,7 +114,7 @@ public class DissertationTopicRightPanelController {
                 } else {
                     submitterLabel.setText("No submitter");
                 }
-                currentSelection = newSelection;
+                selection = newSelection;
                 Set<MastersModel> compatibleMasters = newSelection.getCompatibleMasters();
                 if (compatibleMasters != null && !compatibleMasters.isEmpty()) {
                     String mastersList = compatibleMasters.stream()

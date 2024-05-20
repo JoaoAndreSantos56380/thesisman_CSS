@@ -9,6 +9,7 @@ import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.handlers.StatisticsHandlerP;
+import pt.ul.fc.css.example.demo.handlers.ViewDefensesHandler;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 
 import java.util.Date;
@@ -17,23 +18,35 @@ import java.util.Set;
 
 @Component
 public class ThesisDefenseService {
-    @Autowired
-    private DefenseRepository defenseRepository;
+	@Autowired
+	private DefenseRepository defenseRepository;
 
-    @Autowired
-    private StatisticsHandlerP statsHandler;
+	@Autowired
+	private StatisticsHandlerP statsHandler;
 
-    public List<ThesisDefense> findAllDefenses() {
-        return statsHandler.findAllDefenses();
-    }
+	@Autowired
+	private ViewDefensesHandler defensesHandler;
 
-    /* public ThesisDefense addDefense(ThesisExecution te, String location, Date time) {
-        return defenseRepository.save(new ThesisDefense(te, location, time));
-    } */
+	public List<ThesisDefense> findAllDefenses() {
+		return statsHandler.findAllDefenses();
+	}
 
-    public List<ThesisDefense> findAllPositives() {
-        return statsHandler.findAllPositives();
-    }
+	/*
+	 * public ThesisDefense addDefense(ThesisExecution te, String location, Date
+	 * time) {
+	 * public List<ThesisDefense> findAllByStudent(long studentId) {
+	 * return defensesHandler.getStudentDefenses(studentId);
+	 * }
+	 *
+	 * public ThesisDefense addDefense(ThesisExecution te, String location, Date
+	 * time) {
+	 * return defenseRepository.save(new ThesisDefense(te, location, time));
+	 * }
+	 */
+
+	public List<ThesisDefense> findAllPositives() {
+		return statsHandler.findAllPositives();
+	}
 
 	public ThesisDefense findById(Long id) {
 		return defenseRepository.findById(id).orElseThrow();
@@ -52,7 +65,8 @@ public class ThesisDefenseService {
 
 	}
 
-	public FinalDefense addFinalDefense(ThesisExecution te, String location, Date time, Professor arguente, Professor president) {
+	public FinalDefense addFinalDefense(ThesisExecution te, String location, Date time, Professor arguente,
+			Professor president) {
 		return defenseRepository.save(new FinalDefense(te, location, time, president, arguente));
 	}
 
@@ -61,6 +75,10 @@ public class ThesisDefenseService {
 	}
 
 	public List<FinalDefense> getScheduledFinal(AppUser loggedinUser) {
-		return defenseRepository.findScheduledFinalDefenses((Professor)loggedinUser);
+		return defenseRepository.findScheduledFinalDefenses((Professor) loggedinUser);
+	}
+
+	public List<ThesisDefense>findAllByStudent(long studentId){
+		return defensesHandler.getStudentDefenses(studentId);
 	}
 }

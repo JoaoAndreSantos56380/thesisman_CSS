@@ -12,6 +12,6 @@
             <Text text="Application to Topic: " style="-fx-font-weight: bold;" />
             <Label fx:id="applicationDetailsLabel" wrapText="true" maxWidth="Infinity" />
         </VBox>
-        <Button text="CANCEL APPLICATION" style="-fx-background-color: red; -fx-text-fill: black;" onAction="#handleCancelButton" />
+        <Button fx:id="cancelButton" text="CANCEL APPLICATION" style="-fx-background-color: red; -fx-text-fill: black;" onAction="#handleCancelButton" />
     </VBox>
 </VBox>
