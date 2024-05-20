@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pt.ul.fc.di.css.javafxexample.presentation.control.LoginController;
 import pt.ul.fc.di.css.javafxexample.presentation.control.MainController;
 
@@ -18,6 +19,14 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.setMinWidth(800);
+        primaryStage.setMinHeight(600);
+        primaryStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                primaryStage.requestFocus();
+            }
+        });
         showLoginView();
     }
 
@@ -29,9 +38,10 @@ public class MainApp extends Application {
         LoginController controller = loader.getController();
         controller.setMainApp(this);
 
-        Scene scene = new Scene(root, 300, 200);
+        Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
+
         primaryStage.show();
     }
 
@@ -59,6 +69,8 @@ public class MainApp extends Application {
         Scene scene = new Scene(stackPane, 800, 600);
         primaryStage.setTitle("Welcome " + username + "!");
         primaryStage.setScene(scene);
+
+
         primaryStage.show();
     }
 

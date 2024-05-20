@@ -7,10 +7,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
 <VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.javafxexample.presentation.control.LoginController" style="-fx-padding: 20;">
     <StackPane fx:id="contentPane" alignment="CENTER">
         <VBox alignment="CENTER" spacing="10" style="-fx-padding: 20; -fx-padding-top: 40;">
+                            <Text text="Welcome to Thesis Manager" style="-fx-font-weight: bold; -fx-font-size: 24;" />
+
             <Label text="Username:" />
             <TextField fx:id="usernameField" text="radiante" minWidth="200" maxWidth="300"/>
             <Label text="Password:" />

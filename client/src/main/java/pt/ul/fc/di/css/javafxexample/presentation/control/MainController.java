@@ -6,9 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import pt.ul.fc.di.css.javafxexample.MainApp;
 import pt.ul.fc.di.css.javafxexample.presentation.model.ApplicationModel;
 import pt.ul.fc.di.css.javafxexample.presentation.model.DataModel;
@@ -41,6 +43,12 @@ public class MainController {
     @FXML
     private Button executionsButton;
 
+    @FXML 
+    private VBox welcome;
+
+    @FXML
+    private Label userLabel;
+
     private Pane overlay;
 
     public void setOverlay(Pane overlay) {
@@ -54,6 +62,7 @@ public class MainController {
         dissertationTopicButton.setOnAction(event -> showDissertationTopicList());
         defensesButton.setOnAction(event -> showDefenses());
         executionsButton.setOnAction(event -> showExecutions());
+        userLabel.setText("User: " + MainControllerSingleton.username);
     }
 
     public void showApplicationList() {
@@ -146,6 +155,7 @@ public class MainController {
         progressIndicator.setVisible(true);
         contentPane.setDisable(true);
         rightPane.setDisable(true);
+        welcome.setVisible(false);
         //showOverlay(); // Show overlay when loading
     }
 

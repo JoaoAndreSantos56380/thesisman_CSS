@@ -2,6 +2,7 @@ package pt.ul.fc.di.css.javafxexample.presentation.control;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -67,7 +68,7 @@ public class SubmitFilePopupController {
     }
 
     @FXML
-    private void handleCancelAction() {
+    private void handleCancelAction() {        
         confirmed = false;
         dialogStage.close();
     }

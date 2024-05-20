@@ -84,6 +84,7 @@ public class LoginController {
                 loginRequest();
                 Platform.runLater(() -> {
                     try {
+                        MainControllerSingleton.username = usernameField.getText();
                         mainApp.showMainView(usernameField.getText());
                     } catch (Exception e) {
                         e.printStackTrace();
