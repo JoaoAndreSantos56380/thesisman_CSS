@@ -1,19 +1,11 @@
 package pt.ul.fc.di.css.javafxexample.presentation.model;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -24,6 +16,7 @@ public class DataModel<T> {
 
     private final ObservableList<T> itemsList = FXCollections.observableArrayList();
     private final ObjectProperty<T> currentItem = new SimpleObjectProperty<>(null);
+    private final Client client = ClientBuilder.newClient();
 
     public ObservableList<T> getItemsList() {
         return itemsList;
@@ -45,25 +38,24 @@ public class DataModel<T> {
         itemsList.setAll(items);
     }
 
+    private String fetchUrlContent(String urlString) {
+        WebTarget target = client.target(urlString);
+        Response response = target.request().get();
+
+        if (response.getStatus() == 200) {
+            return response.readEntity(String.class);
+        } else {
+            System.err.println("Failed with HTTP error code : " + response.getStatus());
+            return null;
+        }
+    }
 
     public void loadDissertationTopics() {
-        try {
-            URL url = new URL("http://localhost:8080/api/dissertationTopics/" + MainControllerSingleton.user_id);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) { // success
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder content = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    content.append(inputLine);
-                }
-                in.close();
-
-                List<DissertationTopicModel> dissertationTopics = APIParser.parseDissertationTopics(content.toString());
+        String urlString = "http://localhost:8080/api/dissertationTopics/" + MainControllerSingleton.user_id;
+        String content = fetchUrlContent(urlString);
+        if (content != null) {
+            try {
+                List<DissertationTopicModel> dissertationTopics = APIParser.parseDissertationTopics(content);
 
                 // Collect all items
                 List<T> items = new ArrayList<>();
@@ -76,37 +68,19 @@ public class DataModel<T> {
                 // Process all items at once
                 itemsList.setAll(items);  
               
-            } else {
-                System.out.println("GET request failed. Response Code: " + responseCode);
+            } catch (Exception e) {
+                System.out.println("Failed to parse JSON!");
+                //e.printStackTrace();
             }
-            connection.disconnect();
-        } catch (Exception e) {
-            System.out.println("Failed to parse JSON!");
-            //e.printStackTrace();
         }
     }
 
-
     public void loadApplications() {
-        try {
-            URL url = new URL("http://localhost:8080/api/applications/" + MainControllerSingleton.user_id);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) { // success
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder content = new StringBuilder();
-
-                while ((inputLine = in.readLine()) != null) {
-                    content.append(inputLine);
-                }
-                in.close();
-
-                // Create a list to hold the ApplicationModel instances
-                List<ApplicationModel> applications = APIParser.parseApplications(content.toString());
-
+        String urlString = "http://localhost:8080/api/applications/" + MainControllerSingleton.user_id;
+        String content = fetchUrlContent(urlString);
+        if (content != null) {
+            try {
+                List<ApplicationModel> applications = APIParser.parseApplications(content);
 
                 // Collect all items
                 List<T> items = new ArrayList<>();
@@ -118,93 +92,57 @@ public class DataModel<T> {
 
                 // Process all items at once
                 itemsList.setAll(items);             
-            } else {
-                System.out.println("GET request failed. Response Code: " + responseCode);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            connection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-        public void loadThesisExecutions() {
+    public void loadThesisExecutions() {
+        String urlString = "http://localhost:8080/api/thesisExecutions/" + MainControllerSingleton.user_id;
+        String content = fetchUrlContent(urlString);
+        if (content != null) {
             try {
-                URL url = new URL("http://localhost:8080/api/thesisExecutions/" + MainControllerSingleton.user_id);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-    
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) { // success
-                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    String inputLine;
-                    StringBuilder content = new StringBuilder();
-    
-                    while ((inputLine = in.readLine()) != null) {
-                        content.append(inputLine);
-                    }
-                    in.close();
-    
-                    // Create a list to hold the ApplicationModel instances
-                    List<ThesisExecutionModel> executions = APIParser.parseThesisExecutions(content.toString());
-    
-    
-                    // Collect all items
-                    List<T> items = new ArrayList<>();
-                    if (!executions.isEmpty()) {
-                        for (ThesisExecutionModel execution : executions) {
-                            items.add((T) execution);
-                        }
-                    }
+                List<ThesisExecutionModel> executions = APIParser.parseThesisExecutions(content);
 
-                    // Process all items at once
-                    itemsList.setAll(items);
-                } else {
-                    System.out.println("GET request failed. Response Code: " + responseCode);
+                // Collect all items
+                List<T> items = new ArrayList<>();
+                if (!executions.isEmpty()) {
+                    for (ThesisExecutionModel execution : executions) {
+                        items.add((T) execution);
+                    }
                 }
-                connection.disconnect();
+
+                // Process all items at once
+                itemsList.setAll(items);  
+              
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    
-        
-        public void loadThesisDefenses() {
+    }
+
+    public void loadThesisDefenses() {
+        String urlString = "http://localhost:8080/api/thesisDefenses/" + MainControllerSingleton.user_id;
+        String content = fetchUrlContent(urlString);
+        if (content != null) {
             try {
-                // Replace with the correct URL for thesis defenses
-                URL url = new URL("http://localhost:8080/api/thesisDefenses/" + MainControllerSingleton.user_id);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-    
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) { // success
-                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    String inputLine;
-                    StringBuilder content = new StringBuilder();
-    
-                    while ((inputLine = in.readLine()) != null) {
-                        content.append(inputLine);
-                    }
-                    in.close();
-    
-                    // Create a list to hold the ThesisDefenseModel instances
-                    List<ThesisDefenseModel> defenses = APIParser.parseThesisDefenses(content.toString());
+                List<ThesisDefenseModel> defenses = APIParser.parseThesisDefenses(content);
 
-                    // Collect all items
-                    List<T> items = new ArrayList<>();
-                    if (!defenses.isEmpty()) {
-                        for (ThesisDefenseModel defense : defenses) {
-                            items.add((T) defense);
-                        }
+                // Collect all items
+                List<T> items = new ArrayList<>();
+                if (!defenses.isEmpty()) {
+                    for (ThesisDefenseModel defense : defenses) {
+                        items.add((T) defense);
                     }
-
-                    // Process all items at once
-                    itemsList.setAll(items);
-                } else {
-                    System.out.println("GET request failed. Response Code: " + responseCode);
                 }
-                connection.disconnect();
+
+                // Process all items at once
+                itemsList.setAll(items);  
+              
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
 }
