@@ -22,7 +22,9 @@ import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.Consultant;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
+import pt.ul.fc.css.example.demo.entities.FinalDefense;
 import pt.ul.fc.css.example.demo.entities.Masters;
+import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
@@ -56,8 +58,8 @@ public class WebController {
 	private ApplicationService applicationService;
 
 	@GetMapping("/")
-	public String getIndex(Model model) {
-		return "layout";
+	public String home(final Model model) {
+		return "index";
 	}
 
 	@GetMapping("/consultant/register")
@@ -72,27 +74,21 @@ public class WebController {
 		return "redirect:/user/login";
 	}
 
-	@GetMapping("/user/login")
+	@GetMapping("/login")
 	public String userLoginScreen(final Model model) {
 		// model.addAttribute("appuser", new Consultant());
-		return "user_login";
+		return "login";
 	}
 
-	@GetMapping("/user/home")
-	public String home(final Model model) {
-		return "consultant_home";
-	}
-
-	@GetMapping("/consultant/submit")
+	@GetMapping("/submit-thesis-topic")
 	public String newTopicByConsultant(final Model model) {
 		model.addAttribute("dissertation_topic", new DissertationTopic());
 		Set<Masters> masters = mastersService.getAllMasters();
 		model.addAttribute("masters", masters);
-
-		return "consultant_submit_topic";
+		return "submit-thesis-topic";
 	}
 
-	@PostMapping("/consultant/submit")
+	@PostMapping("/submit-thesis-topic")
 	public String newTopicByConsultantAction(final Model model, @ModelAttribute DissertationTopic dt,
 			Authentication authentication, @RequestParam List<Long> master_ids) {
 
@@ -115,73 +111,94 @@ public class WebController {
 			dt2 = dissertationTopicService.addTopic(dt.getTitle(), dt.getDescription(), dt.getSalary(),
 					loggedInConsultant, compatibleMasters);
 
-			return "consultant_home";
+			return "index";
 		} catch (Exception e) {
 			dt2 = new DissertationTopic();
 			model.addAttribute("dissertationTopic", dt2);
 			model.addAttribute("error", e.getMessage());
 			System.out.println(e.getMessage());
-			return "error_page";
+			return "error";
 		}
 	}
 
-	@GetMapping("/consultant/thesis_defense")
+	@GetMapping("/thesis-i-advise")
 	public String newThesisDefense(final Model model, Authentication auth) {
 		AppUser loggedinUser = null;
 		if (auth != null && auth.getPrincipal() instanceof UserDetails) {
 			String username = ((UserDetails) auth.getPrincipal()).getUsername();
 			loggedinUser = userService.findUsereByUsername(username);
 		}
-		List<ThesisExecution> theses = execService.getThesisIAmOrienting(loggedinUser);
-		model.addAttribute("theses", theses);
-		return "consultant_thesis_defense";
+		List<ThesisExecution> unscheduledTheses = execService.getUnscheduledTheses(loggedinUser);
+		List<ThesisExecution> scheduledTheses = execService.getScheduledTheses(loggedinUser);
+		List<ThesisExecution> scheduledFinal = execService.getScheduledFinal(loggedinUser);
+		model.addAttribute("unscheduledTheses", unscheduledTheses);
+		model.addAttribute("scheduledTheses", scheduledTheses);
+		model.addAttribute("scheduledFinal", scheduledFinal);
+		return "thesis-i-advise";
 	}
 
-	@GetMapping("/consultant/thesis_defense/{id}")
+	@GetMapping("/thesis-i-advise/{id}")
 	public String newThesisDefenseSchedule(final Model model, @PathVariable Long id) {
 		model.addAttribute("thesis_defense", new ThesisDefense());
-		return "consultant_thesis_defense_scheduler";
+		List<AppUser> profs = userService.getAllProfessorsExceptMe(id);
+		model.addAttribute("profs", profs);
+		return "thesis-i-advise-id-schedule";
 	}
 
-	@PostMapping("/consultant/thesis_defense/{id}")
+	@PostMapping("/thesis-i-advise/{id}")
 	public String newThesisDefenseSubmition(final Model model, @PathVariable Long id,
 			@ModelAttribute ThesisDefense td) {
-		Optional<ThesisExecution> te = execService.getThesis(id);
-		if (te.isPresent()) {
-			defenseService.addDefense(te.get(), td.getLocation(), td.getTime());
-		} else {
-			model.addAttribute("error", "Thesis Execution not found.");
-			return "error_page";
-		}
-		return "redirect:/consultant/thesis_defense";
+		ThesisExecution te = execService.getThesis(id);
+		defenseService.addDefense(te, td.getLocation(), td.getTime(), td.getArguente());
+		return "redirect:/thesis-i-advise";
 	}
 
-	@GetMapping("/consultant/thesis_defense/grading")
-	public String thesis_defense_grading(final Model model, Authentication auth) {
-		AppUser loggedinUser = null;
-		if (auth != null && auth.getPrincipal() instanceof UserDetails) {
-			String username = ((UserDetails) auth.getPrincipal()).getUsername();
-			loggedinUser = userService.findUsereByUsername(username);
-		}
-		List<ThesisDefense> defenses = defenseService.getDefensesOfTheThesesIAmOrienting(loggedinUser);
-		model.addAttribute("defenses", defenses);
-		return "thesis_defense_grading";
-	}
 
-	@GetMapping("/consultant/thesis_defense/grading/{id}")
+	@GetMapping("/thesis-i-advise/grade/{id}")
 	public String thesis_defense_grading_save(final Model model, @PathVariable Long id) {
 		model.addAttribute("id", id);
 		model.addAttribute("gradeDefense", new ThesisDefense());
 		return "thesis_defense_grading_id";
 	}
 
-	@PutMapping("/consultant/thesis_defense/grading/{id}")
+	@PutMapping("/thesis-i-advise/grade/{id}")
 	public String thesis_defense_grading_save_put(final Model model, @PathVariable Long id,
-			@ModelAttribute ThesisDefense gradeDefense) {
+	@ModelAttribute ThesisDefense gradeDefense) {
 		ThesisDefense defense = defenseService.findById(id);
 		defense.setGrade(gradeDefense.getGrade());
 		defenseService.addDefense(defense);
-		return "redirect:/user/home";
+		return "redirect:/thesis-i-advise";
+	}
+
+	@GetMapping("/thesis-i-advise/final-defense/{id}")
+	public String newFinalDefenseSchedule(final Model model, @PathVariable Long id) {
+		model.addAttribute("final_defense", new FinalDefense());
+		List<AppUser> profs = userService.getAllProfessorsExceptMe(id);
+		model.addAttribute("profs", profs);
+		return "thesis-i-advise_final-defense_id";
+	}
+
+	@PostMapping("/thesis-i-advise/final-defense{id}")
+	public String newFinalDefenseSubmition(final Model model, @PathVariable Long id, @ModelAttribute FinalDefense td) {
+		ThesisExecution te = execService.getThesis(id);
+		defenseService.addFinalDefense(te, td.getLocation(), td.getTime(), td.getArguente(), td.getPresident());
+		return "redirect:/thesis-i-advise";
+	}
+
+	@GetMapping("/thesis-i-advise/final-defense/grade/{id}")
+	public String final_defense_grading_save(final Model model, @PathVariable Long id) {
+		model.addAttribute("id", id);
+		model.addAttribute("gradeDefense", new FinalDefense());
+		return "final_defense_grading_id";
+	}
+
+	@PutMapping("/thesis-i-advise/final-defense/grade/{id}")
+	public String final_defense_grading_save_put(final Model model, @PathVariable Long id,
+	@ModelAttribute FinalDefense gradeDefense) {
+		FinalDefense defense = (FinalDefense) defenseService.findById(id);
+		defense.setGrade(gradeDefense.getGrade());
+		defenseService.addDefense(defense);
+		return "redirect:/thesis-i-advise";
 	}
 
 	@GetMapping("/statistics")
@@ -222,3 +239,19 @@ public class WebController {
 		return "redirect:/user/home";
 	}
 }
+
+/*
+* @GetMapping("/thesis-i-advise/grade")
+* public String thesis_defense_grading(final Model model, Authentication auth)
+* {
+	* AppUser loggedinUser = null;
+	* if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+		* String username = ((UserDetails) auth.getPrincipal()).getUsername();
+		* loggedinUser = userService.findUsereByUsername(username);
+		* }
+ * List<ThesisDefense> defenses =
+ * defenseService.getDefensesOfTheThesesIAmOrienting(loggedinUser);
+ * model.addAttribute("defenses", defenses);
+ * return "thesis-i-advise-grade";
+ * }
+ */
