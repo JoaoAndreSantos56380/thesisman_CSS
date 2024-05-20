@@ -12,9 +12,9 @@
     <StackPane fx:id="contentPane" alignment="CENTER">
         <VBox alignment="CENTER" spacing="10" style="-fx-padding: 20; -fx-padding-top: 40;">
             <Label text="Username:" />
-            <TextField fx:id="usernameField" minWidth="200" maxWidth="300"/>
+            <TextField fx:id="usernameField" text="radiante" minWidth="200" maxWidth="300"/>
             <Label text="Password:" />
-            <PasswordField fx:id="passwordField" minWidth="200" maxWidth="300"/>
+            <PasswordField fx:id="passwordField" text="(insert any)" minWidth="200" maxWidth="300"/>
             <Button fx:id="loginButton" text="Login" onAction="#handleLogin" minWidth="200" maxWidth="300"/>
             <Label fx:id="errorMessage" text="Please fill in all fields" textFill="red" visible="false"/>
         </VBox>
