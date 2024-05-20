@@ -41,8 +41,7 @@
 			<h2>Submeter nota:</h2>
 			<div class="error" th:text="${error}"></div>
 
-			<form th:action="@{/consultant/thesis_defense/grading/{id}(id=${id})}" th:object="${gradeDefense}"
-				method="post">
+			<form th:action="@{/thesis-i-advise/grade/{id}(id=${id})}" th:object="${gradeDefense}" method="post">
 				<input type="hidden" name="_method" value="put" />
 				<label for="grade">Nota</label><input type="text" name="grade" th:field="*{grade}" /><br />
 				<input type="submit" value="registar" />

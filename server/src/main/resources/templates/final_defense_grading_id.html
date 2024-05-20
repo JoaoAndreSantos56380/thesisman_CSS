@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Spring Boot Application</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<section>
+			<h2>Submeter nota final:</h2>
+			<div class="error" th:text="${error}"></div>
+
+			<form th:action="@{/thesis-i-advise/final-defense/grade/{id}(id=${id})}" th:object="${gradeDefense}" method="post">
+				<input type="hidden" name="_method" value="put" />
+				<label for="grade">Nota</label><input type="text" name="grade" th:field="*{grade}" /><br />
+				<input type="submit" value="registar" />
+			</form>
+		</section>
+	</div>
+</body>
+
+</html>

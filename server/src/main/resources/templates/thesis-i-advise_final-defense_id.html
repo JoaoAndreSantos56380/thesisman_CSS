@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<body>
+	<div layout:fragment="content">
+		<section>
+			<h1 class="text-3xl font-bold mb-4">Agendar defesa de proposta tese:</h1>
+
+			<div class="text-red-500 font-semibold" th:text="${error}"></div>
+
+			<form th:action="@{/thesis-i-advise/final-defense} + ${id}" th:object="${final_defense}" method="post">
+				<div class="flex flex-col gap-1">
+					<label for="location">Localização</label>
+					<input type="text" name="location" th:field="*{location}"
+						class="border rounded-lg bg-muted-100 p-2" />
+				</div>
+				<div class="flex flex-col gap-1">
+					<label for="time">Data e hora</label>
+					<input type="datetime-local" name="time" th:field="*{time}"
+						class="border rounded-lg bg-muted-100 p-2" />
+				</div>
+				<p>Escolha um presidente:</p>
+				<div th:each="prof : ${profs}" class="text-left flex items-center gap-2">
+					<input type="radio" name="arguente" th:id="${prof.id}" th:value="${prof.id}" th:field="*{president}">
+					<label th:for="${prof.id}" th:text="${prof.name}"></label>
+				</div>
+				<p>Escolha um arguente:</p>
+				<div th:each="prof : ${profs}" class="text-left flex items-center gap-2">
+					<input type="radio" name="arguente" th:id="${prof.id}" th:value="${prof.id}" th:field="*{arguente}">
+					<label th:for="${prof.id}" th:text="${prof.name}"></label>
+				</div>
+				<button type="submit" value="marcar"
+					class="rounded-lg bg-cyan-700 hover:bg-cyan-800 active:bg-cyan-900 text-white p-2">Agendar</button>
+			</form>
+		</section>
+	</div>
+</body>
+
+</html>

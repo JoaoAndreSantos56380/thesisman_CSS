@@ -53,7 +53,7 @@
 
 			<ul>
 				<li th:each="defense : ${defenses}">
-					<a th:href="@{/consultant/thesis_defense/grading/{id}(id=${defense.id})}">
+					<a th:href="@{/thesis-i-advise/grade/{id}(id=${defense.id})}">
 						<span>Student: </span>
 						<span th:text="${defense.thesisExecution.student.name}"></span>
 						<span>Localização: </span>

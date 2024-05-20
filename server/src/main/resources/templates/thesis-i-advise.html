@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<body>
+	<div layout:fragment="content" class="flex-1 text-left">
+		<h1 class="text-3xl mb-4">Teses que eu oriento</h1>
+
+		<div class="flex flex-col gap-6">
+
+			<div class="bg-gray-100 p-4 rounded-2xl">
+				<h2 class="text-xl font-bold">Teses sem defesa marcada</h2>
+				<div th:each="thesis : ${unscheduledTheses}" class="flex gap-4 items-baseline">
+					<div th:text="${thesis.topic.title}"></div>
+					<div th:text="${thesis.student.name}"></div>
+					<a th:href="@{/thesis-i-advise/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto">Agendar defesa</a>
+				</div>
+			</div>
+			<div class="bg-gray-100 p-4 rounded-2xl">
+				<h2 class="text-xl font-bold">Teses com defesa marcada</h2>
+				<div th:each="thesis : ${scheduledTheses}" class="flex gap-4 items-baseline">
+					<div th:text="${thesis.topic.title}"></div>
+					<div th:text="${thesis.student.name}"></div>
+					<a th:href="@{/thesis-i-advise/grade/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto">Registar nota</a>
+				</div>
+			</div>
+			<div class="bg-gray-100 p-4 rounded-2xl">
+				<h2 class="text-xl font-bold">Teses com defesa final marcada</h2>
+				<div th:each="thesis : ${scheduledFinal}" class="flex gap-4 items-baseline">
+					<div th:text="${thesis.topic.title}"></div>
+					<div th:text="${thesis.student.name}"></div>
+					<a th:href="@{/thesis-i-advise/final-defense/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto">Agendar defesa final</a>
+				</div>
+			</div>
+			<div class="bg-gray-100 p-4 rounded-2xl">
+				<h2 class="text-xl font-bold">Teses com defesa final marcada</h2>
+				<div th:each="thesis : ${scheduledTheses}" class="flex gap-4 items-baseline">
+					<div th:text="${thesis.topic.title}"></div>
+					<div th:text="${thesis.student.name}"></div>
+					<a th:href="@{/thesis-i-advise/final-defense/grade/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto">Registar nota final</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- 3 tipos de teses:
+	Teses sem defesa marcada (é para aparecer)
+	Teses com defesa marcada (é para esconder)
+	Teses já defendidas mas cuja nota da defesa foi negativa (é para aparecer)
+
+	Teses sem defesa associada ou com defesa associada cuja nota < 10
+
+	ThesisExecution
+	topic	student
+
+	ThesisDefense
+	thesisExecution	grade
+	"drone" "Maria"	6
+	"drone" "Maria"	8
+	"drone" "Maria"	9
+-->
+
+<!-- <div th:if="${thesis.finalGrade == 0}"><a th:href="@{/thesis-i-advise/{id}/grade(id=${thesis.id})}">Dar
+	nota</a></div>
+	<div th:if="${thesis.finalGrade != 0}" th:text="${thesis.finalGrade}"></div>
+	<div>Agendar defesa final ou mostrar data da defesa final</div>
+<div>Dar nota final (só o prof presidente é que vê este botão) ou mostrar nota final</div> -->
