@@ -4,14 +4,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pt.ul.fc.di.css.javafxexample.presentation.control.MainControllerSingleton;
 
 public class DataModel<T> {
 
@@ -40,60 +47,93 @@ public class DataModel<T> {
 
 
     public void loadDissertationTopics() {
-
-         try {
-            URL url = new URL("https://www.youtube.com");
+        try {
+            URL url = new URL("http://localhost:8080/api/dissertationTopics/" + MainControllerSingleton.user_id);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+
             int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder content = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                // Parse the JSON response
+                JsonArray topicsArray = JsonParser.parseString(content.toString()).getAsJsonArray();
+                System.out.println(content.toString());
+                // Print the number of objects in the array
+                System.out.println("Number of Dissertation Topics: " + topicsArray.size());
+
+                // List to hold the DissertationTopicModel instances
+                List<DissertationTopicModel> dissertationTopics = new ArrayList<>();
+
+                // Process each topic
+                for (JsonElement topicElement : topicsArray) {
+                    JsonObject topicObject = topicElement.getAsJsonObject();
+
+                    long id = topicObject.get("id").getAsLong();
+                    String title = topicObject.get("title").getAsString();
+                    String description = topicObject.get("description").getAsString();
+                    double salary = topicObject.get("salary").getAsDouble();
+
+                    // Parse submitter
+                    JsonObject submitterObject = topicObject.getAsJsonObject("submitter");
+                    String submitterName = submitterObject.get("name").getAsString();
+                    String submitterUsername = submitterObject.get("username").getAsString();
+                    String submitterPassword = submitterObject.get("password").getAsString();
+
+                    // Create submitter model
+                    AppUserModel submitter = new AppUserModel(submitterUsername, submitterPassword, submitterName);
+
+                    // Parse compatible masters
+                    Set<MastersModel> compatibleMasters = new HashSet<>();
+                    JsonArray mastersArray = topicObject.getAsJsonArray("compatibleMasters");
+                    for (JsonElement masterElement : mastersArray) {
+                        JsonObject masterObject = masterElement.getAsJsonObject();
+                        String masterName = masterObject.get("name").getAsString();
+
+                        // Parse coordinator
+                        JsonObject coordinatorObject = masterObject.getAsJsonObject("coordinator");
+                        String coordinatorName = coordinatorObject.get("name").getAsString();
+                        String coordinatorUsername = coordinatorObject.get("username").getAsString();
+                        String coordinatorPassword = coordinatorObject.get("password").getAsString();
+
+                        // Create coordinator model
+                        ProfessorModel coordinator = new ProfessorModel(coordinatorUsername, coordinatorPassword, coordinatorName);
+
+                        // Create master model
+                        MastersModel master = new MastersModel(masterName, coordinator);
+                        compatibleMasters.add(master);
+                    }
+
+                    // Create dissertation topic model
+                    DissertationTopicModel dissertationTopic = new DissertationTopicModel(title, description, salary, submitter, compatibleMasters);
+                    dissertationTopic.setId(id);
+
+                    // Add to the list
+                    dissertationTopics.add(dissertationTopic);
+                }
+
+                // Call loadItems with the created dissertation topics
+                if (!dissertationTopics.isEmpty()) {
+                    // Convert list to array
+                    DissertationTopicModel[] topicsArray2 = dissertationTopics.toArray(new DissertationTopicModel[0]);
+                    // Cast to T[] and call loadItems
+                    loadItems((T[]) topicsArray2);
+                }
+            } else {
+                System.out.println("GET request failed. Response Code: " + responseCode);
+            }
             connection.disconnect();
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Failed to parse JSON!");
+            //e.printStackTrace();
         }
-        Set<MastersModel> mastersSet1 = new HashSet<>();
-        mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Prof1", "hello", "mantorras")));
-
-        Set<MastersModel> mastersSet2 = new HashSet<>();
-        mastersSet2.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
-        mastersSet2.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
-
-        Set<MastersModel> mastersSet3 = new HashSet<>();
-        mastersSet3.add(new MastersModel("Artificial Intelligence", new ProfessorModel("Prof4", "ai", "ml")));
-        mastersSet3.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
-        mastersSet3.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
-
-        DissertationTopicModel topic1 = new DissertationTopicModel(
-                "Artificial Intelligence in Wonderland",
-                "Exploring AI concepts through Alice's adventures.",
-                1500.0,
-                new ProfessorModel("alice.wonderland", "CheshireCat01", "Alice Wonderland"),
-                mastersSet1
-        );
-
-        DissertationTopicModel topic2 = new DissertationTopicModel(
-                "Building Smart Cities",
-                "Technologies and methodologies for constructing smart cities.",
-                1700.0,
-                new ProfessorModel("bob.builder", "FixItAll02", "Bob Builder"),
-                mastersSet2
-        );
-
-        DissertationTopicModel topic3 = new DissertationTopicModel(
-                "Chocolate Factory Automation",
-                "Automating processes in chocolate production.",
-                1400.0,
-                new ProfessorModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
-                mastersSet3
-        );
-
-        topic1.setId(1);
-        topic2.setId(2);
-        topic3.setId(3);
-
-        // Add more DissertationTopicModel instances as needed
-
-        // Load these topics into your application (for example, into a list or database)
-        loadItems((T)topic1, (T)topic2, (T)topic3);
     }
 
 

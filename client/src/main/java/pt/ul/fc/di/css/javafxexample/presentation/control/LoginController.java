@@ -118,7 +118,7 @@ public class LoginController {
 
                 // Parse the response to long
                 long studentId = Long.parseLong(response.toString());
-
+                MainControllerSingleton.user_id = studentId;
                 // Print or use the student ID
                 System.out.println("Student ID: " + studentId);
             } else {
