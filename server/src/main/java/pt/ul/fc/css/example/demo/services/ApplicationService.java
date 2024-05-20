@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Student;
+import pt.ul.fc.css.example.demo.handlers.ViewAndCancelApplicationsHandler;
 import pt.ul.fc.css.example.demo.repositories.ApplicationRepository;
 
 @Component
@@ -13,6 +14,9 @@ public class ApplicationService {
 
     @Autowired
     private ApplicationRepository applicationRepository;
+
+    @Autowired
+    private ViewAndCancelApplicationsHandler viewAndCancelApplicationsHandler;
 
     public Application addApplication(Application application) {
         List<Application> studentApplications = applicationRepository.findByStudent(application.getStudent());
@@ -29,8 +33,8 @@ public class ApplicationService {
         return applicationRepository.save(application);
     }
 
-    public List<Application> findApplicationsByStudent(Student student) {
-        return applicationRepository.findByStudent(student);
+    public List<Application> findApplicationsByStudent(long studentId) {
+        return viewAndCancelApplicationsHandler.viewStudentApplications(studentId);
     }
 
     public List<Application> findApplicationsByTopic(DissertationTopic topic) {

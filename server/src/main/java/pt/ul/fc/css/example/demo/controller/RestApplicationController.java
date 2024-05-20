@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +27,10 @@ class RestApplication {
     @Autowired
     private ApplicationService applicationService;
 
-    @GetMapping("/getStudentApplications")
-    List<Application> getStudentApplications(@RequestBody Student student) {      
-        return applicationService.findApplicationsByStudent(student);
-    }
+    @GetMapping("/applications/{studentid}")
+    List<Application> getStudentApplications(@PathVariable long studentid) {      
+        return applicationService.findApplicationsByStudent(studentid);
+    }    
 
     @PostMapping("/createApplication")
     ResponseEntity<?> createApplication(@RequestBody Application application) {
