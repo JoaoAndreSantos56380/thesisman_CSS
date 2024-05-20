@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -13,20 +14,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig {
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests((requests) -> requests
-						.requestMatchers("/consultant/register", "/", "/api/**")
-						.permitAll()
-						.anyRequest().authenticated())
-				.formLogin((form) -> form
-						.loginPage("/user/login")
-						.defaultSuccessUrl("/user/home", true)
-						.permitAll())
-				.logout((logout) -> logout.permitAll());
+        http
+            .csrf(csrf -> csrf
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .ignoringRequestMatchers("/api/deleteApplication/**")
+            )
+            .authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/consultant/register", "/", "/api/**")
+                .permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin((form) -> form
+                .loginPage("/user/login")
+                .defaultSuccessUrl("/user/home", true)
+                .permitAll()
+            )
+            .logout((logout) -> logout.permitAll());
 
-		return http.build();
-	}
+        return http.build();
+    }
 
 	// Ensure you have the password encoder bean
 	@Bean
