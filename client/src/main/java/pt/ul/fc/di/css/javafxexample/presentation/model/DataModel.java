@@ -138,69 +138,133 @@ public class DataModel<T> {
 
 
     public void loadApplications() {
-
         try {
-            URL url = new URL("https://www.youtube.com");
+            URL url = new URL("http://localhost:8080/api/applications/" + MainControllerSingleton.user_id);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+
             int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder content = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+
+                // Parse the JSON response
+                JsonArray applicationsArray = JsonParser.parseString(content.toString()).getAsJsonArray();
+                System.out.println(content.toString());
+                // Print the number of objects in the array
+                System.out.println("Number of Applications: " + applicationsArray.size());
+
+                // Create a list to hold the ApplicationModel instances
+                List<ApplicationModel> applications = new ArrayList<>();
+
+                // Process each application
+                for (JsonElement applicationElement : applicationsArray) {
+                    JsonObject applicationObject = applicationElement.getAsJsonObject();
+
+                    long id = applicationObject.get("id").getAsLong();
+
+                    // Parse student
+                    JsonObject studentObject = applicationObject.getAsJsonObject("student");
+                    String studentId = studentObject.get("id").getAsString();
+                    String studentUsername = studentObject.get("username").getAsString();
+                    String studentPassword = studentObject.get("password").getAsString();
+                    String studentName = studentObject.get("name").getAsString();
+                    int studentNumber = studentObject.get("studentNumber").getAsInt();
+                    double averageGrade = studentObject.get("averageGrade").getAsDouble();
+
+                    // Parse student's masters
+                    JsonObject masterObject = studentObject.getAsJsonObject("masters");
+                    long masterId = masterObject.get("id").getAsLong();
+                    String masterName = masterObject.get("name").getAsString();
+
+                    // Parse master's coordinator
+                    JsonObject coordinatorObject = masterObject.getAsJsonObject("coordinator");
+                    long coordinatorId = coordinatorObject.get("id").getAsLong();
+                    String coordinatorUsername = coordinatorObject.get("username").getAsString();
+                    String coordinatorPassword = coordinatorObject.get("password").getAsString();
+                    String coordinatorName = coordinatorObject.get("name").getAsString();
+
+                    // Create coordinator model
+                    ProfessorModel coordinator = new ProfessorModel(coordinatorUsername, coordinatorPassword, coordinatorName);
+
+                    // Create master's model
+                    MastersModel master = new MastersModel(masterName, coordinator);
+
+                    // Create student model
+                    StudentModel student = new StudentModel(studentUsername, studentPassword, studentName, studentNumber, averageGrade, null);
+
+                    // Parse topic
+                    JsonObject topicObject = applicationObject.getAsJsonObject("topic");
+                    long topicId = topicObject.get("id").getAsLong();
+                    String topicTitle = topicObject.get("title").getAsString();
+                    String topicDescription = topicObject.get("description").getAsString();
+                    double topicSalary = topicObject.get("salary").getAsDouble();
+
+                    // Parse submitter
+                    JsonObject submitterObject = topicObject.getAsJsonObject("submitter");
+                    long submitterId = submitterObject.get("id").getAsLong();
+                    String submitterUsername = submitterObject.get("username").getAsString();
+                    String submitterPassword = submitterObject.get("password").getAsString();
+                    String submitterName = submitterObject.get("name").getAsString();
+
+                    // Create submitter model
+                    AppUserModel submitter = new AppUserModel(submitterUsername, submitterPassword, submitterName);
+
+                    // Parse compatible masters
+                    Set<MastersModel> compatibleMasters = new HashSet<>();
+                    JsonArray mastersArray = topicObject.getAsJsonArray("compatibleMasters");
+                    for (JsonElement masterElement : mastersArray) {
+                        JsonObject compatibleMasterObject = masterElement.getAsJsonObject();
+                        long compatibleMasterId = compatibleMasterObject.get("id").getAsLong();
+                        String compatibleMasterName = compatibleMasterObject.get("name").getAsString();
+
+                        // Parse coordinator of compatible master
+                        JsonObject compatibleCoordinatorObject = compatibleMasterObject.getAsJsonObject("coordinator");
+                        long compatibleCoordinatorId = compatibleCoordinatorObject.get("id").getAsLong();
+                        String compatibleCoordinatorUsername = compatibleCoordinatorObject.get("username").getAsString();
+                        String compatibleCoordinatorPassword = compatibleCoordinatorObject.get("password").getAsString();
+                        String compatibleCoordinatorName = compatibleCoordinatorObject.get("name").getAsString();
+
+                        // Create coordinator model
+                        ProfessorModel compatibleCoordinator = new ProfessorModel(compatibleCoordinatorUsername, compatibleCoordinatorPassword, compatibleCoordinatorName);
+
+                        // Create compatible master model
+                        MastersModel compatibleMaster = new MastersModel(compatibleMasterName, compatibleCoordinator);
+                        compatibleMasters.add(compatibleMaster);
+                    }
+
+                    // Create dissertation topic model
+                    DissertationTopicModel topic = new DissertationTopicModel(topicTitle, topicDescription, topicSalary, submitter, compatibleMasters);
+                    topic.setId(topicId);
+
+                    // Create application model
+                    ApplicationModel application = new ApplicationModel(student, topic);
+                    application.setId(id);
+
+                    // Add to the list
+                    applications.add(application);
+                }
+
+                // Call loadItems with the created application models
+                if (!applications.isEmpty()) {
+                    for (ApplicationModel application : applications) {
+                        loadItems((T) application);
+                    }
+                }
+            } else {
+                System.out.println("GET request failed. Response Code: " + responseCode);
+            }
             connection.disconnect();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        // Mock data for students
-        StudentModel student1 = new StudentModel("1", "Alice Wonderland", "a", 58226, 1);
-        StudentModel student2 = new StudentModel("2", "Bob Builder", "Bob", 58227, 1);
-        StudentModel student3 = new StudentModel("3", "Charlie Chocolate", "Charlo", 58229, 1);
-
-        Set<MastersModel> mastersSet1 = new HashSet<>();
-        mastersSet1.add(new MastersModel("Computer Science", new ProfessorModel("Prof1", "hello", "mantorras")));
-
-        Set<MastersModel> mastersSet2 = new HashSet<>();
-        mastersSet2.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
-        mastersSet2.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
-
-        Set<MastersModel> mastersSet3 = new HashSet<>();
-        mastersSet3.add(new MastersModel("Artificial Intelligence", new ProfessorModel("Prof4", "ai", "ml")));
-        mastersSet3.add(new MastersModel("Data Science", new ProfessorModel("Prof2", "deus", "god")));
-        mastersSet3.add(new MastersModel("Software Engineering", new ProfessorModel("Prof3", "css", "git")));
-
-        DissertationTopicModel topic1 = new DissertationTopicModel(
-                "Artificial Intelligence in Wonderland",
-                "Exploring AI concepts through Alice's adventures.",
-                1500.0,
-                new ProfessorModel("alice.wonderland", "CheshireCat01", "Alice Wonderland"),
-                mastersSet1
-        );
-
-        DissertationTopicModel topic2 = new DissertationTopicModel(
-                "Building Smart Cities",
-                "Technologies and methodologies for constructing smart cities.",
-                1700.0,
-                new ProfessorModel("bob.builder", "FixItAll02", "Bob Builder"),
-                mastersSet2
-        );
-
-        DissertationTopicModel topic3 = new DissertationTopicModel(
-                "Chocolate Factory Automation",
-                "Automating processes in chocolate production.",
-                1400.0,
-                new ProfessorModel("charlie.chocolate", "GoldenTicket03", "Charlie Chocolate"),
-                mastersSet3
-        );
-
-       
-    
-            // Create mock applications
-            ApplicationModel application1 = new ApplicationModel(student1, topic1);
-            ApplicationModel application2 = new ApplicationModel(student2, topic2);
-            ApplicationModel application3 = new ApplicationModel(student3, topic3);
-            application1.setId(1);
-            application2.setId(2);
-            application3.setId(3);
-            // Add more ApplicationModel instances as needed
-            loadItems((T)application1, (T)application2, (T)application3);
-        }
+    }
 
         public void loadThesisExecutions() {
             try {
