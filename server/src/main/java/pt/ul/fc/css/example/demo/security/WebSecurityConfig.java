@@ -19,7 +19,7 @@ public class WebSecurityConfig {
         http
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringRequestMatchers("/api/deleteApplication/**")
+                .ignoringRequestMatchers("/api/**")
             )
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/consultant/register", "/", "/api/**")

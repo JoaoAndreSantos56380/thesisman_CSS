@@ -32,20 +32,19 @@ class RestApplication {
         return applicationService.findApplicationsByStudent(studentid);
     }    
 
-    @PostMapping("/createApplication")
-    ResponseEntity<?> createApplication(@RequestBody Application application) {
-        try {
-            Application created = applicationService.addApplication(application);
+    @PostMapping("/createApplication/{topicId}")
+    ResponseEntity<?> createApplication(@PathVariable long topicId, @RequestBody long studentId) {
+        System.err.println("Create application endpoint reached!");
+        System.err.println("TopicID: " + topicId);
+        System.err.println("StudentID: " + studentId);
+        Application created = applicationService.createApplication(studentId, topicId);
             
-            // in case the student already has 5 applications
-            if(created == null) {                
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            return ResponseEntity.ok().body(created);
-        } catch(Exception e) {
-            e.printStackTrace();
+        // in case the student already has 5 applications
+        if(created == null) {                
+            System.err.println("It's null");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return ResponseEntity.ok().body(created);        
     }
 
     @PostMapping("/deleteApplication/{applicationid}")
