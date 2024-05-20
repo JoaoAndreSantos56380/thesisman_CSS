@@ -129,11 +129,14 @@ public class WebController {
 			loggedinUser = userService.findUsereByUsername(username);
 		}
 		List<ThesisExecution> unscheduledTheses = execService.getUnscheduledTheses(loggedinUser);
-		List<ThesisExecution> scheduledTheses = execService.getScheduledTheses(loggedinUser);
-		List<ThesisExecution> scheduledFinal = execService.getScheduledFinal(loggedinUser);
+		List<ThesisDefense> scheduledTheses = defenseService.getScheduledTheses((Professor) loggedinUser);
+		List<ThesisExecution> unscheduledFinalTheses = execService.findUnscheduledFinalTheses(loggedinUser);
+		List<FinalDefense> scheduledFinal = defenseService.getScheduledFinal(loggedinUser);
 		model.addAttribute("unscheduledTheses", unscheduledTheses);
 		model.addAttribute("scheduledTheses", scheduledTheses);
+		model.addAttribute("unscheduledFinalTheses", unscheduledFinalTheses);
 		model.addAttribute("scheduledFinal", scheduledFinal);
+		model.addAttribute("id", loggedinUser.getId());
 		return "thesis-i-advise";
 	}
 
@@ -153,7 +156,6 @@ public class WebController {
 		return "redirect:/thesis-i-advise";
 	}
 
-
 	@GetMapping("/thesis-i-advise/grade/{id}")
 	public String thesis_defense_grading_save(final Model model, @PathVariable Long id) {
 		model.addAttribute("id", id);
@@ -163,7 +165,7 @@ public class WebController {
 
 	@PutMapping("/thesis-i-advise/grade/{id}")
 	public String thesis_defense_grading_save_put(final Model model, @PathVariable Long id,
-	@ModelAttribute ThesisDefense gradeDefense) {
+			@ModelAttribute ThesisDefense gradeDefense) {
 		ThesisDefense defense = defenseService.findById(id);
 		defense.setGrade(gradeDefense.getGrade());
 		defenseService.addDefense(defense);
@@ -194,7 +196,7 @@ public class WebController {
 
 	@PutMapping("/thesis-i-advise/final-defense/grade/{id}")
 	public String final_defense_grading_save_put(final Model model, @PathVariable Long id,
-	@ModelAttribute FinalDefense gradeDefense) {
+			@ModelAttribute FinalDefense gradeDefense) {
 		FinalDefense defense = (FinalDefense) defenseService.findById(id);
 		defense.setGrade(gradeDefense.getGrade());
 		defenseService.addDefense(defense);
@@ -239,19 +241,3 @@ public class WebController {
 		return "redirect:/user/home";
 	}
 }
-
-/*
-* @GetMapping("/thesis-i-advise/grade")
-* public String thesis_defense_grading(final Model model, Authentication auth)
-* {
-	* AppUser loggedinUser = null;
-	* if (auth != null && auth.getPrincipal() instanceof UserDetails) {
-		* String username = ((UserDetails) auth.getPrincipal()).getUsername();
-		* loggedinUser = userService.findUsereByUsername(username);
-		* }
- * List<ThesisDefense> defenses =
- * defenseService.getDefensesOfTheThesesIAmOrienting(loggedinUser);
- * model.addAttribute("defenses", defenses);
- * return "thesis-i-advise-grade";
- * }
- */
