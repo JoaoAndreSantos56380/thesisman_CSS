@@ -8,7 +8,7 @@
 <html>
 
 <body>
-	<header th:fragment="header" class="flex justify-between items-center gap-6">
+	<header th:fragment="header" class="flex justify-between items-center gap-6 py-4">
 		<p class="text-lg mr-auto"><a th:href="@{/}">ThesisMan</a></p>
 		<div sec:authorize="isAnonymous()" class="contents">
 			<a th:href="@{/user/login}" class="underline hover:bg-gray-200 p-2 rounded-lg">Log in</a>

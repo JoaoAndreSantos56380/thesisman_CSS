@@ -12,24 +12,17 @@
 		<div th:replace="fragments/header :: header"></div>
 		<div class="flex gap-6">
 			<nav class="flex flex-col items-start gap-3 max-w-[300px]" sec:authorize="isAuthenticated()">
-				<a th:href="@{/submit-thesis-topic}"
-					class="text-white p-2 hover:bg-cyan-800 bg-cyan-700 rounded-lg active:bg-cyan-900">Submeter topico
+				<a th:href="@{/submit-thesis-topic}" class="px-4 py-2 hover:bg-gray-300 rounded-xl">Submeter topico
 					de tese</a>
-				<a th:href="@{/thesis-i-advise}"
-					class="text-white p-2 hover:bg-cyan-800 bg-cyan-700 rounded-lg active:bg-cyan-900">Teses que eu oriento</a>
-				<a th:href="@{/thesis-i-advise}"
-					class="text-white p-2 hover:bg-cyan-800 bg-cyan-700 rounded-lg active:bg-cyan-900">Marcar defesa
+				<a th:href="@{/thesis-i-advise}" class="px-4 py-2 hover:bg-gray-300 rounded-xl">Teses que eu oriento</a>
+				<a th:href="@{/thesis-i-advise}" class="px-4 py-2 hover:bg-gray-300 rounded-xl">Marcar defesa
 					final de tese</a>
-				<!-- <a th:href="@{/consultant/thesis_defense/grading}"
-					class="text-white p-2 hover:bg-cyan-800 bg-cyan-700 rounded-lg active:bg-cyan-900">Registar nota</a> -->
-				<a th:href="@{/statistics}"
-					class="text-white p-2 hover:bg-cyan-800 bg-cyan-700 rounded-lg active:bg-cyan-900">Estatisticas
+				<a th:href="@{/statistics}" class="px-4 py-2 hover:bg-gray-300 rounded-xl">Estatisticas
 					alunos</a>
 				<div th:if="${isAdmin}">
 					<hr class="my-2" />
 					<p class="text-xs text-gray-400 pb-2">Administração</p>
-					<a th:href="@{/topics}"
-						class="text-white p-2 hover:bg-cyan-800 bg-cyan-700 rounded-lg active:bg-cyan-900">Alunos sem
+					<a th:href="@{/topics}" class="px-4 py-2 hover:bg-gray-300 rounded-xl">Alunos sem
 						teses</a>
 				</div>
 

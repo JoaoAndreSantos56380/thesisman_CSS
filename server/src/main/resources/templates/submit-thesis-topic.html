@@ -3,22 +3,43 @@
 	layout:decorate="~{layout}">
 
 <body>
-	<div layout:fragment="content">
-		<section>
-			<h2>Submeter topico de tese:</h2>
+	<div layout:fragment="content" class="flex-1">
+		<section class="text-left">
+			<h1 class="text-4xl font-semibold mb-4">Submeter topico de tese</h1>
 
 			<div class="error" th:text="${error}"></div>
 
-			<form action="#" th:action="@{/submit-thesis-topic}" th:object="${dissertation_topic}" method="post">
-				<label for="title">Title:</label><input name="title" th:field="*{title}" /><br />
-				<label for="description">Description:</label><input name="description"
-					th:field="*{description}" /><br />
-				<label for="salary">Salary:</label><input name="salary" th:field="*{salary}" /><br />
-				<p>Masters:</p>
-				<div th:each="master : ${masters}">
-					<input type="checkbox" name="master_ids" th:value="${master.id}" th:text="${master.name}" />
+			<form action="#" th:action="@{/submit-thesis-topic}" th:object="${dissertation_topic}" method="post"
+				class="flex flex-col gap-2">
+				<div class="flex gap-2">
+					<div class="flex flex-col gap-2 flex-1">
+						<div class="flex gap-2">
+							<div class="flex flex-col gap-1 flex-1">
+								<label for="title">Title</label>
+								<input type="text" name="title" th:field="*{title}"
+									class="border rounded-lg bg-muted-100 p-2" />
+							</div>
+							<div class="flex flex-col gap-1">
+								<label for="salary">Salary</label>
+								<input type="number" name="salary" th:field="*{salary}"
+									class="border rounded-lg bg-muted-100 p-2" />
+							</div>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label for="description">Description</label>
+							<textarea name="description" th:field="*{description}"
+								class="border rounded-lg bg-muted-100 p-2 w-full min-h-48"></textarea>
+						</div>
+					</div>
+					<div class="border rounded-lg p-4 self-stretch">
+						<labelc class="font-bold">Masters</label>
+						<div th:each="master : ${masters}" class="flex gap-2">
+							<input type="checkbox" name="master_ids" th:value="${master.id}" /><span th:text="${master.name}" class="text-gray-500 font-normal"></span>
+						</div>
+					</div>
 				</div>
-				<input type="submit" value="submit" />
+				<button type="submit"
+					class="rounded-lg bg-cyan-700 hover:bg-cyan-800 active:bg-cyan-900 text-white p-2 w-full">Submeter</button>
 			</form>
 		</section>
 	</div>

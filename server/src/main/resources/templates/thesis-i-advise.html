@@ -19,14 +19,14 @@
 			<div class="bg-gray-100 p-4 rounded-2xl">
 				<h2 class="text-xl font-bold">Teses com defesa marcada</h2>
 				<div th:each="thesis : ${scheduledTheses}" class="flex gap-4 items-baseline">
-					<div th:text="${thesis.topic.title}"></div>
-					<div th:text="${thesis.student.name}"></div>
+					<div th:text="${thesis.thesisExecution.topic.title}"></div>
+					<div th:text="${thesis.thesisExecution.student.name}"></div>
 					<a th:href="@{/thesis-i-advise/grade/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto">Registar nota</a>
 				</div>
 			</div>
 			<div class="bg-gray-100 p-4 rounded-2xl">
-				<h2 class="text-xl font-bold">Teses com defesa final marcada</h2>
-				<div th:each="thesis : ${scheduledFinal}" class="flex gap-4 items-baseline">
+				<h2 class="text-xl font-bold">Teses para marcar defesa final</h2>
+				<div th:each="thesis : ${unscheduledFinalTheses}" class="flex gap-4 items-baseline">
 					<div th:text="${thesis.topic.title}"></div>
 					<div th:text="${thesis.student.name}"></div>
 					<a th:href="@{/thesis-i-advise/final-defense/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto">Agendar defesa final</a>
@@ -34,10 +34,10 @@
 			</div>
 			<div class="bg-gray-100 p-4 rounded-2xl">
 				<h2 class="text-xl font-bold">Teses com defesa final marcada</h2>
-				<div th:each="thesis : ${scheduledTheses}" class="flex gap-4 items-baseline">
-					<div th:text="${thesis.topic.title}"></div>
-					<div th:text="${thesis.student.name}"></div>
-					<a th:href="@{/thesis-i-advise/final-defense/grade/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto">Registar nota final</a>
+				<div th:each="thesis : ${scheduledFinal}" class="flex gap-4 items-baseline">
+					<div th:text="${thesis.thesisExecution.topic.title}"></div>
+					<div th:text="${thesis.thesisExecution.student.name}"></div>
+					<a th:href="@{/thesis-i-advise/final-defense/grade/{id}(id=${thesis.id})}" class="p-2 bg-gray-200 rounded-lg ml-auto" th:if="${id==thesis.president.id}">Registar nota final</a>
 				</div>
 			</div>
 		</div>
