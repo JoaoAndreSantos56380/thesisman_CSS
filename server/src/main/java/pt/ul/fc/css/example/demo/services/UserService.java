@@ -3,6 +3,8 @@ package pt.ul.fc.css.example.demo.services;
 /* import java.util.Optional;
  */
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.Consultant;
+import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
 /* import pt.ul.fc.css.example.demo.handlers.ConsultantRegisterHandlerB; */
 import pt.ul.fc.css.example.demo.handlers.TopicSubmissionByConsultantHandlerE;
@@ -77,6 +80,10 @@ public class UserService implements UserDetailsService {
 
 	public List<AppUser> findFreeStudents() {
 		return userRepository.findFreeStudents();
+	}
+
+	public List<AppUser> getAllProfessorsExceptMe(Long id) {
+		return userRepository.findAllProfessorsExceptMe(id);
 	}
 
 }

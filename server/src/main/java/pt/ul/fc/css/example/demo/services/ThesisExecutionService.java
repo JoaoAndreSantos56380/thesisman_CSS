@@ -20,23 +20,35 @@ public class ThesisExecutionService {
 	ThesisExecutionRepository thesisRep;
 
 	public List<ThesisExecution> getThesisIAmOrienting(AppUser advisor) {
-		return thesisRep.findByInternalAdvisor((Professor)advisor);
-
+		// return thesisRep.findByInternalAdvisor((Professor)advisor);
+		return thesisRep.findUnscheduledTheses((Professor) advisor);
 	}
 
-	public Optional<ThesisExecution> getThesis(Long id) {
-		return thesisRep.findById(id);
+	public ThesisExecution getThesis(Long id) {
+		return thesisRep.findById(id).orElseThrow();
 	}
 
 	public void createThesisExecution(DissertationTopic topic, Student student) {
 		int currentYear = LocalDate.now().getYear();
-        int nextYear = currentYear + 1;
-        String currentYearLast2Digits = String.format("%02d", currentYear);
-        String nextYearLast2Digits = String.format("%02d", nextYear);
+		int nextYear = currentYear + 1;
+		String currentYearLast2Digits = String.format("%02d", currentYear);
+		String nextYearLast2Digits = String.format("%02d", nextYear);
 
-        String result = currentYearLast2Digits + "/" + nextYearLast2Digits;
+		String result = currentYearLast2Digits + "/" + nextYearLast2Digits;
 
 		thesisRep.save(new ThesisExecution(student, topic, result));
+	}
+
+	public List<ThesisExecution> getUnscheduledTheses(AppUser loggedinUser) {
+		return thesisRep.findUnscheduledTheses((Professor) loggedinUser);
+	}
+
+	public List<ThesisExecution> getScheduledTheses(AppUser loggedinUser) {
+		return thesisRep.findScheduledTheses((Professor) loggedinUser);
+	}
+
+	public List<ThesisExecution> getScheduledFinal(AppUser loggedinUser) {
+		return thesisRep.findScheduledFinal((Professor) loggedinUser);
 	}
 
 }

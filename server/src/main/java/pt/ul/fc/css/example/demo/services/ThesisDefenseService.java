@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import pt.ul.fc.css.example.demo.entities.AppUser;
+import pt.ul.fc.css.example.demo.entities.FinalDefense;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
@@ -26,9 +27,9 @@ public class ThesisDefenseService {
         return statsHandler.findAllDefenses();
     }
 
-    public ThesisDefense addDefense(ThesisExecution te, String location, Date time) {
+    /* public ThesisDefense addDefense(ThesisExecution te, String location, Date time) {
         return defenseRepository.save(new ThesisDefense(te, location, time));
-    }
+    } */
 
     public List<ThesisDefense> findAllPositives() {
         return statsHandler.findAllPositives();
@@ -44,5 +45,14 @@ public class ThesisDefenseService {
 
 	public void addDefense(ThesisDefense defense) {
 		defenseRepository.save(defense);
+	}
+
+	public ThesisDefense addDefense(ThesisExecution thesisExecution, String location, Date time, Professor arguente) {
+		return defenseRepository.save(new ThesisDefense(thesisExecution, location, time, arguente));
+
+	}
+
+	public FinalDefense addFinalDefense(ThesisExecution te, String location, Date time, Professor arguente, Professor president) {
+		return defenseRepository.save(new FinalDefense(te, location, time, president, arguente));
 	}
 }
