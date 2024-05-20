@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Student;
+import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.services.DissertationTopicService;
+import pt.ul.fc.css.example.demo.services.ThesisDefenseService;
 import pt.ul.fc.css.example.demo.services.ThesisExecutionService;
 import pt.ul.fc.css.example.demo.services.UserService;
 
@@ -27,6 +29,9 @@ class RestMasters {
 
     @Autowired
     private ThesisExecutionService executionService;
+
+    @Autowired 
+    private ThesisDefenseService defenseService;
 
     @GetMapping("/dissertationTopics")
     List<DissertationTopic> all() {
@@ -51,5 +56,10 @@ class RestMasters {
     @GetMapping("/thesisExecutions/{studentid}")
     List<ThesisExecution> thesisExecutions(@PathVariable long studentid) {        
         return executionService.getStudentExecutions(studentid);
+    }
+
+    @GetMapping("/thesisDefenses/{studentid}")
+    List<ThesisDefense> thesisDefenses(@PathVariable long studentid) {        
+        return defenseService.findAllByStudent(studentid);
     }
 }

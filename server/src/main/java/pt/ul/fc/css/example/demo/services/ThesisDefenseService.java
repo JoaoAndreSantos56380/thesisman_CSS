@@ -8,6 +8,7 @@ import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.ThesisDefense;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.handlers.StatisticsHandlerP;
+import pt.ul.fc.css.example.demo.handlers.ViewDefensesHandler;
 import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 
 import java.util.Date;
@@ -22,8 +23,15 @@ public class ThesisDefenseService {
     @Autowired
     private StatisticsHandlerP statsHandler;
 
+    @Autowired
+    private ViewDefensesHandler defensesHandler;
+
     public List<ThesisDefense> findAllDefenses() {
         return statsHandler.findAllDefenses();
+    }
+
+    public List<ThesisDefense> findAllByStudent(long studentId) {
+        return defensesHandler.getStudentDefenses(studentId);
     }
 
     public ThesisDefense addDefense(ThesisExecution te, String location, Date time) {
