@@ -95,7 +95,7 @@ public class SubmitFilePopupController {
         executorService.submit(() -> {
             try {
                 fileHandler();
-            } catch (URISyntaxException | IOException e) {
+            } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
         });
