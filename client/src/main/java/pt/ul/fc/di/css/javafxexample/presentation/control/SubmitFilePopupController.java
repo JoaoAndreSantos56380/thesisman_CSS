@@ -214,6 +214,12 @@ public class SubmitFilePopupController {
         
         // Request is lazily fired whenever you need to obtain information about response.
         int responseCode = ((HttpURLConnection) connection).getResponseCode();
-        System.out.println(responseCode); // Should be 200
+
+        if (responseCode == 200) {
+            Platform.runLater(() -> showConfirmationMessage(true));
+        } else {
+            Platform.runLater(() -> showConfirmationMessage(false));
+        }
+        //System.out.println(responseCode); // Should be 200
         }
 }
