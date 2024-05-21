@@ -7,9 +7,11 @@ import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,6 +90,22 @@ class RestApplication {
         }
         return ResponseEntity.ok().body(proposals);
     }
+
+    @Autowired
+    private FileSystemStorageService storageService;
+
+    @GetMapping("/getdocument/{documentname}") 
+    ResponseEntity<Resource> getProposals(@PathVariable String documentname) {
+        Resource file = storageService.loadAsResource(documentname);
+        if (file != null) {
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
     
 
 
