@@ -1,14 +1,21 @@
 package pt.ul.fc.css.example.demo.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import io.micrometer.common.lang.NonNull;
 import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -40,6 +47,11 @@ public class ThesisExecution {
   @Nullable
   @Column(nullable = true)
   private int finalGrade;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "thesis_execution_id")
+  private Set<Document> documents = new HashSet<>();
+
 
   public void setFinalGrade(int grade) {
     finalGrade = grade;
@@ -82,6 +94,14 @@ public class ThesisExecution {
 
   public String getYearOfExecution() {
     return this.yearOfExecution;
+  }
+
+  public void addDocument(Document document) {
+    this.documents.add(document);
+  }
+
+  public Set<Document> getDocuments() {
+    return documents;
   }
 
   public ThesisExecution(Student student, DissertationTopic topic, String yearOfExecution) {

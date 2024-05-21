@@ -18,6 +18,17 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 
 public class SubmitFilePopupController {
 
@@ -40,6 +51,7 @@ public class SubmitFilePopupController {
     private Stage dialogStage;
     private boolean confirmed;
     private long selectedId;
+    private String filePath;
     
     @FXML
     private StackPane contentPane;
@@ -79,7 +91,14 @@ public class SubmitFilePopupController {
         DocumentType selectedDocumentType = documentTypeComboBox.getSelectionModel().getSelectedItem();
         System.out.println("Confirm button pressed for application with id: " + selectedId + " and document type: " + selectedDocumentType);
         showLoadingIndicator(true);
-        executorService.submit(this::makeGetRequest);
+        //alterar??
+        executorService.submit(() -> {
+            try {
+                fileHandler();
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
@@ -87,6 +106,8 @@ public class SubmitFilePopupController {
         dialogStage.close();
     }
 
+    //delete
+    /*
     private void makeGetRequest() {
         try {
             URL url = new URL("https://www.youtube.com");
@@ -102,7 +123,7 @@ public class SubmitFilePopupController {
             e.printStackTrace();
             Platform.runLater(() -> showConfirmationMessage(false));
         }
-    }
+    }*/
 
     private void showLoadingIndicator(boolean show) {
         contentBox.setVisible(!show);
@@ -134,6 +155,8 @@ public class SubmitFilePopupController {
 
         if (file != null) {
             String fileName = file.getName();
+            //not sure
+            filePath = fileName;
             System.out.println("Selected file: " + fileName);
             selectedDocumentLabel.setText(fileName);
             try {
@@ -146,4 +169,51 @@ public class SubmitFilePopupController {
             selectedDocumentLabel.setText("None");
         }
     }
+
+
+    public void fileHandler() throws MalformedURLException, IOException, URISyntaxException {
+        
+
+        String url = "http://localhost:8080/files/";
+        
+        String charset = "UTF-8";
+        String param = "value";
+        //changed file input to be the atribute
+        File binaryFile = new File(filePath);//new File("/Users/alcidesfonseca/Downloads/documento.pdf");
+
+
+        String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
+        String CRLF = "\r\n"; // Line separator required by multipart/form-data.
+        
+        URLConnection connection = new URI(url).toURL().openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        
+        try (
+            OutputStream output = connection.getOutputStream();
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, charset), true);
+        ) {
+
+            writer.append("--" + boundary).append(CRLF);
+            writer.append("Content-Disposition: form-data; name=\"param\"").append(CRLF);
+            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
+            writer.append(CRLF).append(param).append(CRLF).flush();
+        
+            // Send binary file.
+            writer.append("--" + boundary).append(CRLF);
+            writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"" + binaryFile.getName() + "\"").append(CRLF);
+            writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(binaryFile.getName())).append(CRLF);
+            writer.append("Content-Transfer-Encoding: binary").append(CRLF);
+            writer.append(CRLF).flush();
+            Files.copy(binaryFile.toPath(), output);
+            output.flush(); // Important before continuing with writer!
+            writer.append(CRLF).flush(); // CRLF is important! It indicates end of boundary.
+        
+            writer.append("--" + boundary + "--").append(CRLF).flush();
+        }
+        
+        // Request is lazily fired whenever you need to obtain information about response.
+        int responseCode = ((HttpURLConnection) connection).getResponseCode();
+        System.out.println(responseCode); // Should be 200
+        }
 }

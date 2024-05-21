@@ -24,6 +24,7 @@ import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
 import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
+import pt.ul.fc.css.example.demo.services.Storage.FileSystemStorageService;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -43,8 +44,11 @@ public class DemoApplication {
 			ThesisExecutionRepository thesisExecutionRepository,
 			DefenseRepository defenseRepository,
 			ApplicationRepository applicationRepository,
-			PasswordEncoder passwordEncoder) {
+			PasswordEncoder passwordEncoder,
+			FileSystemStorageService storageService) {
 		return (args) -> {
+			storageService.deleteAll();
+			storageService.init();
 			// criar professor
 			Professor cr7Professor = new Professor("ronaldo", "password", "cristiano ronaldo");
 			Professor arguente = new Professor("arguente", "password", "arguente");
