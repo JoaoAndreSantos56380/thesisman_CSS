@@ -46,6 +46,10 @@ public class ThesisExecutionService {
     return uploadDocumentHandler.submitProposalDocument(executionid, file);
   }
 
+  public ThesisExecution uploadFinal(long executionid, MultipartFile file) {
+    return uploadDocumentHandler.submitFinalDocument(executionid, file);
+  }
+
   public Set<Document> getProposals(long executionid) {
     ThesisExecution exec = thesisRep.findById(executionid).get();
 
@@ -60,6 +64,22 @@ public class ThesisExecutionService {
       }
     }
     return proposals;
+  }
+
+  public Document getFinal(long executionid) {
+    ThesisExecution exec = thesisRep.findById(executionid).get();
+
+    if(exec == null) {
+      return null;
+    }
+   
+    for(Document d : exec.getDocuments()) {
+      if(d.getType() == DocumentType.FINAL) {
+        return d;
+      }
+    }
+    return null;
+  
   }
 
   public void createThesisExecution(DissertationTopic topic, Student student) {

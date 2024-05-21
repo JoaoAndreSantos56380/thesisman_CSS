@@ -45,4 +45,35 @@ public class UploadDocumentHandler {
         executionRepository.save(execution);
         return execution;
     }
+
+    public ThesisExecution submitFinalDocument(long executionid, MultipartFile file) {
+        ThesisExecution execution = executionRepository.findById(executionid).orElse(null);
+
+        if(execution == null) {
+            return null;
+        }
+
+        Set<Document> existingDocuments = execution.getDocuments();
+
+        for(Document doc : existingDocuments) {
+            if(doc.getFilename().equals(file.getOriginalFilename())) {
+                return null;
+            }
+
+            if(doc.getType() == DocumentType.FINAL) {
+                return null;
+            }
+        }
+
+        storageService.store(file);
+
+        Document newDocument = new Document(file.getOriginalFilename(), DocumentType.FINAL);
+		
+        execution.addDocument(newDocument);
+
+        executionRepository.save(execution);
+        return execution;
+    }
+
+    
 }

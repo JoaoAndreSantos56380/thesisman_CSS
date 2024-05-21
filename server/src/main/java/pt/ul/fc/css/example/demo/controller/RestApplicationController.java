@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import groovyjarjarantlr4.v4.parse.ANTLRParser.finallyClause_return;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -71,10 +74,21 @@ class RestApplication {
     @Autowired
     private ThesisExecutionService executionService;
     
-    @PostMapping("/uploadDocument/{executionid}")
-	ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable long executionid) {
+    @PostMapping("/uploadProposal/{executionid}")
+	ResponseEntity<?> handleProposalUpload(@RequestParam("file") MultipartFile file, @PathVariable long executionid) {
 
 		ThesisExecution exec = executionService.uploadProposal(executionid, file);
+        if(exec == null) {
+            return ResponseEntity.internalServerError().body("Failed to create document");
+        }
+
+        return ResponseEntity.ok().build();
+	}
+
+    @PostMapping("/uploadFinal/{executionid}")
+	ResponseEntity<?> handleFinalUpload(@RequestParam("file") MultipartFile file, @PathVariable long executionid) {
+
+		ThesisExecution exec = executionService.uploadFinal(executionid, file);
         if(exec == null) {
             return ResponseEntity.internalServerError().body("Failed to create document");
         }
@@ -89,6 +103,15 @@ class RestApplication {
             return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.ok().body(proposals);
+    }
+
+    @GetMapping("/getfinal/{executionid}")
+    ResponseEntity<?> getFinal(@PathVariable long executionid) {
+        Document finalName = executionService.getFinal(executionid);
+        if(finalName == null) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().body(finalName);
     }
 
     @Autowired
