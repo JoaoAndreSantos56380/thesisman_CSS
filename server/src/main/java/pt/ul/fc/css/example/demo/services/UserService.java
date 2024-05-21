@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
 		AppUser user = userRepository.findByUserName(username).orElse(null);
 
 		// no user exists, create it!
-		if(user == null) {						
+		if(user == null) {
 			int studentNumber = (int) new Date().getTime();
 			Student s = new Student(username, "password", "alberto "+studentNumber, studentNumber, mastersRepository.findAll().get(0));
 			userRepository.save(s);
@@ -93,12 +93,12 @@ public class UserService implements UserDetailsService {
 		return userRepository.findAll();
 	}
 
-	public Student findById(Long id) {
-		return (Student) userRepository.findById(id).orElseThrow();
+	public AppUser findById(Long id) {
+		return userRepository.findById(id).orElseThrow();
 	}
 
 	public List<AppUser> findByType(Class<? extends AppUser> type) {
-		return userRepository.findByType(Student.class);
+		return userRepository.findByType(type);
 	}
 
 	public List<AppUser> findFreeStudents() {

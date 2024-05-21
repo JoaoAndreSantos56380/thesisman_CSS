@@ -34,14 +34,14 @@ public class DissertationTopicService {
 	// CREATE A HANDLER TO DO THIS
 	public List<DissertationTopic> getTopics() {
 		return dissertationTopicRepository.findAll();
-	}	
+	}
 
 	public DissertationTopic getTopicById(Long id) {
 		return dissertationTopicRepository.findById(id).orElseThrow();
 	}
 
-	public List<DissertationTopic> findFreeTopics() {
-		return dissertationTopicRepository.findFreeTopics();
+	public List<DissertationTopic> findFreeTopics(Masters masters) {
+		return dissertationTopicRepository.findFreeTopics(masters);
 	}
 
 	public List<DissertationTopic> getCompatibleTopicsForStudent(long studentId) {

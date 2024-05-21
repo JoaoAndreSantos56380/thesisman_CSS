@@ -15,6 +15,7 @@ import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Document;
 import pt.ul.fc.css.example.demo.entities.DocumentType;
 import pt.ul.fc.css.example.demo.entities.Professor;
+import pt.ul.fc.css.example.demo.entities.ProjectExecution;
 import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 import pt.ul.fc.css.example.demo.handlers.StudentExecutionHandler;
@@ -72,14 +73,14 @@ public class ThesisExecutionService {
     if(exec == null) {
       return null;
     }
-   
+
     for(Document d : exec.getDocuments()) {
       if(d.getType() == DocumentType.FINAL) {
         return d;
       }
     }
     return null;
-  
+
   }
 
   public void createThesisExecution(DissertationTopic topic, Student student) {
@@ -102,6 +103,15 @@ public class ThesisExecutionService {
 
 	public List<ThesisExecution> findUnscheduledFinalTheses(AppUser user) {
 		return thesisRep.findUnscheduledFinalTheses((Professor) user);
+	}
+
+	public void createProjectExecution(DissertationTopic topic, Student student, Professor professor) {
+		int currentYear = LocalDate.now().getYear();
+		int nextYear = currentYear + 1;
+		String currentYearLast2Digits = String.format("%02d", currentYear);
+		String nextYearLast2Digits = String.format("%02d", nextYear);
+		String result = currentYearLast2Digits + "/" + nextYearLast2Digits;
+		thesisRep.save(new ProjectExecution(student, topic, result, professor));
 	}
 
 }
