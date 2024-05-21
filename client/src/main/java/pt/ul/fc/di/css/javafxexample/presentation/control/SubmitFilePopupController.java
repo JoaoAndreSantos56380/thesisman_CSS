@@ -192,7 +192,7 @@ public class SubmitFilePopupController {
             OutputStream output = connection.getOutputStream();
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, charset), true);
         ) {
-            // Send normal param.
+            
             writer.append("--" + boundary).append(CRLF);
             writer.append("Content-Disposition: form-data; name=\"param\"").append(CRLF);
             writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
@@ -208,7 +208,6 @@ public class SubmitFilePopupController {
             output.flush(); // Important before continuing with writer!
             writer.append(CRLF).flush(); // CRLF is important! It indicates end of boundary.
         
-            // End of multipart/form-data.
             writer.append("--" + boundary + "--").append(CRLF).flush();
         }
         
