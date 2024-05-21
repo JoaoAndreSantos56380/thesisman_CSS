@@ -177,7 +177,7 @@ public class SubmitFilePopupController {
         
         String charset = "UTF-8";
         String param = "value";
-        //change file input
+        //changed file input to be the atribute
         File binaryFile = new File(filePath);//new File("/Users/alcidesfonseca/Downloads/documento.pdf");
 
 
