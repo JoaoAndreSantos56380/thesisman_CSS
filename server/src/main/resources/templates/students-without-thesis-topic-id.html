@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<body>
+	<div layout:fragment="content" class="text-left">
+		<h1 class="text-4xl font-semibold">Atribuir <span th:text="${thesisExecution.student.name}"></span> a tópico de dissertação</h1>
+
+		<form th:action="@{'/students-without-thesis-topic/' + ${thesisExecution.student.id}}" method="post" class="flex flex-col gap-4">
+			<div th:each="topic : ${topics}" class="hover:bg-gray-200 p-2 rounded-lg">
+				<input type="radio" th:id="${topic.id}" name="topicId" th:value="${topic.id}">
+				<label th:for="${topic.id}" th:text="${topic.title}"></label>
+			</div>
+			<button type="submit"
+				class="bg-cyan-700 hover:bg-cyan-800 active:bg-cyan-900 px-4 py-2 rounded-lg text-white">Atribuir tópico
+				de tese</button>
+		</form>
+	</div>
+</body>
+
+</html>
