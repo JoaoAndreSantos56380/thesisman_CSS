@@ -107,6 +107,7 @@ public class SubmitFilePopupController {
     }
 
     //delete
+    /*
     private void makeGetRequest() {
         try {
             URL url = new URL("https://www.youtube.com");
@@ -122,7 +123,7 @@ public class SubmitFilePopupController {
             e.printStackTrace();
             Platform.runLater(() -> showConfirmationMessage(false));
         }
-    }
+    }*/
 
     private void showLoadingIndicator(boolean show) {
         contentBox.setVisible(!show);
