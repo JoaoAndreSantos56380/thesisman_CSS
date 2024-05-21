@@ -6,10 +6,7 @@ module pt.ul.fc.di.css.javafxexample {
     requires jakarta.ws.rs;
     requires jakarta.xml.bind;
     requires com.google.gson;
-
     requires javafx.graphics;
-    //requires demo;
-    //server.src.main.java.
 
     opens pt.ul.fc.di.css.javafxexample to javafx.fxml, javafx.web;
     opens pt.ul.fc.di.css.javafxexample.presentation.control to javafx.fxml;
