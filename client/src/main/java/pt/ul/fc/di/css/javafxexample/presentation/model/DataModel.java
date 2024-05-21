@@ -70,7 +70,6 @@ public class DataModel<T> {
               
             } catch (Exception e) {
                 System.out.println("Failed to parse JSON!");
-                //e.printStackTrace();
             }
         }
     }
