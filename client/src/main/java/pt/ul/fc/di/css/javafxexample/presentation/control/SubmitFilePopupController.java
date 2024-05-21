@@ -174,21 +174,29 @@ public class SubmitFilePopupController {
     public void fileHandler() throws MalformedURLException, IOException, URISyntaxException {
         
 
-        String url = "http://localhost:8080/files/";
+        //String url = "http://localhost:8080/files/";
         
         String charset = "UTF-8";
         String param = "value";
         //changed file input to be the atribute
-        File binaryFile = new File(filePath);
+        //File binaryFile = new File(filePath);
         File binaryFile = new File("file:///C:/Users/rafae/Downloads/T_07_orm_pt2.pdf");
 
 
         String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
         String CRLF = "\r\n"; // Line separator required by multipart/form-data.
-        
+        /*
         URLConnection connection = new URI(url).toURL().openConnection();
         connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);*/
+        URL url = new URL("http://localhost:8080/api/uploadProposal/" + selectedId);
+            System.out.println(url);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            //connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Content-Type", "uploadProposal/pdf; boundary=" + boundary);
+            //connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
         
         try (
             OutputStream output = connection.getOutputStream();
@@ -214,7 +222,7 @@ public class SubmitFilePopupController {
         }
         
         // Request is lazily fired whenever you need to obtain information about response.
-        int responseCode = ((HttpURLConnection) connection).getResponseCode();
+        int responseCode = connection.getResponseCode();
 
         if (responseCode == 200) {
             Platform.runLater(() -> showConfirmationMessage(true));
