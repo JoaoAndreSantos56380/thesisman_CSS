@@ -95,7 +95,7 @@ public class SubmitFilePopupController {
         executorService.submit(() -> {
             try {
                 fileHandler();
-            } catch (IOException | URISyntaxException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -154,7 +154,7 @@ public class SubmitFilePopupController {
         File file = fileChooser.showOpenDialog(dialogStage);
 
         if (file != null) {
-            String fileName = file.getName();
+            String fileName = file.getAbsolutePath();
             //not sure
             filePath = fileName;
             System.out.println("Selected file: " + fileName);
@@ -170,65 +170,42 @@ public class SubmitFilePopupController {
         }
     }
 
-
-    public void fileHandler() throws MalformedURLException, IOException, URISyntaxException {
-        
-
-        //String url = "http://localhost:8080/files/";
-        
+    public void fileHandler() throws IOException {
+        if (filePath == null) {
+            Platform.runLater(() -> showConfirmationMessage(false));
+            return;
+        }
+    
+        String boundary = Long.toHexString(System.currentTimeMillis());
+        String CRLF = "\r\n";
         String charset = "UTF-8";
-        String param = "value";
-        //changed file input to be the atribute
-        //File binaryFile = new File(filePath);
-        File binaryFile = new File("file:///C:/Users/rafae/Downloads/T_07_orm_pt2.pdf");
-
-
-        String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
-        String CRLF = "\r\n"; // Line separator required by multipart/form-data.
-        /*
-        URLConnection connection = new URI(url).toURL().openConnection();
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);*/
+        File binaryFile = new File(filePath);
+    
         URL url = new URL("http://localhost:8080/api/uploadProposal/" + selectedId);
-            System.out.println(url);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            //connection.setRequestProperty("Content-Type", "application/json; utf-8");
-            connection.setRequestProperty("Content-Type", "uploadProposal/pdf; boundary=" + boundary);
-            //connection.setRequestProperty("Accept", "application/json");
-            connection.setDoOutput(true);
-        
-        try (
-            OutputStream output = connection.getOutputStream();
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, charset), true);
-        ) {
-
-            writer.append("--" + boundary).append(CRLF);
-            writer.append("Content-Disposition: form-data; name=\"param\"").append(CRLF);
-            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
-            writer.append(CRLF).append(param).append(CRLF).flush();
-        
-            // Send binary file.
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        connection.setDoOutput(true);
+    
+        try (OutputStream output = connection.getOutputStream();
+             PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, charset), true)) {
+    
+            // Enviar o arquivo binário
             writer.append("--" + boundary).append(CRLF);
             writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"" + binaryFile.getName() + "\"").append(CRLF);
             writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(binaryFile.getName())).append(CRLF);
             writer.append("Content-Transfer-Encoding: binary").append(CRLF);
             writer.append(CRLF).flush();
             Files.copy(binaryFile.toPath(), output);
-            output.flush(); // Important before continuing with writer!
-            writer.append(CRLF).flush(); // CRLF is important! It indicates end of boundary.
-        
+            output.flush();
+            writer.append(CRLF).flush();
+    
+            // Finalizar a requisição
             writer.append("--" + boundary + "--").append(CRLF).flush();
         }
-        
-        // Request is lazily fired whenever you need to obtain information about response.
+    
         int responseCode = connection.getResponseCode();
-
-        if (responseCode == 200) {
-            Platform.runLater(() -> showConfirmationMessage(true));
-        } else {
-            Platform.runLater(() -> showConfirmationMessage(false));
-        }
-        //System.out.println(responseCode); // Should be 200
-        }
+        Platform.runLater(() -> showConfirmationMessage(responseCode == 200));
+    }
+    
 }
