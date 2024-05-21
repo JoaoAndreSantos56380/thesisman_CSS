@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.Consultant;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
+import pt.ul.fc.css.example.demo.entities.DissertationTopicType;
 import pt.ul.fc.css.example.demo.entities.FinalDefense;
 import pt.ul.fc.css.example.demo.entities.Masters;
 import pt.ul.fc.css.example.demo.entities.Professor;
@@ -142,9 +144,9 @@ public class WebController {
 
 	@GetMapping("/thesis-i-advise/{id}")
 	public String newThesisDefenseSchedule(final Model model, @PathVariable Long id) {
-		model.addAttribute("thesis_defense", new ThesisDefense());
 		List<AppUser> profs = userService.getAllProfessorsExceptMe(id);
 		model.addAttribute("profs", profs);
+		model.addAttribute("thesis_defense", new ThesisDefense());
 		return "thesis-i-advise-id-schedule";
 	}
 
@@ -216,28 +218,60 @@ public class WebController {
 		return "statistics";
 	}
 
-	@GetMapping("/topics")
+	@GetMapping("/students-without-thesis-topic")
 	public String getApplications(final Model model) {
-		List<DissertationTopic> topics = dissertationTopicService.findFreeTopics();
-		model.addAttribute("topics", topics);
-		return "topics";
-	}
-
-	@GetMapping("/topic/{id}")
-	public String getApplicationId(final Model model, @PathVariable Long id) {
 		List<AppUser> students = userService.findFreeStudents();
-		DissertationTopic topic = dissertationTopicService.getTopicById(id);
 		model.addAttribute("students", students);
-		model.addAttribute("topic", topic);
-		model.addAttribute("id", id);
-		return "students";
+		return "students-without-thesis-topic";
 	}
 
-	@PostMapping("/topic/{id}")
-	public String saveThesis(final Model model, @PathVariable Long id, @RequestParam Long studentId) {
-		DissertationTopic topic = dissertationTopicService.getTopicById(id);
-		Student student = userService.findById(studentId);
-		execService.createThesisExecution(topic, student);
-		return "redirect:/user/home";
+	@GetMapping("/students-without-thesis-topic/{id}")
+	public String getApplicationId(final HttpSession session, final Model model, @PathVariable Long id) {
+		Student student = (Student) userService.findById(id);
+		List<DissertationTopic> topics = dissertationTopicService.findFreeTopics(student.getMasters());
+		ThesisExecution thesisExecution = new ThesisExecution();
+		thesisExecution.setStudent(student);
+		session.setAttribute("thesisExecution", thesisExecution);
+		model.addAttribute("thesisExecution", thesisExecution);
+		model.addAttribute("topics", topics);
+		return "students-without-thesis-topic-id";
 	}
+
+	@PostMapping("/students-without-thesis-topic/{studentId}")
+	public String saveThesis(final HttpSession session, @PathVariable Long studentId, @RequestParam Long topicId) {
+		ThesisExecution thesisExecution = (ThesisExecution) session.getAttribute("thesisExecution");
+		DissertationTopic topic = dissertationTopicService.getTopicById(topicId);
+		thesisExecution.setTopic(topic);
+		if (topic.getType() == DissertationTopicType.PROJECT) {
+			session.setAttribute("thesisExecution", thesisExecution);
+			return "redirect:/students-without-thesis-topic-add-internal-advisor";
+		}
+		execService.createThesisExecution(thesisExecution.getTopic(), thesisExecution.getStudent());
+		return "redirect:/";
+	}
+
+	@GetMapping("/students-without-thesis-topic-add-internal-advisor")
+	public String addInternalAdvisorForm(final Model model, final HttpSession session) {
+		ThesisExecution thesisExecution = (ThesisExecution) session.getAttribute("thesisExecution");
+		List<AppUser> profs = userService.findByType(Professor.class);
+		model.addAttribute("thesisExecution", thesisExecution);
+		model.addAttribute("profs", profs);
+		return "students-without-thesis-topic-add-internal-advisor";
+	}
+
+	@PostMapping("/students-without-thesis-topic-add-internal-advisor")
+	public String saveInternalAdvisor(final HttpSession session, final Model model,
+			@RequestParam Long internalAdvisor) {
+		ThesisExecution thesisExecution = (ThesisExecution) session.getAttribute("thesisExecution");
+		// session.removeAttribute("thesisExecution");
+		// Fetch the selected internal advisor
+		Professor advisor = (Professor) userService.findById(internalAdvisor);
+		thesisExecution.setInternalAdvisor(advisor);
+
+		// Ensure the thesisExecution is properly created with the internal advisor
+		execService.createProjectExecution(thesisExecution.getTopic(), thesisExecution.getStudent(),
+				thesisExecution.getInternalAdvisor());
+		return "redirect:/";
+	}
+
 }
