@@ -1,9 +1,11 @@
 package pt.ul.fc.css.example.demo.controller;
 
 import java.util.List;
+import java.util.Set;
+
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.Student;
-
+import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
+import pt.ul.fc.css.example.demo.entities.Document;
 import pt.ul.fc.css.example.demo.services.ApplicationService;
+import pt.ul.fc.css.example.demo.services.ThesisExecutionService;
 import pt.ul.fc.css.example.demo.services.Storage.FileSystemStorageService;
 
 @RestController()
@@ -63,16 +67,29 @@ class RestApplication {
     }
 
     @Autowired
-    private FileSystemStorageService storageService;
+    private ThesisExecutionService executionService;
+    
+    @PostMapping("/uploadDocument/{executionid}")
+	ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable long executionid) {
 
-    @PostMapping("/uploadDocument")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file,
-			RedirectAttributes redirectAttributes) {
+		ThesisExecution exec = executionService.uploadProposal(executionid, file);
+        if(exec == null) {
+            return ResponseEntity.internalServerError().body("Failed to create document");
+        }
 
-		storageService.store(file);
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + file.getOriginalFilename() + "!");
-
-		return "redirect:/";
+        return ResponseEntity.ok().build();
 	}
+
+    @GetMapping("/getproposals/{executionid}")
+    ResponseEntity<?> getProposals(@PathVariable long executionid) {
+        Set<Document> proposals = executionService.getProposals(executionid);
+        if(proposals == null) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().body(proposals);
+    }
+    
+
+
+
 }
