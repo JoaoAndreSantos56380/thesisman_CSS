@@ -28,9 +28,10 @@ public interface DefenseRepository extends JpaRepository<ThesisDefense, Long> {
 	@Query("SELECT td FROM ThesisDefense td JOIN td.thesisExecution te WHERE te.internalAdvisor = :professor")
 	List<ThesisDefense> getDefensesOfTheThesesIAmOrienting(@Param("professor") Professor professor);
 
-	@Query("SELECT td FROM ThesisDefense td WHERE td.thesisExecution.internalAdvisor = :internalAdvisor and td.grade = -1")
-	List<ThesisDefense> findScheduledTheses(@Param("internalAdvisor") Professor internalAdvisor);
-
 	@Query("SELECT f FROM FinalDefense f WHERE (f.thesisExecution.internalAdvisor = :p OR f.arguente = :p OR f.president = :p) AND f.grade = -1")
 	List<FinalDefense> findScheduledFinalDefenses(@Param("p") Professor p);
+
+	//@Query("SELECT td FROM ThesisDefense td WHERE td.thesisExecution.internalAdvisor = :internalAdvisor and td.grade = -1")
+    @Query("SELECT td FROM ThesisDefense td WHERE td.thesisExecution.internalAdvisor = :internalAdvisor AND td.grade = -1 AND TYPE(td) = ThesisDefense")
+    List<ThesisDefense> findScheduledTheses(@Param("internalAdvisor") Professor internalAdvisor);
 }
