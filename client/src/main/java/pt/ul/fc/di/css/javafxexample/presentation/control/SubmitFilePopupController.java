@@ -179,7 +179,8 @@ public class SubmitFilePopupController {
         String charset = "UTF-8";
         String param = "value";
         //changed file input to be the atribute
-        File binaryFile = new File(filePath);//new File("/Users/alcidesfonseca/Downloads/documento.pdf");
+        File binaryFile = new File(filePath);
+        File binaryFile = new File("file:///C:/Users/rafae/Downloads/T_07_orm_pt2.pdf");
 
 
         String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
