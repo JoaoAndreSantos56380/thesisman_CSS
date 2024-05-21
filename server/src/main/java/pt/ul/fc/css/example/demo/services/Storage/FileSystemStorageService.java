@@ -39,7 +39,6 @@ public class FileSystemStorageService  {
 				Files.copy(inputStream, destinationFile,
 					StandardCopyOption.REPLACE_EXISTING);
 			}
-			System.out.println(destinationFile.toString());
 
 		}
 		catch (IOException e) {
