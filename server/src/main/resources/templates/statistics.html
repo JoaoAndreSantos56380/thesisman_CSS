@@ -4,14 +4,7 @@
 
 <body>
 	<div layout:fragment="content">
-		<div>
-			<ul>
-				<li th:each="defense : ${defenses}">
-					<span th:text="'Defesa ' + ${defense.id} + ': ' + ${defense.grade}"></span>
-				</li>
-			</ul>
-		</div>
-
+		
 		<div>
 			<span>Positivas: </span>
 			<span th:text="${positives / total_defenses * 100 + '%'}"></span>
