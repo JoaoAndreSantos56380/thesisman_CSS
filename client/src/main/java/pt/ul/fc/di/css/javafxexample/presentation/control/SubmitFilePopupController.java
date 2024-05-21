@@ -178,7 +178,7 @@ public class SubmitFilePopupController {
         String charset = "UTF-8";
         String param = "value";
         //change file input
-        File binaryFile = new File("/Users/alcidesfonseca/Downloads/documento.pdf");
+        File binaryFile = new File(filePath);//new File("/Users/alcidesfonseca/Downloads/documento.pdf");
 
 
         String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
@@ -192,7 +192,7 @@ public class SubmitFilePopupController {
             OutputStream output = connection.getOutputStream();
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, charset), true);
         ) {
-            
+
             writer.append("--" + boundary).append(CRLF);
             writer.append("Content-Disposition: form-data; name=\"param\"").append(CRLF);
             writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
