@@ -106,25 +106,6 @@ public class SubmitFilePopupController {
         dialogStage.close();
     }
 
-    //delete
-    /*
-    private void makeGetRequest() {
-        try {
-            URL url = new URL("https://www.youtube.com");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            int responseCode = connection.getResponseCode();
-            if (responseCode == 200) {
-                Platform.runLater(() -> showConfirmationMessage(true));
-            } else {
-                Platform.runLater(() -> showConfirmationMessage(false));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Platform.runLater(() -> showConfirmationMessage(false));
-        }
-    }*/
-
     private void showLoadingIndicator(boolean show) {
         contentBox.setVisible(!show);
         loadingIndicator.setVisible(show);
