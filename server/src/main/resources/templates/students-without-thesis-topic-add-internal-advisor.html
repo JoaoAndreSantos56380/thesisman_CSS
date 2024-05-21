@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<body>
+	<div layout:fragment="content" class="text-left">
+		<h1 class="text-4xl font-semibold mb-4">Associar Orientador Interno</h1>
+		<p>Nesta página pode associar um orientador interno do aluno <span
+				th:text="${thesisExecution.student.name}"></span>
+			para a tese
+			de tópico <span th:text="${thesisExecution.topic.title}"></span>.</p>
+		<form th:action="@{/students-without-thesis-topic-add-internal-advisor}" method="post"
+			class="flex flex-col gap-0.5">
+			<div th:each="prof : ${profs}" class="hover:bg-gray-200 rounded-lg flex gap-2">
+				<input type="radio" th:id="${prof.id}" name="internalAdvisor" th:value="${prof.id}">
+				<label th:for="${prof.id}" th:text="${prof.name}" class="flex-1 px-2 py-1"></label>
+			</div>
+			<button type="submit"
+				class="text-white bg-cyan-700 hover:bg-cyan-800 active:bg-cyan-900 rounded-lg p-2">Atribuir orientador
+				interno</button>
+		</form>
+	</div>
+</body>
+
+</html>

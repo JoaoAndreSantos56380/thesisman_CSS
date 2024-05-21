@@ -59,7 +59,7 @@ class DissertationTopicRepositoryTests {
   void findDissertationTopicBySubmitter() {
     Professor test = (Professor) userRepository.findByName("ricardo quaresma").get(0);
 
-    assertEquals(9, dissertationTopicRepository.findBySubmitter(test).size());
+    assertEquals(11, dissertationTopicRepository.findBySubmitter(test).size());
   }
 
   @Test

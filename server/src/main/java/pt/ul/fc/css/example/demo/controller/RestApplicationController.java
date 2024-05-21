@@ -7,9 +7,11 @@ import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.Student;
 import pt.ul.fc.css.example.demo.entities.ThesisExecution;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import groovyjarjarantlr4.v4.parse.ANTLRParser.finallyClause_return;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -69,10 +74,21 @@ class RestApplication {
     @Autowired
     private ThesisExecutionService executionService;
     
-    @PostMapping("/uploadDocument/{executionid}")
-	ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable long executionid) {
+    @PostMapping("/uploadProposal/{executionid}")
+	ResponseEntity<?> handleProposalUpload(@RequestParam("file") MultipartFile file, @PathVariable long executionid) {
 
 		ThesisExecution exec = executionService.uploadProposal(executionid, file);
+        if(exec == null) {
+            return ResponseEntity.internalServerError().body("Failed to create document");
+        }
+
+        return ResponseEntity.ok().build();
+	}
+
+    @PostMapping("/uploadFinal/{executionid}")
+	ResponseEntity<?> handleFinalUpload(@RequestParam("file") MultipartFile file, @PathVariable long executionid) {
+
+		ThesisExecution exec = executionService.uploadFinal(executionid, file);
         if(exec == null) {
             return ResponseEntity.internalServerError().body("Failed to create document");
         }
@@ -88,6 +104,31 @@ class RestApplication {
         }
         return ResponseEntity.ok().body(proposals);
     }
+
+    @GetMapping("/getfinal/{executionid}")
+    ResponseEntity<?> getFinal(@PathVariable long executionid) {
+        Document finalName = executionService.getFinal(executionid);
+        if(finalName == null) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().body(finalName);
+    }
+
+    @Autowired
+    private FileSystemStorageService storageService;
+
+    @GetMapping("/getdocument/{documentname}") 
+    ResponseEntity<Resource> getProposals(@PathVariable String documentname) {
+        Resource file = storageService.loadAsResource(documentname);
+        if (file != null) {
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
     
 
 

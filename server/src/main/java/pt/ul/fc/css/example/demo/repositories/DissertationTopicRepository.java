@@ -19,6 +19,6 @@ public interface DissertationTopicRepository extends JpaRepository<DissertationT
 	@Query("SELECT dt FROM DissertationTopic dt WHERE dt.title LIKE %:q% ")
 	List<DissertationTopic> findByTitle(@Param("q") String q);
 
-	@Query("SELECT dt FROM DissertationTopic dt LEFT JOIN ThesisExecution te ON dt.id = te.topic.id WHERE te.id IS NULL")
-	List<DissertationTopic> findFreeTopics();
+	@Query("SELECT dt FROM DissertationTopic dt LEFT JOIN ThesisExecution te ON dt.id = te.topic.id JOIN dt.compatibleMasters cm WHERE te.id IS NULL AND cm = :masters")
+	List<DissertationTopic> findFreeTopics(@Param("masters") Masters masters);
 }

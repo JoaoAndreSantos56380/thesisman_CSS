@@ -24,7 +24,6 @@ import pt.ul.fc.css.example.demo.repositories.DissertationTopicRepository;
 import pt.ul.fc.css.example.demo.repositories.MastersRepository;
 import pt.ul.fc.css.example.demo.repositories.ThesisExecutionRepository;
 import pt.ul.fc.css.example.demo.repositories.UserRepository;
-import pt.ul.fc.css.example.demo.services.Storage.FileSystemStorageService;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -44,18 +43,17 @@ public class DemoApplication {
 			ThesisExecutionRepository thesisExecutionRepository,
 			DefenseRepository defenseRepository,
 			ApplicationRepository applicationRepository,
-			PasswordEncoder passwordEncoder,
-			FileSystemStorageService storageService) {
+			PasswordEncoder passwordEncoder) {
 		return (args) -> {
-			storageService.deleteAll();
-			storageService.init();
 			// criar professor
 			Professor cr7Professor = new Professor("ronaldo", "password", "cristiano ronaldo");
 			Professor arguente = new Professor("arguente", "password", "arguente");
+			String encodedPassword = passwordEncoder.encode(arguente.getPassword());
+			arguente.setPassword(encodedPassword);
 			userRepository.save(arguente);
 			Professor rq7Professor = new Professor("quaresma", "password", "ricardo quaresma");
 			Professor presiJuri = new Professor("pjuri", "password", "presi juri");
-			Consultant consultant = new Consultant("consultant@mail.com", "password", "jorge mendes", " sumol");
+			Consultant consultant = new Consultant("consultant", "password", "jorge mendes", " sumol");
 			Consultant consultant2 = new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol");
 
 			Professor prof1 = new Professor("prof1", "password", "prof1");
@@ -66,7 +64,7 @@ public class DemoApplication {
 			Professor prof5 = new Professor("prof5", "password", "prof5");
 
 			userRepository.save(prof1);
-			String encodedPassword = passwordEncoder.encode(SUPERADMIN.getPassword());
+			encodedPassword = passwordEncoder.encode(SUPERADMIN.getPassword());
 			SUPERADMIN.setPassword(encodedPassword);
 			userRepository.save(SUPERADMIN);
 			userRepository.save(prof2);
@@ -109,17 +107,35 @@ public class DemoApplication {
 			userRepository.save(student7);
 			userRepository.save(student8);
 
+			Student studentSemTopico1 = new Student("studentSemTopico1", "password", "studentSemTopico1", 1903, 19.99,
+					master10);
+			Student studentSemTopico2 = new Student("studentSemTopico2", "password", "studentSemTopico2", 1903, 19.99,
+					master10);
+			Student studentSemTopico3 = new Student("studentSemTopico3", "password", "studentSemTopico3", 1903, 19.99,
+					master9);
+
+			userRepository.save(studentSemTopico1);
+			userRepository.save(studentSemTopico2);
+			userRepository.save(studentSemTopico3);
+
 			String encodedPassword2 = passwordEncoder.encode(rq7Professor.getPassword());
 			rq7Professor.setPassword(encodedPassword2);
 			userRepository.save(rq7Professor);
 
 			HashSet<Masters> mastersArr = new HashSet<Masters>();
 			mastersArr.add(theBestMaster);
+
 			HashSet<Masters> mastersArr2 = new HashSet<Masters>();
+			mastersArr.add(master8);
 			mastersArr.add(master10);
 			mastersArr.add(master9);
-			mastersArr.add(master8);
 			mastersArr.add(master7);
+
+			HashSet<Masters> mastersArr9 = new HashSet<Masters>();
+			mastersArr9.add(master9);
+
+			HashSet<Masters> mastersArr10 = new HashSet<Masters>();
+			mastersArr10.add(master10);
 
 			DissertationTopic dissertationTopicFutebolRadiante = new DissertationTopic("Futebol radiante",
 					"description", 99999, rq7Professor, mastersArr);
@@ -140,6 +156,14 @@ public class DemoApplication {
 					"description", 55555, rq7Professor, mastersArr2);
 			DissertationTopic dissertationTopic5 = new DissertationTopic("2 passou 1 defesa e vai para a final",
 					"description", 66666, rq7Professor, mastersArr2);
+
+			DissertationTopic dissertationTopicNaoAssociado1 = new DissertationTopic("dissertationTopicNaoAssociado1",
+					"description", 66666, rq7Professor, mastersArr9);
+			DissertationTopic dissertationTopicNaoAssociado2 = new DissertationTopic("dissertationTopicNaoAssociado2",
+					"description", 66666, rq7Professor, mastersArr10);
+
+			dissertationTopicRepository.save(dissertationTopicNaoAssociado1);
+			dissertationTopicRepository.save(dissertationTopicNaoAssociado2);
 
 			dissertationTopicRepository.save(dissertationTopic0);
 			dissertationTopicRepository.save(dissertationTopic1);
@@ -208,6 +232,10 @@ public class DemoApplication {
 			encodedPassword = passwordEncoder.encode(consultant.getPassword());
 			consultant.setPassword(encodedPassword);
 			userRepository.save(consultant);
+
+			DissertationTopic topicoConsultant = new DissertationTopic("topicoConsultot", "descioqe", 0, consultant, mastersArr9);
+
+			dissertationTopicRepository.save(topicoConsultant);
 
 			encodedPassword = passwordEncoder.encode(consultant.getPassword());
 			consultant2.setPassword(encodedPassword);
