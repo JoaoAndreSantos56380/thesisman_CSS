@@ -130,6 +130,7 @@ public class SubmitFilePopupController {
         loadingIndicator.setVisible(show);
     }
 
+    //is this right?
     private void showConfirmationMessage(boolean success) {
         loadingIndicator.setVisible(false);
         confirmationBox.setVisible(true);
@@ -155,9 +156,7 @@ public class SubmitFilePopupController {
 
         if (file != null) {
             String fileName = file.getAbsolutePath();
-            //not sure
             filePath = fileName;
-            System.out.println("Selected file: " + fileName);
             selectedDocumentLabel.setText(fileName);
             try {
                 byte[] fileContent = Files.readAllBytes(file.toPath());
