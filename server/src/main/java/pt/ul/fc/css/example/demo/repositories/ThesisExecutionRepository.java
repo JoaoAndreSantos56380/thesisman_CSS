@@ -1,11 +1,12 @@
 package pt.ul.fc.css.example.demo.repositories;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
 import pt.ul.fc.css.example.demo.entities.Professor;
 import pt.ul.fc.css.example.demo.entities.Student;
@@ -35,5 +36,8 @@ public interface ThesisExecutionRepository extends JpaRepository<ThesisExecution
 
 	@Query("SELECT t FROM ThesisExecution t LEFT JOIN ThesisDefense d ON t.id = d.thesisExecution.id WHERE t.internalAdvisor = :internalAdvisor AND EXISTS (SELECT d2.id FROM ThesisDefense d2 WHERE d2.thesisExecution.id = t.id AND d2.grade > 9) AND NOT EXISTS (SELECT d2.id FROM ThesisDefense d2 WHERE d2.thesisExecution.id = t.id AND TYPE(d2) = 'FINAL')")
 	List<ThesisExecution> findUnscheduledFinalTheses(@Param("internalAdvisor") Professor internalAdvisor);
+
+	@Query("SELECT t FROM ThesisExecution t WHERE t.student.id = :studentId")
+	Optional<ThesisExecution> findByStudentID(@Param("studentId") Long studentId);
 
 }
