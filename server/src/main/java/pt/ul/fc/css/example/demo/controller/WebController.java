@@ -169,7 +169,13 @@ public class WebController {
 	public String thesis_defense_grading_save_put(final Model model, @PathVariable Long id,
 			@ModelAttribute ThesisDefense gradeDefense) {
 		ThesisDefense defense = defenseService.findById(id);
-		defense.setGrade(gradeDefense.getGrade());
+		int grade = gradeDefense.getGrade();
+		if(grade < 0 || grade > 20) {
+			model.addAttribute("gradeDefense", defense);
+			model.addAttribute("error", "A nota tem que ser um valor entre 0 e 20.");
+			return "thesis_defense_grading_id";
+		}
+		defense.setGrade(grade);
 		defenseService.addDefense(defense);
 		return "redirect:/thesis-i-advise";
 	}
@@ -263,12 +269,9 @@ public class WebController {
 	public String saveInternalAdvisor(final HttpSession session, final Model model,
 			@RequestParam Long internalAdvisor) {
 		ThesisExecution thesisExecution = (ThesisExecution) session.getAttribute("thesisExecution");
-		// session.removeAttribute("thesisExecution");
-		// Fetch the selected internal advisor
 		Professor advisor = (Professor) userService.findById(internalAdvisor);
 		thesisExecution.setInternalAdvisor(advisor);
 
-		// Ensure the thesisExecution is properly created with the internal advisor
 		execService.createProjectExecution(thesisExecution.getTopic(), thesisExecution.getStudent(),
 				thesisExecution.getInternalAdvisor());
 		return "redirect:/";
