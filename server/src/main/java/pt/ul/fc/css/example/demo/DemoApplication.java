@@ -67,10 +67,10 @@ public class DemoApplication {
 			Masters master2 = new Masters("INFORMATICA",
 					(Professor) userRepository.findByUsername("Paul").get());
 			Masters master3 = new Masters("STOCK", (Professor) userRepository.findByUsername("pjuri").get());
-			Masters master10 = new Masters("master10", (Professor) userRepository.findByUsername("prof1").get());
-			Masters master9 = new Masters("master9", (Professor) userRepository.findByUsername("prof2").get());
-			Masters master8 = new Masters("master8", (Professor) userRepository.findByUsername("prof3").get());
-			Masters master7 = new Masters("master7", (Professor) userRepository.findByUsername("prof4").get());
+			Masters master10 = new Masters("master10", (Professor) userRepository.findByUsername("Michael").get());
+			Masters master9 = new Masters("master9", (Professor) userRepository.findByUsername("Werner").get());
+			Masters master8 = new Masters("master8", (Professor) userRepository.findByUsername("Paul").get());
+			Masters master7 = new Masters("master7", (Professor) userRepository.findByUsername("prof1").get());
 
 			createAndSaveMaster(mastersRepository, theBestMaster);
 			createAndSaveMaster(mastersRepository, master2);
