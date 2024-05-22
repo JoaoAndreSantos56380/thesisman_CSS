@@ -14,7 +14,6 @@ import pt.ul.fc.css.example.demo.repositories.DefenseRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class ThesisDefenseService {
@@ -30,19 +29,6 @@ public class ThesisDefenseService {
 	public List<ThesisDefense> findAllDefenses() {
 		return statsHandler.findAllDefenses();
 	}
-
-	/*
-	 * public ThesisDefense addDefense(ThesisExecution te, String location, Date
-	 * time) {
-	 * public List<ThesisDefense> findAllByStudent(long studentId) {
-	 * return defensesHandler.getStudentDefenses(studentId);
-	 * }
-	 *
-	 * public ThesisDefense addDefense(ThesisExecution te, String location, Date
-	 * time) {
-	 * return defenseRepository.save(new ThesisDefense(te, location, time));
-	 * }
-	 */
 
 	public List<ThesisDefense> findAllPositives() {
 		return statsHandler.findAllPositives();

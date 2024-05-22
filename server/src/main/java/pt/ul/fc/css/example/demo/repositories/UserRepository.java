@@ -41,4 +41,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 	@Query("SELECT a FROM AppUser a WHERE TYPE(a) = 'TEACHER' AND a.id <> :id")
 	List<AppUser> findAllProfessorsExceptMe(Long id);
 
+	@Query("SELECT u FROM AppUser u WHERE u.username = :username")
+	Optional<AppUser> findByUsername(@Param("username") String username);
+
 }

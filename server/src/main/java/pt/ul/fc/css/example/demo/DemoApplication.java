@@ -2,6 +2,7 @@ package pt.ul.fc.css.example.demo;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import pt.ul.fc.css.example.demo.entities.AppUser;
 import pt.ul.fc.css.example.demo.entities.Application;
 import pt.ul.fc.css.example.demo.entities.Consultant;
 import pt.ul.fc.css.example.demo.entities.DissertationTopic;
@@ -28,9 +30,6 @@ import pt.ul.fc.css.example.demo.repositories.UserRepository;
 @SpringBootApplication
 public class DemoApplication {
 
-	// private static final Logger log =
-	// LoggerFactory.getLogger(DemoApplication.class);
-
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
@@ -45,126 +44,104 @@ public class DemoApplication {
 			ApplicationRepository applicationRepository,
 			PasswordEncoder passwordEncoder) {
 		return (args) -> {
-			// criar professor
-			Professor cr7Professor = new Professor("ronaldo", "password", "cristiano ronaldo");
-			Professor arguente = new Professor("arguente", "password", "arguente");
-			String encodedPassword = passwordEncoder.encode(arguente.getPassword());
-			arguente.setPassword(encodedPassword);
-			userRepository.save(arguente);
-			Professor rq7Professor = new Professor("quaresma", "password", "ricardo quaresma");
-			Professor presiJuri = new Professor("pjuri", "password", "presi juri");
-			Consultant consultant = new Consultant("consultant", "password", "jorge mendes", " sumol");
-			Consultant consultant2 = new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol");
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Professor("ronaldo", "password", "cristiano ronaldo"));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("arguente", "password", "arguente"));
+			createAndSaveUser(userRepository, passwordEncoder,
+			new Professor("quaresma", "password", "ricardo quaresma"));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("pjuri", "password", "presi juri"));
+			createAndSaveUser(userRepository, passwordEncoder,
+			new Consultant("consultant", "password", "jorge mendes", " sumol"));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol"));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof1", "password", "prof1"));
+			createAndSaveUser(userRepository, passwordEncoder,
+			new Professor("admin", "password", "vescomosouadmin", true));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof2", "password", "prof2"));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof3", "password", "prof3"));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof4", "password", "prof4"));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof5", "password", "prof5"));
 
-			Professor prof1 = new Professor("prof1", "password", "prof1");
-			Professor SUPERADMIN = new Professor("admin", "password", "vescomosouadmin", true);
-			Professor prof2 = new Professor("prof2", "password", "prof2");
-			Professor prof3 = new Professor("prof3", "password", "prof3");
-			Professor prof4 = new Professor("prof4", "password", "prof4");
-			Professor prof5 = new Professor("prof5", "password", "prof5");
 
-			userRepository.save(prof1);
-			encodedPassword = passwordEncoder.encode(SUPERADMIN.getPassword());
-			SUPERADMIN.setPassword(encodedPassword);
-			userRepository.save(SUPERADMIN);
-			userRepository.save(prof2);
-			userRepository.save(prof3);
-			userRepository.save(prof4);
-			userRepository.save(prof5);
+			Masters theBestMaster = new Masters("GOLDENAI", (Professor) userRepository.findByUsername("ronaldo").get());
+			Masters master2 = new Masters("INFORMATICA", (Professor) userRepository.findByUsername("quaresma").get());
+			Masters master3 = new Masters("STOCK", (Professor) userRepository.findByUsername("pjuri").get());
+			Masters master10 = new Masters("master10", (Professor) userRepository.findByUsername("prof1").get());
+			Masters master9 = new Masters("master9", (Professor) userRepository.findByUsername("prof2").get());
+			Masters master8 = new Masters("master8", (Professor) userRepository.findByUsername("prof3").get());
+			Masters master7 = new Masters("master7", (Professor) userRepository.findByUsername("prof4").get());
 
-			// criar mestrado com esse prof a coordenador
-			Masters theBestMaster = new Masters("GOLDENAI", cr7Professor);
-			Masters master2 = new Masters("INFORMATICA", rq7Professor);
-			Masters master3 = new Masters("STOCK", presiJuri);
-
-			Masters master10 = new Masters("master10", prof1);
-			Masters master9 = new Masters("master9", prof2);
-			Masters master8 = new Masters("master8", prof3);
-			Masters master7 = new Masters("master7", prof4);
-
+			mastersRepository.save(theBestMaster);
+			mastersRepository.save(master2);
+			mastersRepository.save(master3);
 			mastersRepository.save(master10);
 			mastersRepository.save(master9);
 			mastersRepository.save(master8);
 			mastersRepository.save(master7);
 
-			Student mCurieStudent = new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster);
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student1", "password", "student1", 1903, 19.99, master10));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student2", "password", "student2", 1903, 19.99, master9));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student3", "password", "student3", 1903, 19.99, master8));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student4", "password", "student4", 1903, 19.99, master7));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student5", "password", "student5", 1903, 19.99, master7));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student6", "password", "student6", 1903, 19.99, master7));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student7", "password", "student7", 1903, 19.99, master7));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("student8", "password", "student8", 1903, 19.99, master7));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("studentSemTopico1", "password", "studentSemTopico1", 1903, 19.99, master10));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("studentSemTopico2", "password", "studentSemTopico2", 1903, 19.99, master10));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("studentSemTopico3", "password", "studentSemTopico3", 1903, 19.99, master9));
 
-			Student student1 = new Student("student1", "password", "student1", 1903, 19.99, master10);
-			Student student2 = new Student("student2", "password", "student2", 1903, 19.99, master9);
-			Student student3 = new Student("student3", "password", "student3", 1903, 19.99, master8);
-			Student student4 = new Student("student4", "password", "student4", 1903, 19.99, master7);
-			Student student5 = new Student("student5", "password", "student5", 1903, 19.99, master7);
-			Student student6 = new Student("student6", "password", "student6", 1903, 19.99, master7);
-			Student student7 = new Student("student7", "password", "student7", 1903, 19.99, master7);
-			Student student8 = new Student("student8", "password", "student8", 1903, 19.99, master7);
-
-			userRepository.save(student1);
-			userRepository.save(student2);
-			userRepository.save(student3);
-			userRepository.save(student4);
-			userRepository.save(student5);
-			userRepository.save(student6);
-			userRepository.save(student7);
-			userRepository.save(student8);
-
-			Student studentSemTopico1 = new Student("studentSemTopico1", "password", "studentSemTopico1", 1903, 19.99,
-					master10);
-			Student studentSemTopico2 = new Student("studentSemTopico2", "password", "studentSemTopico2", 1903, 19.99,
-					master10);
-			Student studentSemTopico3 = new Student("studentSemTopico3", "password", "studentSemTopico3", 1903, 19.99,
-					master9);
-
-			userRepository.save(studentSemTopico1);
-			userRepository.save(studentSemTopico2);
-			userRepository.save(studentSemTopico3);
-
-			String encodedPassword2 = passwordEncoder.encode(rq7Professor.getPassword());
-			rq7Professor.setPassword(encodedPassword2);
-			userRepository.save(rq7Professor);
-
-			HashSet<Masters> mastersArr = new HashSet<Masters>();
+			HashSet<Masters> mastersArr = new HashSet<>();
 			mastersArr.add(theBestMaster);
 
-			HashSet<Masters> mastersArr2 = new HashSet<Masters>();
-			mastersArr.add(master8);
-			mastersArr.add(master10);
-			mastersArr.add(master9);
-			mastersArr.add(master7);
+			HashSet<Masters> mastersArr2 = new HashSet<>();
+			mastersArr2.add(master8);
+			mastersArr2.add(master10);
+			mastersArr2.add(master9);
+			mastersArr2.add(master7);
 
-			HashSet<Masters> mastersArr9 = new HashSet<Masters>();
+			HashSet<Masters> mastersArr9 = new HashSet<>();
 			mastersArr9.add(master9);
 
-			HashSet<Masters> mastersArr10 = new HashSet<Masters>();
+			HashSet<Masters> mastersArr10 = new HashSet<>();
 			mastersArr10.add(master10);
 
 			DissertationTopic dissertationTopicFutebolRadiante = new DissertationTopic("Futebol radiante",
-					"description", 99999, rq7Professor, mastersArr);
-
+					"description", 99999, userRepository.findByUsername("quaresma").get(), mastersArr);
 			DissertationTopic dissertationTopic0 = new DissertationTopic("1 sem defesa marcada", "description", 11111,
-					rq7Professor, mastersArr2);
+					userRepository.findByUsername("quaresma").get(), mastersArr2);
 			DissertationTopic dissertationTopic1 = new DissertationTopic("2 sem defesa marcada", "description", 22222,
-					rq7Professor, mastersArr2);
+					userRepository.findByUsername("quaresma").get(), mastersArr2);
 			DissertationTopic dissertationTopic6 = new DissertationTopic("3 sem defesa marcada", "description", 77777,
-					rq7Professor, mastersArr2);
-
+					userRepository.findByUsername("quaresma").get(), mastersArr2);
 			DissertationTopic dissertationTopic2 = new DissertationTopic("1 1 defesa para marcar nota", "description",
-					33333, rq7Professor, mastersArr2);
+					33333, userRepository.findByUsername("quaresma").get(), mastersArr2);
 			DissertationTopic dissertationTopic3 = new DissertationTopic("2 1 defesa para marcar nota", "description",
-					44444, rq7Professor, mastersArr2);
-
+					44444, userRepository.findByUsername("quaresma").get(), mastersArr2);
 			DissertationTopic dissertationTopic4 = new DissertationTopic("1 passou 1 defesa e vai para a final",
-					"description", 55555, rq7Professor, mastersArr2);
+					"description", 55555, userRepository.findByUsername("quaresma").get(), mastersArr2);
 			DissertationTopic dissertationTopic5 = new DissertationTopic("2 passou 1 defesa e vai para a final",
-					"description", 66666, rq7Professor, mastersArr2);
-
+					"description", 66666, userRepository.findByUsername("quaresma").get(), mastersArr2);
 			DissertationTopic dissertationTopicNaoAssociado1 = new DissertationTopic("dissertationTopicNaoAssociado1",
-					"description", 66666, rq7Professor, mastersArr9);
+					"description", 66666, userRepository.findByUsername("quaresma").get(), mastersArr9);
 			DissertationTopic dissertationTopicNaoAssociado2 = new DissertationTopic("dissertationTopicNaoAssociado2",
-					"description", 66666, rq7Professor, mastersArr10);
+					"description", 66666, userRepository.findByUsername("quaresma").get(), mastersArr10);
 
 			dissertationTopicRepository.save(dissertationTopicNaoAssociado1);
 			dissertationTopicRepository.save(dissertationTopicNaoAssociado2);
-
 			dissertationTopicRepository.save(dissertationTopic0);
 			dissertationTopicRepository.save(dissertationTopic1);
 			dissertationTopicRepository.save(dissertationTopic2);
@@ -173,14 +150,16 @@ public class DemoApplication {
 			dissertationTopicRepository.save(dissertationTopic5);
 			dissertationTopicRepository.save(dissertationTopic6);
 
-			// sem defesa
-			ThesisExecution thesis1 = new ThesisExecution(student1, dissertationTopic0, "2024/2025");
-			ThesisExecution thesis2 = new ThesisExecution(student2, dissertationTopic1, "2024/2025");
-			ThesisExecution thesis3 = new ThesisExecution(student3, dissertationTopic6, "2024/2025");
-
-			// falta nota
-			ThesisExecution thesis4 = new ThesisExecution(student4, dissertationTopic2, "2024/2025");
-			ThesisExecution thesis5 = new ThesisExecution(student5, dissertationTopic3, "2024/2025");
+			ThesisExecution thesis1 = new ThesisExecution((Student) userRepository.findByUsername("student1").get(),
+					dissertationTopic0, "2024/2025");
+			ThesisExecution thesis2 = new ThesisExecution((Student) userRepository.findByUsername("student2").get(),
+					dissertationTopic1, "2024/2025");
+			ThesisExecution thesis3 = new ThesisExecution((Student) userRepository.findByUsername("student3").get(),
+					dissertationTopic6, "2024/2025");
+			ThesisExecution thesis4 = new ThesisExecution((Student) userRepository.findByUsername("student4").get(),
+					dissertationTopic2, "2024/2025");
+			ThesisExecution thesis5 = new ThesisExecution((Student) userRepository.findByUsername("student5").get(),
+					dissertationTopic3, "2024/2025");
 
 			thesisExecutionRepository.save(thesis1);
 			thesisExecutionRepository.save(thesis2);
@@ -188,97 +167,125 @@ public class DemoApplication {
 			thesisExecutionRepository.save(thesis4);
 			thesisExecutionRepository.save(thesis5);
 
-			ThesisDefense defense1 = new ThesisDefense(thesis4, "local_defesa_1", new Date(), arguente);
-			ThesisDefense defense2 = new ThesisDefense(thesis5, "local_defesa_2", new Date(), arguente);
+			ThesisDefense defense1 = new ThesisDefense(thesis4, "local_defesa_1", new Date(),
+					(Professor) userRepository.findByUsername("arguente").get());
+			ThesisDefense defense2 = new ThesisDefense(thesis5, "local_defesa_2", new Date(),
+					(Professor) userRepository.findByUsername("arguente").get());
 
 			defenseRepository.save(defense1);
 			defenseRepository.save(defense2);
 
-			// passou e vai a defesa final
-			ThesisExecution thesis6 = new ThesisExecution(student6, dissertationTopic4, "2024/2025");
-			ThesisExecution thesis7 = new ThesisExecution(student7, dissertationTopic5, "2024/2025");
+			ThesisExecution thesis6 = new ThesisExecution((Student) userRepository.findByUsername("student6").get(),
+					dissertationTopic4, "2024/2025");
+			ThesisExecution thesis7 = new ThesisExecution((Student) userRepository.findByUsername("student7").get(),
+					dissertationTopic5, "2024/2025");
 
 			thesisExecutionRepository.save(thesis6);
 			thesisExecutionRepository.save(thesis7);
 
-			ThesisDefense defense3 = new ThesisDefense(thesis6, "local_defesa_3", new Date(), arguente);
-			ThesisDefense defense4 = new ThesisDefense(thesis7, "local_defesa_4", new Date(), arguente);
+			ThesisDefense defense3 = new ThesisDefense(thesis6, "local_defesa_3", new Date(),
+					(Professor) userRepository.findByUsername("arguente").get());
+			ThesisDefense defense4 = new ThesisDefense(thesis7, "local_defesa_4", new Date(),
+					(Professor) userRepository.findByUsername("arguente").get());
 			defense3.setGrade(10);
 			defense4.setGrade(11);
 
 			defenseRepository.save(defense3);
 			defenseRepository.save(defense4);
 
-			// chumbou a 1 defesa
 			DissertationTopic dissertationTopic7 = new DissertationTopic("chumbou a 1 primeira defesa", "description",
-					99999, rq7Professor, mastersArr2);
+					99999, userRepository.findByUsername("quaresma").get(), mastersArr2);
 			dissertationTopicRepository.save(dissertationTopic7);
 
-			ThesisExecution thesis8 = new ThesisExecution(student8, dissertationTopic7, "2024/2025");
+			ThesisExecution thesis8 = new ThesisExecution((Student) userRepository.findByUsername("student8").get(),
+					dissertationTopic7, "2024/2025");
 			thesisExecutionRepository.save(thesis8);
 
-			ThesisDefense defense5 = new ThesisDefense(thesis8, "local_defesa_5", new Date(), arguente);
+			ThesisDefense defense5 = new ThesisDefense(thesis8, "local_defesa_5", new Date(),
+					(Professor) userRepository.findByUsername("arguente").get());
 			defense5.setGrade(8);
 			defenseRepository.save(defense5);
 
-			Application application1 = new Application(student1, dissertationTopic1);
-			Application application2 = new Application(student2, dissertationTopic2);
-			Application application3 = new Application(student3, dissertationTopic3);
+			Application application1 = new Application((Student) userRepository.findByUsername("student1").get(),
+					dissertationTopic1);
+			Application application2 = new Application((Student) userRepository.findByUsername("student2").get(),
+					dissertationTopic2);
+			Application application3 = new Application((Student) userRepository.findByUsername("student3").get(),
+					dissertationTopic3);
 
 			applicationRepository.save(application1);
 			applicationRepository.save(application2);
 			applicationRepository.save(application3);
 
-			encodedPassword = passwordEncoder.encode(consultant.getPassword());
-			consultant.setPassword(encodedPassword);
-			userRepository.save(consultant);
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Consultant("consultant", "password", "jorge mendes", " sumol"));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol"));
 
-			DissertationTopic topicoConsultant = new DissertationTopic("topicoConsultot", "descioqe", 0, consultant, mastersArr9);
-
+			DissertationTopic topicoConsultant = new DissertationTopic("topicoConsultot", "descioqe", 0,
+					userRepository.findByUsername("consultant").get(), mastersArr9);
 			dissertationTopicRepository.save(topicoConsultant);
 
-			encodedPassword = passwordEncoder.encode(consultant.getPassword());
-			consultant2.setPassword(encodedPassword);
-			userRepository.save(consultant2);
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("pjuri", "password", "presi juri"));
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Professor("ronaldo", "password", "cristiano ronaldo"));
 
-			encodedPassword = passwordEncoder.encode(presiJuri.getPassword());
-			presiJuri.setPassword(encodedPassword);
-			userRepository.save(presiJuri);
+			//mastersRepository.save(theBestMaster);
 
-			encodedPassword = passwordEncoder.encode(cr7Professor.getPassword());
-			cr7Professor.setPassword(encodedPassword);
-			userRepository.save(cr7Professor);
-
-			mastersRepository.save(theBestMaster);
-
-			encodedPassword = passwordEncoder.encode(mCurieStudent.getPassword());
-			mCurieStudent.setPassword(encodedPassword);
-			userRepository.save(mCurieStudent);
-			mastersRepository.save(master2);
-			mastersRepository.save(master3);
+			createAndSaveUser(userRepository, passwordEncoder,
+					new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster));
 
 			dissertationTopicRepository.save(dissertationTopicFutebolRadiante);
 
-			ThesisExecution thesis = new ThesisExecution(mCurieStudent, dissertationTopicFutebolRadiante, "2024/2025");
-
+			ThesisExecution thesis = new ThesisExecution((Student) userRepository.findByUsername("radiante").get(),
+					dissertationTopicFutebolRadiante, "2024/2025");
 			thesisExecutionRepository.save(thesis);
 
-			ThesisDefense defense = new ThesisDefense(thesis, "LOCATION", new Date(), arguente);
-
+			ThesisDefense defense = new ThesisDefense(thesis, "LOCATION", new Date(),
+					(Professor) userRepository.findByUsername("arguente").get());
 			defense.setGrade(17);
 
-			FinalDefense finalDefense = new FinalDefense(thesis, "FINAL_LOCATION", new Date(), presiJuri, arguente);
-
+			FinalDefense finalDefense = new FinalDefense(thesis, "FINAL_LOCATION", new Date(),
+					(Professor) userRepository.findByUsername("pjuri").get(), (Professor) userRepository.findByUsername("arguente").get());
 			finalDefense.setGrade(18);
 			defenseRepository.save(defense);
 
 			defenseRepository.save(finalDefense);
 
-			Application application = new Application(mCurieStudent, dissertationTopicFutebolRadiante);
 
+			Application application = new Application((Student) userRepository.findByUsername("radiante").get(),
+					dissertationTopicFutebolRadiante);
 			applicationRepository.save(application);
-
 		};
 	}
 
+	private void createAndSaveUser(UserRepository userRepository, PasswordEncoder passwordEncoder, Professor user) {
+		Optional<AppUser> existingUser = userRepository.findByUsername(user.getUsername());
+		if (!existingUser.isPresent()) {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			userRepository.save(user);
+		} else {
+			System.out.println("User with username '" + user.getUsername() + "' already exists.");
+		}
+	}
+
+	private void createAndSaveUser(UserRepository userRepository, PasswordEncoder passwordEncoder, Consultant user) {
+		Optional<AppUser> existingUser = userRepository.findByUsername(user.getUsername());
+		if (!existingUser.isPresent()) {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			userRepository.save(user);
+		} else {
+			System.out.println("User with username '" + user.getUsername() + "' already exists.");
+		}
+	}
+
+	private void createAndSaveUser(UserRepository userRepository, PasswordEncoder passwordEncoder, Student user) {
+		Optional<AppUser> existingUser = userRepository.findByUsername(user.getUsername());
+		if (!existingUser.isPresent()) {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			userRepository.save(user);
+		} else {
+			System.out.println("User with username '" + user.getUsername() + "' already exists.");
+		}
+	}
 }
