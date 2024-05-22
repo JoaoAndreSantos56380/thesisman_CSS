@@ -158,15 +158,15 @@ public class DemoApplication {
 			createAndSaveDissertation(dissertationTopicRepository, dissertationTopic5);
 			createAndSaveDissertation(dissertationTopicRepository, dissertationTopic6);
 
-			ThesisExecution thesis1 = new ThesisExecution((Student) userRepository.findByUsername("student1").get(),
+			ThesisExecution thesis1 = new ThesisExecution((Student) userRepository.findByUsername("scarlettJohansson").get(),
 					dissertationTopic0, "2024/2025");
-			ThesisExecution thesis2 = new ThesisExecution((Student) userRepository.findByUsername("student2").get(),
+			ThesisExecution thesis2 = new ThesisExecution((Student) userRepository.findByUsername("denzelWashington").get(),
 					dissertationTopic1, "2024/2025");
-			ThesisExecution thesis3 = new ThesisExecution((Student) userRepository.findByUsername("student3").get(),
+			ThesisExecution thesis3 = new ThesisExecution((Student) userRepository.findByUsername("robertDeNiro").get(),
 					dissertationTopic6, "2024/2025");
-			ThesisExecution thesis4 = new ThesisExecution((Student) userRepository.findByUsername("student4").get(),
+			ThesisExecution thesis4 = new ThesisExecution((Student) userRepository.findByUsername("merylStreep").get(),
 					dissertationTopic2, "2024/2025");
-			ThesisExecution thesis5 = new ThesisExecution((Student) userRepository.findByUsername("student5").get(),
+			ThesisExecution thesis5 = new ThesisExecution((Student) userRepository.findByUsername("angelinaJolie").get(),
 					dissertationTopic3, "2024/2025");
 
 			createAndSaveThesisExecution(thesisExecutionRepository, thesis1);
@@ -183,9 +183,9 @@ public class DemoApplication {
 			createAndSaveDefense(defenseRepository, defense1);
 			createAndSaveDefense(defenseRepository, defense2);
 
-			ThesisExecution thesis6 = new ThesisExecution((Student) userRepository.findByUsername("student6").get(),
+			ThesisExecution thesis6 = new ThesisExecution((Student) userRepository.findByUsername("tomHanks").get(),
 					dissertationTopic4, "2024/2025");
-			ThesisExecution thesis7 = new ThesisExecution((Student) userRepository.findByUsername("student7").get(),
+			ThesisExecution thesis7 = new ThesisExecution((Student) userRepository.findByUsername("juliaRoberts").get(),
 					dissertationTopic5, "2024/2025");
 
 			createAndSaveThesisExecution(thesisExecutionRepository, thesis6);
@@ -206,7 +206,7 @@ public class DemoApplication {
 					99999, userRepository.findByUsername("FermiParadox").get(), mastersArr2);
 			createAndSaveDissertation(dissertationTopicRepository, dissertationTopic7);
 
-			ThesisExecution thesis8 = new ThesisExecution((Student) userRepository.findByUsername("student8").get(),
+			ThesisExecution thesis8 = new ThesisExecution((Student) userRepository.findByUsername("leonardoDiCaprio").get(),
 					dissertationTopic7, "2024/2025");
 			createAndSaveThesisExecution(thesisExecutionRepository, thesis8);
 
@@ -215,11 +215,11 @@ public class DemoApplication {
 			defense5.setGrade(8);
 			createAndSaveDefense(defenseRepository, defense5);
 
-			Application application1 = new Application((Student) userRepository.findByUsername("student1").get(),
+			Application application1 = new Application((Student) userRepository.findByUsername("leonardoDiCaprio").get(),
 					dissertationTopic1);
-			Application application2 = new Application((Student) userRepository.findByUsername("student2").get(),
+			Application application2 = new Application((Student) userRepository.findByUsername("merylStrip").get(),
 					dissertationTopic2);
-			Application application3 = new Application((Student) userRepository.findByUsername("student3").get(),
+			Application application3 = new Application((Student) userRepository.findByUsername("juliaRoberts").get(),
 					dissertationTopic3);
 
 			createAndSaveApplication(applicationRepository, application1);
