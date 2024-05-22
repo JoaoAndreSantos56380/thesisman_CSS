@@ -85,7 +85,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>pt.ul.fc.di.css.javafxexample/pt.ul.fc.di.css.javafxexample.Hello</mainClass>
+                            <mainClass>pt.ul.fc.di.css.javafxexample/pt.ul.fc.di.css.javafxexample.MainApp</mainClass>
                         </configuration>
                     </execution>
                 </executions>
