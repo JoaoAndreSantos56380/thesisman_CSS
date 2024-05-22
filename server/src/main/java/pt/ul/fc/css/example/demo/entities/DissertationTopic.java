@@ -10,8 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.lang.NonNull;
@@ -27,7 +25,7 @@ public class DissertationTopic {
   private DissertationTopicType type;
 
   @NonNull
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String title;
 
   @NonNull
