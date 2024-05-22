@@ -45,20 +45,20 @@ public class DemoApplication {
 			PasswordEncoder passwordEncoder) {
 		return (args) -> {
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Professor("ronaldo", "password", "cristiano ronaldo"));
+					new Professor("BlackHole", "password", "Stephen Hawking"));
 			createAndSaveUser(userRepository, passwordEncoder, new Professor("arguente", "password", "arguente"));
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Professor("quaresma", "password", "ricardo quaresma"));
+					new Professor("FermiParadox", "password", "Enrico Fermi"));
 			createAndSaveUser(userRepository, passwordEncoder, new Professor("pjuri", "password", "presi juri"));
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Consultant("consultant", "password", "jorge mendes", " sumol"));
+					new Consultant("ManhattanProj", "password", "Robert Oppenheimer", "USgov"));
 			createAndSaveUser(userRepository, passwordEncoder,
 					new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol"));
 			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof1", "password", "prof1"));
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Professor("admin", "password", "vescomosouadmin", true));
-			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof2", "password", "prof2"));
-			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof3", "password", "prof3"));
+					new Professor("admin", "password", "admin_root", true));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("Max", "password", "Planck"));
+			createAndSaveUser(userRepository, passwordEncoder, new Professor("Michael", "password", "Faraday"));
 			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof4", "password", "prof4"));
 			createAndSaveUser(userRepository, passwordEncoder, new Professor("prof5", "password", "prof5"));
 
@@ -81,7 +81,7 @@ public class DemoApplication {
 			createAndSaveMaster(mastersRepository, master7);
 
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster));
+					new Student("Radio", "password", "Marie Curie", 1903, 19.99, theBestMaster));
 			createAndSaveUser(userRepository, passwordEncoder,
 					new Student("student1", "password", "student1", 1903, 19.99, master10));
 			createAndSaveUser(userRepository, passwordEncoder,
@@ -120,7 +120,7 @@ public class DemoApplication {
 			HashSet<Masters> mastersArr10 = new HashSet<>();
 			mastersArr10.add(master10);
 
-			DissertationTopic dissertationTopicFutebolRadiante = new DissertationTopic("Futebol radiante",
+			DissertationTopic dissertationTopicRadio = new DissertationTopic(" Radio",
 					"description", 99999, userRepository.findByUsername("quaresma").get(), mastersArr);
 			DissertationTopic dissertationTopic0 = new DissertationTopic("1 sem defesa marcada", "description",
 					11111,
@@ -231,21 +231,21 @@ public class DemoApplication {
 			createAndSaveUser(userRepository, passwordEncoder,
 					new Consultant("fc56380@alunos.fc.ul.pt", "password", "joao", " sumol"));
 
-			DissertationTopic topicoConsultant = new DissertationTopic("topicoConsultot", "descioqe", 0,
+			DissertationTopic topicoConsultant = new DissertationTopic("topicoConsultor", "descricao", 0,
 					userRepository.findByUsername("consultant").get(), mastersArr9);
 			createAndSaveDissertation(dissertationTopicRepository, topicoConsultant);
 
 			createAndSaveUser(userRepository, passwordEncoder, new Professor("pjuri", "password", "presi juri"));
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Professor("ronaldo", "password", "cristiano ronaldo"));
+					new Professor("Einstein", "password", "Albert Einstein"));
 
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Student("radiante", "password", "Marie Curie", 1903, 19.99, theBestMaster));
+					new Student("Radio", "password", "Marie Curie", 1903, 19.99, theBestMaster));
 
-			createAndSaveDissertation(dissertationTopicRepository, dissertationTopicFutebolRadiante);
+			createAndSaveDissertation(dissertationTopicRepository, dissertationTopicRadio);
 
-			ThesisExecution thesis = new ThesisExecution((Student) userRepository.findByUsername("radiante").get(),
-					dissertationTopicFutebolRadiante, "2024/2025");
+			ThesisExecution thesis = new ThesisExecution((Student) userRepository.findByUsername("Radio").get(),
+					dissertationTopicRadio, "2024/2025");
 			createAndSaveThesisExecution(thesisExecutionRepository, thesis);
 
 			ThesisDefense defense = new ThesisDefense(thesis, "LOCATION", new Date(),
@@ -260,8 +260,8 @@ public class DemoApplication {
 
 			createAndSaveDefense(defenseRepository, finalDefense);
 
-			Application application = new Application((Student) userRepository.findByUsername("radiante").get(),
-					dissertationTopicFutebolRadiante);
+			Application application = new Application((Student) userRepository.findByUsername("Radio").get(),
+					dissertationTopicRadio);
 			createAndSaveApplication(applicationRepository, application);
 		};
 	}
