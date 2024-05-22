@@ -15,7 +15,7 @@
                             <Text text="Welcome to Thesis Manager" style="-fx-font-weight: bold; -fx-font-size: 24;" />
 
             <Label text="Username:" />
-            <TextField fx:id="usernameField" text="radiante" minWidth="200" maxWidth="300"/>
+            <TextField fx:id="usernameField" text="morganFreeman" minWidth="200" maxWidth="300"/>
             <Label text="Password:" />
             <PasswordField fx:id="passwordField" text="(insert any)" minWidth="200" maxWidth="300"/>
             <Button fx:id="loginButton" text="Login" onAction="#handleLogin" minWidth="200" maxWidth="300"/>
