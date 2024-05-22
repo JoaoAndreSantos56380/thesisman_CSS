@@ -17,10 +17,9 @@ public class Masters {
   private Long id;
 
   @NonNull
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String name;
 
-  // associacao 1-1 com o professor
   @NonNull
   @OneToOne
   @JoinColumn(name = "fk_professor_id", referencedColumnName = "id", nullable = false)
