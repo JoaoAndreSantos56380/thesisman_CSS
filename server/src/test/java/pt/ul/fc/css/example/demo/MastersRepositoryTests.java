@@ -61,7 +61,7 @@ class MastersRepositoryTests {
 
   @Test
   void testMasterFindByCoordinator() {
-	Professor cr7Professor = (Professor) userRepository.findByName("cristiano ronaldo").get(0);
+	Professor cr7Professor = (Professor) userRepository.findByName("Stephen Hawking").get(0);
 	Masters master = (Masters) mastersRepository.findByCoordinator(cr7Professor).get(0);
 	assertEquals(master.getName(), "GOLDENAI");
   }

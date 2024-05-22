@@ -104,7 +104,7 @@ public class DemoApplication {
 					new Student("morganFreeman", "password", "Morgan Freeman", 1903, 19.99, master10));
 			createAndSaveUser(userRepository, passwordEncoder,
 					new Student("denzelWashington", "password", "Denzel Washington", 1903, 19.99, master9));
-			
+
 			HashSet<Masters> mastersArr = new HashSet<>();
 			mastersArr.add(theBestMaster);
 
@@ -217,7 +217,7 @@ public class DemoApplication {
 
 			Application application1 = new Application((Student) userRepository.findByUsername("leonardoDiCaprio").get(),
 					dissertationTopic1);
-			Application application2 = new Application((Student) userRepository.findByUsername("merylStrip").get(),
+			Application application2 = new Application((Student) userRepository.findByUsername("merylStreep").get(),
 					dissertationTopic2);
 			Application application3 = new Application((Student) userRepository.findByUsername("juliaRoberts").get(),
 					dissertationTopic3);

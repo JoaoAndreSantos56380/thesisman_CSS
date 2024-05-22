@@ -34,14 +34,14 @@ class UserRepositoryTests {
 
   @Test
   void testFindByName() {
-    Professor professor = (Professor) userRepository.findByName("cristiano ronaldo").get(0);
-    assertEquals("cristiano ronaldo", professor.getName());
+    Professor professor = (Professor) userRepository.findByName("Stephen Hawking").get(0);
+    assertEquals("Stephen Hawking", professor.getName());
   }
 
   @Test
   void testFindByUserName() {
-    Professor professor = (Professor) userRepository.findByUserName("ronaldo").orElseThrow();
-    assertEquals("ronaldo", professor.getUsername());
+    Professor professor = (Professor) userRepository.findByUserName("BlackHole").orElseThrow();
+    assertEquals("BlackHole", professor.getUsername());
   }
 
   @Test

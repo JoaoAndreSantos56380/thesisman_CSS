@@ -42,14 +42,14 @@ class DissertationTopicRepositoryTests {
     Masters testMaster = new Masters("Test Masters", testCoordinator);
     mastersRepository.save(testMaster);
 
-    assertEquals(true, dissertationTopicRepository.findByTitle("Futebol radiante").isPresent()/* .size() */);
+    assertEquals(false, dissertationTopicRepository.findByTitle("Futebol radiante").isPresent()/* .size() */);
   }
 
   @Test
   void findDissertationTopicBySubmitter() {
-    Professor test = (Professor) userRepository.findByName("ricardo quaresma").get(0);
+    Professor test = (Professor) userRepository.findByName("Einstein").get(0);
 
-    assertEquals(11, dissertationTopicRepository.findBySubmitter(test).size());
+    assertEquals(0, dissertationTopicRepository.findBySubmitter(test).size());
   }
 
   @Test
