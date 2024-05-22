@@ -217,7 +217,7 @@ public class DemoApplication {
 
 			Application application1 = new Application((Student) userRepository.findByUsername("leonardoDiCaprio").get(),
 					dissertationTopic1);
-			Application application2 = new Application((Student) userRepository.findByUsername("merylStrip").get(),
+			Application application2 = new Application((Student) userRepository.findByUsername("merylStreep").get(),
 					dissertationTopic2);
 			Application application3 = new Application((Student) userRepository.findByUsername("juliaRoberts").get(),
 					dissertationTopic3);
