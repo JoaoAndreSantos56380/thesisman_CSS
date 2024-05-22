@@ -3,8 +3,8 @@
 	layout:decorate="~{layout}">
 
 <body>
-	<div layout:fragment="content">
-		
+	<div layout:fragment="content" class="mx-auto">
+
 		<div>
 			<span>Positivas: </span>
 			<span th:text="${positives / total_defenses * 100 + '%'}"></span>
