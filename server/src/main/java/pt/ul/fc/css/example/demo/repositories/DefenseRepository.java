@@ -34,4 +34,7 @@ public interface DefenseRepository extends JpaRepository<ThesisDefense, Long> {
 	//@Query("SELECT td FROM ThesisDefense td WHERE td.thesisExecution.internalAdvisor = :internalAdvisor and td.grade = -1")
     @Query("SELECT td FROM ThesisDefense td WHERE td.thesisExecution.internalAdvisor = :internalAdvisor AND td.grade = -1 AND TYPE(td) = ThesisDefense")
     List<ThesisDefense> findScheduledTheses(@Param("internalAdvisor") Professor internalAdvisor);
+
+	@Query("SELECT td FROM ThesisDefense td WHERE td.grade != -1")
+	List<ThesisDefense> findAllFinishedDefenses();
 }

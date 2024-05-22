@@ -14,7 +14,7 @@ public class StatisticsHandlerP {
     private DefenseRepository defenseRepository;
 
     public List<ThesisDefense> findAllDefenses() {
-        return defenseRepository.findAll();
+        return defenseRepository.findAllFinishedDefenses();
     }
 
     public List<ThesisDefense> findAllPositives() {

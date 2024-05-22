@@ -209,7 +209,7 @@ public class WebController {
 	public String getStats(final Model model) {
 		ArrayList<ThesisDefense> defenses = (ArrayList<ThesisDefense>) defenseService.findAllDefenses();
 		int total_defenses = defenses.size();
-		int positives = defenseService.findAllPositives().size();
+		double positives = defenseService.findAllPositives().size();
 		double average = (defenses.stream().mapToInt(ThesisDefense::getGrade).sum()) / (double) total_defenses;
 		model.addAttribute("positives", positives);
 		model.addAttribute("average", average);
