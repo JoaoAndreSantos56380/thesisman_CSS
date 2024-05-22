@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
-
+// with help from ChatGPT
 public class APIParser {
 
     public static List<DissertationTopicModel> parseDissertationTopics(String content) {

@@ -88,7 +88,9 @@ public class MainController {
     private <T> void loadListView(String rightPanelFxml, Class<T> modelClass) {
         showLoading();
         
+        // ChatGPT helped with the Threading and Platform.runLater() logic        
         // Run the data loading in a separate thread
+        // ...to keep the UI from blocking
         new Thread(() -> {
             try {
                 loadData(rightPanelFxml, modelClass);

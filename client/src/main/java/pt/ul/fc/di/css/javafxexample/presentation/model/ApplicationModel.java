@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+// ChatGPT was used to help translate the serverside entities into JavaFX models
 public class ApplicationModel {
     private final LongProperty id = new SimpleLongProperty();
     private final ObjectProperty<StudentModel> student = new SimpleObjectProperty<>();

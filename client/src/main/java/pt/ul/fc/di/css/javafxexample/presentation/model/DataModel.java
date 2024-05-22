@@ -12,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pt.ul.fc.di.css.javafxexample.presentation.control.MainControllerSingleton;
 
+// Generic class that allows for any model to be loaded into the ListView
+// With help from ChatGPT
 public class DataModel<T> {
 
     private final ObservableList<T> itemsList = FXCollections.observableArrayList();
