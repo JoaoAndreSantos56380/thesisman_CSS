@@ -65,9 +65,9 @@ public class DemoApplication {
 			Masters theBestMaster = new Masters("GOLDENAI",
 					(Professor) userRepository.findByUsername("BlackHole").get());
 			Masters master2 = new Masters("INFORMATICA",
-					(Professor) userRepository.findByUsername("Paul").get());
+					(Professor) userRepository.findByUsername("Michael").get());
 			Masters master3 = new Masters("STOCK", (Professor) userRepository.findByUsername("pjuri").get());
-			Masters master10 = new Masters("master10", (Professor) userRepository.findByUsername("Michael").get());
+			Masters master10 = new Masters("master10", (Professor) userRepository.findByUsername("Max").get());
 			Masters master9 = new Masters("master9", (Professor) userRepository.findByUsername("Werner").get());
 			Masters master8 = new Masters("master8", (Professor) userRepository.findByUsername("Paul").get());
 			Masters master7 = new Masters("master7", (Professor) userRepository.findByUsername("prof1").get());
