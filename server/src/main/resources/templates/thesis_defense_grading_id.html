@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout}">
+<html lang="pt_PT" xmlns:th="http://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
 
 <head>
-	<meta charset="ISO-8859-1" />
-	<title>Spring Boot Application</title>
-	<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="ISO-8859-1" />
+    <title>Spring Boot Application</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-	<div layout:fragment="content">
-		<section>
-			<h2>Submeter nota:</h2>
-			<div class="error" th:text="${error}"></div>
+    <div layout:fragment="content" class="mx-auto">
+        <section>
+            <h1 class="text-4xl font-semibold mb-4">Registar nota</h1>
 
-			<form th:action="@{/thesis-i-advise/grade/{id}(id=${id})}" th:object="${gradeDefense}" method="post">
-				<input type="hidden" name="_method" value="put" />
-				<label for="grade">Nota</label><input type="text" name="grade" th:field="*{grade}" /><br />
-				<input type="submit" value="registar" />
-			</form>
-		</section>
-	</div>
+            <form th:action="@{/thesis-i-advise/grade/{id}(id=${id})}" th:object="${gradeDefense}" method="post" class="flex flex-col gap-2">
+                <input type="hidden" name="_method" value="put" />
+                <div class="flex flex-col gap-2">
+                    <label for="grade">Nota</label>
+                    <input type="number" min="0" max="20" name="grade" class="p-2 bg-gray-200 rounded-lg" />
+                    <p th:if="${error}" th:text="${error}" class="text-red-500"></p>
+                </div>
+                <button type="submit" class="text-white bg-cyan-700 hover:bg-cyan-800 active:bg-cyan-900 rounded-lg p-2">Registar nota</button>
+            </form>
+        </section>
+    </div>
 </body>
 
 </html>
