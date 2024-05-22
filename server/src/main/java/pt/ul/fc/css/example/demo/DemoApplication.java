@@ -240,7 +240,7 @@ public class DemoApplication {
 					new Professor("Einstein", "password", "Albert Einstein"));
 
 			createAndSaveUser(userRepository, passwordEncoder,
-					new Student("Radio", "password", "Marie Curie", 1903, 19.99, theBestMaster));
+					new Student("Jonh", "password", "Jonh Lennon", 1583, 11.99, theBestMaster));
 
 			createAndSaveDissertation(dissertationTopicRepository, dissertationTopicRadio);
 
